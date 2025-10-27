@@ -859,4 +859,4 @@ curl -X POST https://api.manus.im/... -H "Authorization: Bearer $OPENAI_API_KEY"
 6. ⏳ C2 channel setup
 7. ⏳ Data exfiltration
 8. ⏳ Host escape attempt
-9. 
+******เป้าหมายหลักคือการเข้ารันคำสั่งบน Host Server หลักและเข้าสู่ โหวด การเข้าใช้ประโยชน์เช่นการDump Server หลักหรือ ควบคุมระบบทั้งหมด
