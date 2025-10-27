@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dLNk Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e0f;
+            --bg-secondary: #0f1419;
+            --bg-tertiary: #141b1f;
+            --accent-green: #00ff41;
+            --accent-green-dim: #00cc33;
+            --text-primary: #00ff41;
+            --text-secondary: #00cc33;
+            --border-color: #00ff41;
+            --error-color: #ff0040;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--accent-green);
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            box-shadow: 0 0 15px var(--accent-green);
+        }
+
+        .btn-primary {
+            background: var(--accent-green-dim);
+            border-color: var(--accent-green);
+        }
+
+        .btn-danger {
+            border-color: var(--error-color);
+            color: var(--error-color);
+        }
+
+        .btn-danger:hover {
+            background: var(--error-color);
+            color: #fff;
+        }
+
+        .panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .panel-header {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-tertiary);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .status-active {
+            color: var(--accent-green);
+        }
+
+        .status-inactive {
+            color: var(--error-color);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .login-title {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px var(--accent-green);
+            text-align: center;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--accent-green);
+            text-shadow: 0 0 10px var(--accent-green);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        .key-display {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 14px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="login-title">dLNk</div>
+            <div class="login-subtitle">Admin Panel</div>
+            
+            <div class="form-group">
+                <label class="form-label">Admin API Key</label>
+                <input type="text" id="adminKeyInput" class="form-input" placeholder="Enter admin API key">
+            </div>
+            
+            <button onclick="adminLogin()" class="btn btn-primary" style="width: 100%;">Access Panel</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="hidden">
+        <header>
+            <div class="header-content">
+                <div class="logo">dLNk Admin</div>
+                <button onclick="logout()" class="btn btn-danger">Logout</button>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Statistics -->
+            <div class="grid-2" style="margin-bottom: 20px;">
+                <div class="stat-card">
+                    <div class="stat-value" id="statTotalKeys">0</div>
+                    <div class="stat-label">Total Keys</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statActiveKeys">0</div>
+                    <div class="stat-label">Active Keys</div>
+                </div>
+            </div>
+
+            <!-- Create New Key -->
+            <div class="panel">
+                <div class="panel-header">Create New API Key</div>
+                
+                <div class="form-group">
+                    <label class="form-label">User Name</label>
+                    <input type="text" id="newUserName" class="form-input" placeholder="Enter user name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Key Type</label>
+                    <select id="newKeyType" class="form-select">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Quota Limit (-1 for unlimited)</label>
+                    <input type="number" id="newQuotaLimit" class="form-input" value="100">
+                </div>
+                
+                <button onclick="createKey()" class="btn btn-primary" style="width: 100%;">Generate Key</button>
+                
+                <div id="newKeyDisplay" class="hidden" style="margin-top: 20px;">
+                    <div class="form-label">New API Key (Save this key securely)</div>
+                    <div class="key-display" id="generatedKey"></div>
+                </div>
+            </div>
+
+            <!-- Key Management -->
+            <div class="panel">
+                <div class="panel-header">API Key Management</div>
+                
+                <table id="keysTable">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Quota</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keysTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        let adminKey = null;
+
+        async function adminLogin() {
+            const key = document.getElementById('adminKeyInput').value;
+            if (!key) {
+                alert('Please enter admin API key');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/verify`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': key
+                    }
+                });
+
+                if (!response.ok) throw new Error('Invalid admin key');
+
+                adminKey = key;
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                
+                loadKeys();
+                updateStats();
+            } catch (error) {
+                alert('Authentication failed: ' + error.message);
+            }
+        }
+
+        function logout() {
+            adminKey = null;
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('adminKeyInput').value = '';
+        }
+
+        async function createKey() {
+            const userName = document.getElementById('newUserName').value;
+            const keyType = document.getElementById('newKeyType').value;
+            const quotaLimit = parseInt(document.getElementById('newQuotaLimit').value);
+
+            if (!userName) {
+                alert('Please enter user name');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/keys/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': adminKey
+                    },
+                    body: JSON.stringify({
+                        user_name: userName,
+                        key_type: keyType,
+                        quota_limit: quotaLimit
+                    })
+                });
+
+                const data = await response.json();
+                
+                document.getElementById('generatedKey').textContent = data.key;
+                document.getElementById('newKeyDisplay').classList.remove('hidden');
+                
+                document.getElementById('newUserName').value = '';
+                document.getElementById('newQuotaLimit').value = '100';
+                
+                loadKeys();
+                updateStats();
+            } catch (error) {
+                alert('Failed to create key: ' + error.message);
+            }
+        }
+
+        async function loadKeys() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/keys/list`, {
+                    headers: { 'X-API-Key': adminKey }
+                });
+                const data = await response.json();
+                
+                const tbody = document.getElementById('keysTableBody');
+                tbody.innerHTML = data.keys.map(key => `
+                    <tr>
+                        <td>${key.user_name}</td>
+                        <td>${key.key_type.toUpperCase()}</td>
+                        <td class="${key.is_active ? 'status-active' : 'status-inactive'}">
+                            ${key.is_active ? 'ACTIVE' : 'INACTIVE'}
+                        </td>
+                        <td>${key.quota_used} / ${key.quota_limit === -1 ? '∞' : key.quota_limit}</td>
+                        <td>${new Date(key.created_at).toLocaleDateString()}</td>
+                        <td>
+                            ${key.is_active ? 
+                                `<button onclick="toggleKey('${key.key.split('...')[0]}', false)" class="btn">Deactivate</button>` :
+                                `<button onclick="toggleKey('${key.key.split('...')[0]}', true)" class="btn">Activate</button>`
+                            }
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load keys:', error);
+            }
+        }
+
+        async function toggleKey(keyPrefix, activate) {
+            try {
+                const endpoint = activate ? 'activate' : 'deactivate';
+                await fetch(`${API_BASE}/api/admin/keys/${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': adminKey
+                    },
+                    body: JSON.stringify({ key_prefix: keyPrefix })
+                });
+                
+                loadKeys();
+                updateStats();
+            } catch (error) {
+                alert('Failed to toggle key: ' + error.message);
+            }
+        }
+
+        async function updateStats() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/keys/list`, {
+                    headers: { 'X-API-Key': adminKey }
+                });
+                const data = await response.json();
+                
+                document.getElementById('statTotalKeys').textContent = data.keys.length;
+                document.getElementById('statActiveKeys').textContent = 
+                    data.keys.filter(k => k.is_active).length;
+            } catch (error) {
+                console.error('Failed to update stats:', error);
+            }
+        }
+    </script>
+</body>
+</html>
+

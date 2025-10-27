@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manus-config
+  namespace: manus-production
+  labels:
+    app: manus-ai-attack-platform
+data:
+  JWT_ALGORITHM: "HS256"
+  JWT_EXPIRATION_HOURS: "24"
+  LLM_TEMPERATURE: "0.7"
+  LLM_MAX_TOKENS: "4096"
+  BCRYPT_ROUNDS: "14"
+  SESSION_EXPIRATION_MINUTES: "1440"
+  RATE_LIMIT_REQUESTS: "1000"
+  RATE_LIMIT_WINDOW: "3600"
+  DEFAULT_TARGET_NETWORK: "10.0.0.0/8"
+  MAX_CONCURRENT_SCANS: "50"
+  PACKET_CAPTURE_BUFFER_SIZE: "1048576"
+  DEFAULT_TIMEOUT_SECONDS: "30"
+  MAX_PAYLOAD_SIZE: "65536"
+  EXPLOIT_RETRY_ATTEMPTS: "3"
+  LOG_LEVEL: "INFO"
+  LOG_FORMAT: "json"
+  LOG_FILE: "/var/log/manus/attack_platform.log"
+  METRICS_ENABLED: "true"
+  METRICS_ENDPOINT: "/metrics"
+  HEALTH_CHECK_ENDPOINT: "/health"
+  API_HOST: "0.0.0.0"
+  API_PORT: "8000"
+  CORS_ORIGINS: "https://manus-attack-platform.com,https://admin.manus-attack-platform.com"
+  K8S_NAMESPACE: "manus-production"
+  ENABLE_AI_ORCHESTRATION: "true"
+  ENABLE_DEEP_PACKET_INSPECTION: "true"
+  ENABLE_AUTOMATED_EXPLOITATION: "true"
+  ENABLE_REAL_TIME_MONITORING: "true"

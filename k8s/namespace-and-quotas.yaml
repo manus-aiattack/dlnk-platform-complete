@@ -1,0 +1,50 @@
+# Kubernetes Namespace for Manus AI Attack Platform
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: manus-ai-attack
+  labels:
+    name: manus-ai-attack
+    environment: production
+    component: platform
+  annotations:
+    description: "Namespace for Manus AI Attack Platform production environment"
+
+---
+# Resource Quota for Manus AI Attack Platform
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: manus-platform-quota
+  namespace: manus-ai-attack
+spec:
+  hard:
+    # Compute resources
+    requests.cpu: "100"
+    requests.memory: 200Gi
+    limits.cpu: "200"
+    limits.memory: 400Gi
+
+    # Storage resources
+    requests.storage: 1Ti
+    persistentvolumeclaims: "50"
+
+    # GPU resources (if available)
+    requests.nvidia.com/gpu: "8"
+    limits.nvidia.com/gpu: "16"
+
+    # Custom resources
+    requests.ephemeral-storage: 500Gi
+    limits.ephemeral-storage: 1Ti
+
+    # Object count limits
+    configmaps: "100"
+    secrets: "50"
+    services: "20"
+    services.loadbalancers: "5"
+    services.nodeports: "10"
+    replicasets.apps: "100"
+    deployments.apps: "50"
+    pods: "200"
+    jobs.batch: "30"
+    cronjobs.batch: "10"

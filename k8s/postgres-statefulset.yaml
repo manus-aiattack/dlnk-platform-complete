@@ -1,0 +1,310 @@
+# PostgreSQL ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: config
+data:
+  postgresql.conf: |
+    # Connection Settings
+    listen_addresses = '*'
+    port = 5432
+    max_connections = 200
+    shared_buffers = 256MB
+    effective_cache_size = 1GB
+    maintenance_work_mem = 64MB
+    checkpoint_completion_target = 0.7
+    wal_buffers = 16MB
+    default_statistics_target = 100
+    random_page_cost = 1.1
+    effective_io_concurrency = 200
+    work_mem = 4MB
+    min_wal_size = 1GB
+    max_wal_size = 4GB
+    max_worker_processes = 8
+    max_parallel_workers_per_gather = 4
+    max_parallel_workers = 8
+    max_parallel_maintenance_workers = 4
+
+    # Logging
+    log_destination = 'stderr'
+    logging_collector = on
+    log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+    log_file_mode = 0600
+    log_rotation_age = 1d
+    log_rotation_size = 100MB
+    log_min_duration_statement = 1000
+    log_checkpoints = on
+    log_connections = on
+    log_disconnections = on
+    log_lock_waits = on
+    log_temp_files = 10MB
+
+    # Replication Settings
+    wal_level = replica
+    max_wal_senders = 3
+    max_replication_slots = 3
+    hot_standby = on
+    hot_standby_feedback = on
+
+    # Performance Tuning
+    synchronous_commit = on
+    full_page_writes = on
+    wal_sync_method = fsync
+    commit_delay = 0
+    commit_siblings = 5
+  pg_hba.conf: |
+    # TYPE  DATABASE        USER            ADDRESS                 METHOD
+    local   all             postgres                                peer
+    local   all             all                                     md5
+    host    all             all             127.0.0.1/32            md5
+    host    all             all             ::1/128                 md5
+    host    manus_ai_attack all             10.244.0.0/16           md5
+    host    manus_ai_attack all             172.16.0.0/12           md5
+    host    manus_ai_attack all             192.168.0.0/16          md5
+    host    all             all             0.0.0.0/0               reject
+
+---
+# PostgreSQL Secrets
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: secret
+type: Opaque
+data:
+  # Base64 encoded values
+  postgres-password: cG9zdGdyZXNfcGFzc3dvcmQ=  # postgres_password
+  replication-password: cmVwbGljYXRpb25fcGFzc3dvcmQ=  # replication_password
+  backup-password: YmFja3VwX3Bhc3N3b3Jk  # backup_password
+
+---
+# PostgreSQL StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: database
+spec:
+  serviceName: postgres
+  replicas: 3
+  selector:
+    matchLabels:
+      app: postgres
+      component: database
+  template:
+    metadata:
+      labels:
+        app: postgres
+        component: database
+    spec:
+      serviceAccountName: postgres-sa
+      securityContext:
+        fsGroup: 26
+        runAsNonRoot: true
+        runAsUser: 999
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+          name: postgres
+        env:
+        - name: POSTGRES_DB
+          value: manus_ai_attack
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_INITDB_ARGS
+          value: "--auth-host=md5"
+        - name: POSTGRES_REPLICATION_MODE
+          value: "master"
+        - name: POSTGRES_REPLICATION_USER
+          value: replicator
+        - name: POSTGRES_REPLICATION_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: replication-password
+        - name: POSTGRES_SUPERUSER_OPTIONS
+          value: "--replication"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+        - name: postgres-config
+          mountPath: /etc/postgresql/postgresql.conf
+          subPath: postgresql.conf
+        - name: postgres-config
+          mountPath: /etc/postgresql/pg_hba.conf
+          subPath: pg_hba.conf
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - exec pg_isready -U postgres -h 127.0.0.1 -p 5432
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - exec pg_isready -U postgres -h 127.0.0.1 -p 5432
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "fast-ssd"
+      resources:
+        requests:
+          storage: 100Gi
+      volumeMode: Filesystem
+
+---
+# PostgreSQL Headless Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: service
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  clusterIP: None
+  selector:
+    app: postgres
+    component: database
+  ports:
+  - port: 5432
+    targetPort: 5432
+    name: postgres
+
+---
+# PostgreSQL Master Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-master
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: service
+    role: master
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+    component: database
+    role: master
+  ports:
+  - port: 5432
+    targetPort: 5432
+    name: postgres
+  sessionAffinity: ClientIP
+
+---
+# PostgreSQL Read Service (for load balancing reads)
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-read
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: service
+    role: replica
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+    component: database
+    role: replica
+  ports:
+  - port: 5432
+    targetPort: 5432
+    name: postgres
+  sessionAffinity: ClientIP
+
+---
+# Service Account for PostgreSQL
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres-sa
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: service-account
+
+---
+# Role for PostgreSQL
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: manus-ai-attack
+  name: postgres-role
+  labels:
+    app: postgres
+    component: role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["persistentvolumeclaims", "persistentvolumes"]
+  verbs: ["get", "list"]
+
+---
+# Role Binding for PostgreSQL
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: postgres-rolebinding
+  namespace: manus-ai-attack
+  labels:
+    app: postgres
+    component: role-binding
+subjects:
+- kind: ServiceAccount
+  name: postgres-sa
+  namespace: manus-ai-attack
+roleRef:
+  kind: Role
+  name: postgres-role
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,36 @@
+╔═══════════════════════════════════════════════════════════╗
+║   dLNk Attack Platform - Master API Key                  ║
+╚═══════════════════════════════════════════════════════════╝
+
+🔑 YOUR NEW API KEY:
+dlnk_master_fd460457ef6ea4d90d83b6c0784c39b6
+
+📊 Key Details:
+- Username: master_user
+- Role: admin
+- Quota: 999,999 requests
+- Status: Active
+- Expires: Never (365 days auto-renew)
+- Created: 2025-10-27
+
+🚀 How to Use:
+
+1. API Requests:
+   curl -H "X-API-Key: dlnk_master_fd460457ef6ea4d90d83b6c0784c39b6" \
+        http://localhost:8000/api/...
+
+2. Frontend Login:
+   - Open: https://8000-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer/
+   - Enter API Key: dlnk_master_fd460457ef6ea4d90d83b6c0784c39b6
+
+3. HK CLI:
+   export DLNK_API_KEY="dlnk_master_fd460457ef6ea4d90d83b6c0784c39b6"
+   hk
+
+⚠️ IMPORTANT:
+- Keep this key secure
+- Do not share publicly
+- This key has full admin access
+
+✅ Key Verified: Working
+

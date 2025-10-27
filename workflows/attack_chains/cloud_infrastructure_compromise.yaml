@@ -1,0 +1,83 @@
+# Cloud Infrastructure Compromise Workflow
+# Multi-cloud attack chain (AWS, Azure, GCP)
+
+name: "Cloud Infrastructure Compromise"
+description: "Complete cloud attack chain - IAM escalation to resource compromise"
+version: "1.0.0"
+author: "dLNk HACK"
+target_type: "cloud"
+estimated_duration: 60
+success_rate: 0.70
+
+config:
+  stealth_mode: true
+  max_retries: 3
+  enable_evasion: true
+
+requirements:
+  cloud_provider: required  # aws, azure, or gcp
+  initial_credentials: required
+
+phases:
+  - name: "cloud_enumeration"
+    description: "Enumerate cloud resources"
+    agents:
+      - name: "AWSS3EnumerationAgent"
+        condition: "cloud_provider == 'aws'"
+        outputs:
+          - s3_buckets
+      - name: "AzureBlobStorageAgent"
+        condition: "cloud_provider == 'azure'"
+        outputs:
+          - blob_containers
+      - name: "GCPStorageBucketAgent"
+        condition: "cloud_provider == 'gcp'"
+        outputs:
+          - gcs_buckets
+
+  - name: "iam_escalation"
+    description: "Escalate IAM privileges"
+    agents:
+      - name: "AWSIAMPrivEscAgent"
+        condition: "cloud_provider == 'aws'"
+        outputs:
+          - admin_access
+      - name: "AzureADPrivEscAgent"
+        condition: "cloud_provider == 'azure'"
+        outputs:
+          - admin_access
+      - name: "GCPIAMPrivEscAgent"
+        condition: "cloud_provider == 'gcp'"
+        outputs:
+          - admin_access
+
+  - name: "resource_exploitation"
+    description: "Exploit cloud resources"
+    agents:
+      - name: "AWSLambdaExploitAgent"
+        condition: "cloud_provider == 'aws'"
+      - name: "AWSSecretsManagerAgent"
+        condition: "cloud_provider == 'aws'"
+      - name: "AzureKeyVaultAgent"
+        condition: "cloud_provider == 'azure'"
+      - name: "GCPSecretManagerAgent"
+        condition: "cloud_provider == 'gcp'"
+
+  - name: "persistence"
+    description: "Maintain cloud access"
+    agents:
+      - name: "PersistenceAgent"
+        config:
+          cloud_mechanisms: true
+      - name: "AdvancedBackdoorAgent"
+
+  - name: "data_exfiltration"
+    description: "Exfiltrate cloud data"
+    agents:
+      - name: "AdvancedDataExfiltrationAgent"
+        config:
+          cloud_native: true
+
+success_criteria:
+  minimum_requirements:
+    - "admin_access == true"

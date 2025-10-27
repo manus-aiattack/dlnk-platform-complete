@@ -1,0 +1,72 @@
+/* CSS Animations for Dark Theme */
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Utility classes for Dark Theme */
+.dark-bg {
+  background: #0a0e27 !important;
+}
+
+.primary-text {
+  color: #00ff88 !important;
+}
+
+.secondary-text {
+  color: #b0b0b0 !important;
+}
+
+.muted-text {
+  color: #808080 !important;
+}
+
+.success-text {
+  color: #00ff88 !important;
+}
+
+.error-text {
+  color: #ff4444 !important;
+}
+
+.warning-text {
+  color: #ffaa00 !important;
+}
+
+.info-text {
+  color: #00d4ff !important;
+}
+
+.border-primary {
+  border-color: rgba(0, 255, 136, 0.3) !important;
+}
+
+.border-hover {
+  border-color: #00ff88 !important;
+}
+
+.glow-effect {
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3) !important;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .mobile-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mobile-agent-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+  }
+}

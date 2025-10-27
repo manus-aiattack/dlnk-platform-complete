@@ -1,0 +1,240 @@
+# Network Policy for API Services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-network-policy
+  namespace: manus-ai-attack
+spec:
+  podSelector:
+    matchLabels:
+      app: manus-api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    # Allow traffic from frontend
+    - podSelector:
+        matchLabels:
+          app: manus-frontend
+    # Allow traffic from CLI
+    - podSelector:
+        matchLabels:
+          app: manus-cli
+    # Allow traffic from monitoring
+    - podSelector:
+        matchLabels:
+          app: monitoring
+    ports:
+    - protocol: TCP
+      port: 8000
+      # API health checks
+    - protocol: TCP
+      port: 8080
+  egress:
+  - to:
+    # Allow outbound to database
+    - podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+  - to:
+    # Allow outbound to Redis
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  - to:
+    # Allow outbound to monitoring
+    - podSelector:
+        matchLabels:
+          app: monitoring
+    ports:
+    - protocol: TCP
+      port: 9090
+  - to: []
+    # Allow DNS resolution
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+
+---
+# Network Policy for Database
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: database-network-policy
+  namespace: manus-ai-attack
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    # Allow traffic from API
+    - podSelector:
+        matchLabels:
+          app: manus-api
+    # Allow traffic from backup jobs
+    - podSelector:
+        matchLabels:
+          app: backup
+    ports:
+    - protocol: TCP
+      port: 5432
+  egress:
+  - to: []
+    # Allow outbound to monitoring
+    ports:
+    - protocol: TCP
+      port: 9100
+  - to: []
+    # Allow DNS resolution
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+
+---
+# Network Policy for Redis
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis-network-policy
+  namespace: manus-ai-attack
+spec:
+  podSelector:
+    matchLabels:
+      app: redis
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    # Allow traffic from API
+    - podSelector:
+        matchLabels:
+          app: manus-api
+    # Allow traffic from monitoring
+    - podSelector:
+        matchLabels:
+          app: monitoring
+    ports:
+    - protocol: TCP
+      port: 6379
+  egress:
+  - to: []
+    # Allow outbound to monitoring
+    ports:
+    - protocol: TCP
+      port: 9121
+  - to: []
+    # Allow DNS resolution
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+
+---
+# Network Policy for Monitoring
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monitoring-network-policy
+  namespace: manus-ai-attack
+spec:
+  podSelector:
+    matchLabels:
+      app: monitoring
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    # Allow traffic from all platform components
+    - podSelector:
+        matchLabels:
+          component: platform
+    ports:
+    - protocol: TCP
+      port: 9090
+    - protocol: TCP
+      port: 3000
+    - protocol: TCP
+      port: 9093
+    - protocol: TCP
+      port: 9094
+  egress:
+  - to: []
+    # Allow outbound to external monitoring services
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
+  - to: []
+    # Allow DNS resolution
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+
+---
+# Network Policy for Agents (if running as separate pods)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: agent-network-policy
+  namespace: manus-ai-attack
+spec:
+  podSelector:
+    matchLabels:
+      component: agent
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    # Allow traffic from orchestrator
+    - podSelector:
+        matchLabels:
+          app: manus-api
+    ports:
+    - protocol: TCP
+      port: 8000
+  egress:
+  - to:
+    # Allow outbound to target systems (external)
+    - namespaceSelector:
+        matchLabels:
+          name: external
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 22
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+  - to: []
+    # Allow DNS resolution
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53

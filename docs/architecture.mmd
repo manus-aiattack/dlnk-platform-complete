@@ -1,0 +1,47 @@
+graph TD
+    subgraph "User Interface"
+        A[Frontend - React/Vite] --> B{API Gateway}
+    end
+
+    subgraph "Core Services"
+        B --> C[One-Click Orchestrator]
+        B --> D[API Endpoints - FastAPI]
+    end
+
+    subgraph "AI System"
+        C --> E[AI Decision Engine]
+        E --> F[ML Vulnerability Detector]
+        E --> G[AI Attack Planner]
+        E --> H[Self-Learning System]
+    end
+
+    subgraph "Attack & Exploitation Agents"
+        G --> I[Reconnaissance Agents]
+        G --> J[Scanning Agents]
+        G --> K[Exploitation Agents]
+        K --> L[Post-Exploitation Agents]
+    end
+
+    subgraph "Zero-Day Hunter"
+        M[Zero-Day Hunter API] --> N[Fuzzing Engine]
+        M --> O[Symbolic Execution - Angr]
+        M --> P[Taint Analysis Engine]
+        N --> Q[Corpus Manager]
+        O --> R[Exploit Generator]
+        R --> S[ROP & Shellcode Gen]
+    end
+
+    subgraph "Supporting Services"
+        T[Self-Healing System] --> C
+        U[Performance Monitor] --> D
+        V[Security Auditor] --> D
+        W[Cache Manager] --> D
+    end
+
+    D --> M
+    D --> H
+    H --> E
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#ccf,stroke:#333,stroke-width:2px
+    style D fill:#ccf,stroke:#333,stroke-width:2px

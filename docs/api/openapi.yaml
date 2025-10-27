@@ -1,0 +1,451 @@
+openapi: 3.0.3
+info:
+  title: dLNk Attack Platform API
+  description: |
+    Comprehensive API documentation for dLNk Attack Platform.
+    
+    ## Features
+    - Authentication & Authorization
+    - Target Management
+    - Attack Orchestration
+    - Agent Control
+    - Zero-Day Hunter
+    - Real-time Updates
+    
+    ## Authentication
+    All endpoints require JWT token authentication except `/auth/login` and `/auth/register`.
+    Include the token in the `Authorization` header: `Bearer <token>`
+    
+  version: 1.0.0
+  contact:
+    name: dLNk Security Team
+    email: security@dlnk.io
+  license:
+    name: Proprietary
+    url: https://dlnk.io/license
+
+servers:
+  - url: https://api.dlnk.io/v1
+    description: Production server
+  - url: https://staging-api.dlnk.io/v1
+    description: Staging server
+  - url: http://localhost:8000/v1
+    description: Development server
+
+tags:
+  - name: Authentication
+    description: User authentication and authorization
+  - name: Targets
+    description: Target management operations
+  - name: Attacks
+    description: Attack orchestration and management
+  - name: Agents
+    description: Agent control and monitoring
+  - name: Zero-Day Hunter
+    description: Zero-day vulnerability discovery
+  - name: Reports
+    description: Report generation and export
+
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Authenticate user and return JWT token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  example: admin
+                password:
+                  type: string
+                  format: password
+                  example: SecurePassword123!
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: User registration
+      description: Register new user account
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+                - email
+              properties:
+                username:
+                  type: string
+                  example: newuser
+                password:
+                  type: string
+                  format: password
+                  example: SecurePassword123!
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          description: Invalid input or user already exists
+
+  /targets:
+    get:
+      tags:
+        - Targets
+      summary: List all targets
+      description: Retrieve list of all registered targets
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, scanning]
+      responses:
+        '200':
+          description: List of targets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Target'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+    post:
+      tags:
+        - Targets
+      summary: Add new target
+      description: Register a new target for scanning
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - host
+              properties:
+                name:
+                  type: string
+                  example: Production Server
+                host:
+                  type: string
+                  example: 192.168.1.100
+                port:
+                  type: integer
+                  example: 80
+                description:
+                  type: string
+                  example: Main production web server
+      responses:
+        '201':
+          description: Target created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Target'
+
+  /targets/{targetId}:
+    get:
+      tags:
+        - Targets
+      summary: Get target details
+      parameters:
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Target details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Target'
+
+    delete:
+      tags:
+        - Targets
+      summary: Delete target
+      parameters:
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Target deleted successfully
+
+  /attacks:
+    get:
+      tags:
+        - Attacks
+      summary: List all attacks
+      responses:
+        '200':
+          description: List of attacks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Attack'
+
+    post:
+      tags:
+        - Attacks
+      summary: Launch new attack
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target_id
+                - attack_type
+              properties:
+                target_id:
+                  type: string
+                attack_type:
+                  type: string
+                  enum: [reconnaissance, exploitation, post_exploitation]
+                agents:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Attack launched successfully
+
+  /agents:
+    get:
+      tags:
+        - Agents
+      summary: List all agents
+      responses:
+        '200':
+          description: List of agents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+
+  /zero-day/scan:
+    post:
+      tags:
+        - Zero-Day Hunter
+      summary: Start zero-day scan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - binary_path
+              properties:
+                binary_path:
+                  type: string
+                  example: /path/to/binary
+                fuzzing_enabled:
+                  type: boolean
+                  default: true
+                symbolic_execution_enabled:
+                  type: boolean
+                  default: true
+                taint_analysis_enabled:
+                  type: boolean
+                  default: true
+      responses:
+        '202':
+          description: Scan started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  scan_id:
+                    type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [admin, operator, viewer]
+        created_at:
+          type: string
+          format: date-time
+
+    Target:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        host:
+          type: string
+        port:
+          type: integer
+        status:
+          type: string
+          enum: [active, inactive, scanning]
+        created_at:
+          type: string
+          format: date-time
+
+    Attack:
+      type: object
+      properties:
+        id:
+          type: string
+        target_id:
+          type: string
+        attack_type:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, completed, failed]
+        started_at:
+          type: string
+          format: date-time
+
+    Agent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        status:
+          type: string
+          enum: [idle, running, error]
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        code:
+          type: string
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        pages:
+          type: integer
+

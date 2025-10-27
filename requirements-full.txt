@@ -1,0 +1,86 @@
+# dLNk Predator Attack Platform - Complete Python Dependencies
+
+# ===== Web Framework =====
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+websockets==12.0
+
+# ===== Database =====
+asyncpg>=0.29.0
+psycopg2-binary>=2.9.9
+pymongo>=4.6.1
+pymysql==1.1.0
+sqlalchemy==2.0.25
+
+# ===== HTTP & Networking =====
+aiohttp>=3.9.1
+requests==2.31.0
+httpx>=0.25.2,<0.26.0
+urllib3==2.1.0
+
+# ===== Security & Crypto =====
+cryptography==42.0.0
+pycryptodome==3.19.1
+paramiko==3.4.0
+bcrypt==4.1.2
+pyjwt==2.8.0
+
+# ===== LLM Integration =====
+ollama==0.1.6
+openai==1.10.0
+
+# ===== Data Processing =====
+pydantic==2.5.3
+python-dotenv==1.0.0
+pyyaml>=6.0.1
+toml==0.10.2
+
+# ===== File Operations =====
+aiofiles==23.2.1
+python-magic==0.4.27
+
+# ===== System Monitoring =====
+psutil==5.9.7
+
+# ===== Logging & Monitoring =====
+loguru==0.7.2
+prometheus-client==0.19.0
+
+# ===== Testing =====
+pytest==7.4.4
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+
+# ===== Code Quality =====
+black==24.1.1
+flake8==7.0.0
+mypy==1.8.0
+
+# ===== Utilities =====
+click==8.1.7
+colorama==0.4.6
+tqdm==4.66.1
+rich==13.7.0
+
+# ===== Web Scraping & Parsing =====
+beautifulsoup4==4.12.3
+# lxml==5.1.0  # Removed - causes build issues on WSL
+# Use beautifulsoup4 with html.parser instead, or install system packages first
+
+# ===== Redis (Optional) =====
+redis==5.0.1
+aioredis==2.0.1
+
+# ===== Email =====
+aiosmtplib==3.0.1
+
+# ===== Reporting =====
+jinja2==3.1.3
+markdown==3.5.2
+reportlab==4.0.9
+
+# ===== Additional Security Tools =====
+scapy>=2.5.0
+dnspython==2.5.0
+

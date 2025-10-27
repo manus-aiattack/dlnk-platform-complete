@@ -1,0 +1,19 @@
+[Unit]
+Description=dLNk Attack Platform Production Server
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/aiprojectattack
+Environment="VC_API_KEY=8-WmOAVImJdRrqBybLj55n-QDu1Y-WYnQNRb280wLhU"
+Environment="REDIS_URL=redis://localhost:6379"
+Environment="DATABASE_URL=sqlite:///./data/dlnk.db"
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/usr/bin/python3.11 /home/ubuntu/aiprojectattack/run_production.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+

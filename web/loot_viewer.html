@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loot Viewer - dLNk dLNk Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #00ff00;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 20px #00ff00;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #00cc00;
+            font-size: 1.2em;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: rgba(0, 255, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .card-title {
+            font-size: 0.9em;
+            color: #00cc00;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .card-value {
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .tab:hover {
+            background: rgba(0, 255, 0, 0.2);
+        }
+
+        .tab.active {
+            background: #00ff00;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .loot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .loot-item {
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .loot-item:hover {
+            background: rgba(0, 255, 0, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .loot-filename {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .loot-meta {
+            color: #00cc00;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .loot-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #00ff00;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .btn-danger:hover {
+            background: #ff0000;
+            color: #fff;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.5em;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 60px;
+            font-size: 1.3em;
+            color: #00cc00;
+        }
+
+        .auto-exploit-section {
+            background: rgba(255, 165, 0, 0.1);
+            border: 2px solid #ffa500;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .auto-exploit-section h2 {
+            color: #ffa500;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ffa500;
+            border-radius: 5px;
+            color: #00ff00;
+            font-size: 1.1em;
+        }
+
+        .btn-exploit {
+            padding: 15px 40px;
+            background: rgba(255, 165, 0, 0.2);
+            border: 2px solid #ffa500;
+            color: #ffa500;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-exploit:hover {
+            background: #ffa500;
+            color: #000;
+        }
+
+        .warning {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏴‍☠️ LOOT VIEWER</h1>
+            <p class="subtitle">Stolen Data Management System</p>
+        </header>
+
+        <!-- Auto Exploit Section -->
+        <div class="auto-exploit-section">
+            <h2>⚡ Auto Exploit</h2>
+            <div class="input-group">
+                <input type="text" id="targetUrl" placeholder="Enter target URL (e.g., http://target.com)" />
+                <button class="btn-exploit" onclick="autoExploit()">🚀 EXPLOIT NOW</button>
+            </div>
+            <div class="warning">
+                ⚠️ WARNING: Do NOT attack localhost, 127.0.0.1, or your own systems!
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards" id="summaryCards">
+            <div class="card">
+                <div class="card-title">Total Items</div>
+                <div class="card-value" id="totalItems">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Database Dumps</div>
+                <div class="card-value" id="dbDumps">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Credentials</div>
+                <div class="card-value" id="credentials">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Session Tokens</div>
+                <div class="card-value" id="sessionTokens">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Files</div>
+                <div class="card-value" id="files">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Webshells</div>
+                <div class="card-value" id="webshells">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Total Size</div>
+                <div class="card-value" id="totalSize">-</div>
+            </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchCategory('database_dumps')">💾 Database Dumps</div>
+            <div class="tab" onclick="switchCategory('credentials')">🔑 Credentials</div>
+            <div class="tab" onclick="switchCategory('session_tokens')">🎫 Session Tokens</div>
+            <div class="tab" onclick="switchCategory('files')">📁 Files</div>
+            <div class="tab" onclick="switchCategory('webshells')">🐚 Webshells</div>
+            <div class="tab" onclick="switchCategory('c2_agents')">🤖 C2 Agents</div>
+        </div>
+
+        <!-- Loot Grid -->
+        <div id="lootContainer">
+            <div class="loading">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        let currentCategory = 'database_dumps';
+
+        // Load summary on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSummary();
+            loadLoot(currentCategory);
+        });
+
+        async function loadSummary() {
+            try {
+                const response = await fetch(`${API_BASE}/loot/summary`);
+                const data = await response.json();
+
+                document.getElementById('totalItems').textContent = data.total_items;
+                document.getElementById('dbDumps').textContent = data.categories.database_dumps;
+                document.getElementById('credentials').textContent = data.categories.credentials;
+                document.getElementById('sessionTokens').textContent = data.categories.session_tokens;
+                document.getElementById('files').textContent = data.categories.files;
+                document.getElementById('webshells').textContent = data.categories.webshells;
+                document.getElementById('totalSize').textContent = data.total_size_mb + ' MB';
+            } catch (error) {
+                console.error('Failed to load summary:', error);
+            }
+        }
+
+        async function loadLoot(category) {
+            const container = document.getElementById('lootContainer');
+            container.innerHTML = '<div class="loading">Loading...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/loot/${category}`);
+                const data = await response.json();
+
+                if (data.items.length === 0) {
+                    container.innerHTML = '<div class="empty">📭 No loot in this category yet</div>';
+                    return;
+                }
+
+                const grid = document.createElement('div');
+                grid.className = 'loot-grid';
+
+                data.items.forEach(item => {
+                    const lootItem = document.createElement('div');
+                    lootItem.className = 'loot-item';
+                    lootItem.innerHTML = `
+                        <div class="loot-filename">📦 ${item.filename}</div>
+                        <div class="loot-meta">
+                            Size: ${item.size_kb} KB<br>
+                            Modified: ${new Date(item.modified).toLocaleString()}
+                        </div>
+                        <div class="loot-actions">
+                            <a href="${API_BASE}${item.download_url}" class="btn" download>⬇️ Download</a>
+                            <button class="btn btn-danger" onclick="deleteLoot('${category}', '${item.filename}')">🗑️ Delete</button>
+                        </div>
+                    `;
+                    grid.appendChild(lootItem);
+                });
+
+                container.innerHTML = '';
+                container.appendChild(grid);
+            } catch (error) {
+                container.innerHTML = `<div class="error">❌ Failed to load loot: ${error.message}</div>`;
+            }
+        }
+
+        function switchCategory(category) {
+            currentCategory = category;
+
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Load loot for this category
+            loadLoot(category);
+        }
+
+        async function deleteLoot(category, filename) {
+            if (!confirm(`Are you sure you want to delete ${filename}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/loot/${category}/${filename}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('✅ File deleted successfully');
+                    loadSummary();
+                    loadLoot(currentCategory);
+                } else {
+                    alert('❌ Failed to delete file');
+                }
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+
+        async function autoExploit() {
+            const targetUrl = document.getElementById('targetUrl').value.trim();
+
+            if (!targetUrl) {
+                alert('⚠️ Please enter a target URL');
+                return;
+            }
+
+            // Safety check
+            if (targetUrl.includes('localhost') || targetUrl.includes('127.0.0.1') || targetUrl.includes('0.0.0.0')) {
+                alert('🚫 BLOCKED: Cannot attack localhost or 127.0.0.1!');
+                return;
+            }
+
+            if (!confirm(`⚡ Start auto exploitation on ${targetUrl}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auto-exploit?target_url=${encodeURIComponent(targetUrl)}`, {
+                    method: 'POST'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(`✅ Auto exploit started!\n\nTarget: ${targetUrl}\n\nCheck back in a few minutes for results.`);
+                    
+                    // Reload summary after 5 seconds
+                    setTimeout(() => {
+                        loadSummary();
+                        loadLoot(currentCategory);
+                    }, 5000);
+                } else {
+                    alert(`❌ Failed to start auto exploit: ${data.error || 'Unknown error'}`);
+                }
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            loadSummary();
+            loadLoot(currentCategory);
+        }, 30000);
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,391 @@
+# Redis ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: manus-ai-attack
+  labels:
+    app: redis
+    component: config
+data:
+  redis.conf: |
+    # Network
+    bind 0.0.0.0
+    port 6379
+    protected-mode yes
+    tcp-backlog 511
+    timeout 0
+    tcp-keepalive 300
+    daemonize no
+    supervised no
+
+    # General
+    pidfile /var/run/redis_6379.pid
+    loglevel notice
+    logfile ""
+    databases 16
+    always-show-logo yes
+
+    # Snapshotting
+    save 900 1
+    save 300 10
+    save 60 10000
+    stop-writes-on-bgsave-error yes
+    rdbcompression yes
+    rdbchecksum yes
+    dbfilename dump.rdb
+    dir /data
+
+    # Replication
+    replica-serve-stale-data yes
+    replica-read-only yes
+    repl-diskless-sync no
+    repl-diskless-sync-delay 5
+    repl-ping-replica-period 10
+    repl-timeout 60
+    repl-disable-tcp-nodelay no
+    repl-backlog-size 1mb
+    repl-backlog-ttl 3600
+
+    # Security
+    requirepass redis_password
+    maxclients 10000
+
+    # Memory
+    maxmemory 2gb
+    maxmemory-policy allkeys-lru
+    maxmemory-samples 5
+
+    # Append only file
+    appendonly yes
+    appendfilename "appendonly.aof"
+    appendfsync everysec
+    no-appendfsync-on-rewrite no
+    auto-aof-rewrite-percentage 100
+    auto-aof-rewrite-min-size 64mb
+    aof-load-truncated yes
+    aof-use-rdb-preamble yes
+
+    # Cluster (if enabled)
+    # cluster-enabled yes
+    # cluster-config-file nodes.conf
+    # cluster-node-timeout 5000
+    # cluster-announce-ip $(POD_IP)
+    # cluster-announce-port 6379
+    # cluster-announce-bus-port 16379
+
+    # Lua scripting
+    lua-time-limit 5000
+
+    # Slow log
+    slowlog-log-slower-than 10000
+    slowlog-max-len 128
+
+    # Latency monitoring
+    latency-monitor-threshold 100
+
+    # Stream
+    stream-node-max-bytes 4096
+    stream-node-max-entries 100000
+
+    # Client output buffer limits
+    client-output-buffer-limit normal 0 0 0
+    client-output-buffer-limit replica 256mb 64mb 60
+    client-output-buffer-limit pubsub 32mb 8mb 60
+
+    # Client query buffer limit
+    client-query-buffer-limit 1gb
+
+---
+# Redis Secrets
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-secret
+  namespace: manus-ai-attack
+  labels:
+    app: redis
+    component: secret
+type: Opaque
+data:
+  # Base64 encoded values
+  redis-password: cmVkaXNfcGFzc3dvcmQ=  # redis_password
+
+---
+# Redis StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: manus-ai-attack
+  labels:
+    app: redis
+    component: cache
+spec:
+  serviceName: redis
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis
+      component: cache
+  template:
+    metadata:
+      labels:
+        app: redis
+        component: cache
+    spec:
+      serviceAccountName: redis-sa
+      securityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 999
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        command:
+        - redis-server
+        - /etc/redis/redis.conf
+        - --appendonly
+        - yes
+        - --cluster-enabled
+        - yes
+        - --cluster-config-file
+        - /data/nodes.conf
+        - --cluster-node-timeout
+        - "5000"
+        - --cluster-announce-ip
+        - "$(POD_IP)"
+        - --cluster-announce-port
+        - "6379"
+        - --cluster-announce-bus-port
+        - "16379"
+        ports:
+        - containerPort: 6379
+          name: redis
+        - containerPort: 16379
+          name: redis-cluster
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: redis-password
+        volumeMounts:
+        - name: redis-storage
+          mountPath: /data
+        - name: redis-config
+          mountPath: /etc/redis
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - -a
+            - "$(REDIS_PASSWORD)"
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - -a
+            - "$(REDIS_PASSWORD)"
+            - ping
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "fast-ssd"
+      resources:
+        requests:
+          storage: 50Gi
+      volumeMode: Filesystem
+
+---
+# Redis Headless Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: manus-ai-attack
+  labels:
+    app: redis
+    component: service
+spec:
+  clusterIP: None
+  selector:
+    app: redis
+    component: cache
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: redis
+  - port: 16379
+    targetPort: 16379
+    name: redis-cluster
+
+---
+# Redis Service (for client access)
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: manus-ai-attack
+  labels:
+    app: redis
+    component: service
+    type: client
+spec:
+  type: ClusterIP
+  selector:
+    app: redis
+    component: cache
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: redis
+  sessionAffinity: ClientIP
+
+---
+# Redis Sentinel (for high availability)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-sentinel
+  namespace: manus-ai-attack
+  labels:
+    app: redis-sentinel
+    component: sentinel
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis-sentinel
+      component: sentinel
+  template:
+    metadata:
+      labels:
+        app: redis-sentinel
+        component: sentinel
+    spec:
+      serviceAccountName: redis-sa
+      containers:
+      - name: redis-sentinel
+        image: redis:7-alpine
+        command:
+        - redis-sentinel
+        - /etc/redis/sentinel.conf
+        ports:
+        - containerPort: 26379
+          name: sentinel
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: redis-password
+        volumeMounts:
+        - name: redis-config
+          mountPath: /etc/redis
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-sentinel-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "fast-ssd"
+      resources:
+        requests:
+          storage: 10Gi
+
+---
+# Redis Sentinel Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-sentinel-service
+  namespace: manus-ai-attack
+  labels:
+    app: redis-sentinel
+    component: service
+spec:
+  type: ClusterIP
+  selector:
+    app: redis-sentinel
+    component: sentinel
+  ports:
+  - port: 26379
+    targetPort: 26379
+    name: sentinel
+
+---
+# Service Account for Redis
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: redis-sa
+  namespace: manus-ai-attack
+  labels:
+    app: redis
+    component: service-account
+
+---
+# Role for Redis
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: manus-ai-attack
+  name: redis-role
+  labels:
+    app: redis
+    component: role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+
+---
+# Role Binding for Redis
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: redis-rolebinding
+  namespace: manus-ai-attack
+  labels:
+    app: redis
+    component: role-binding
+subjects:
+- kind: ServiceAccount
+  name: redis-sa
+  namespace: manus-ai-attack
+roleRef:
+  kind: Role
+  name: redis-role
+  apiGroup: rbac.authorization.k8s.io

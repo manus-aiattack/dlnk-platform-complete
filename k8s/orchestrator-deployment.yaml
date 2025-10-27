@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlnk-orchestrator
+  namespace: dlnk-predator
+  labels:
+    app: dlnk-orchestrator
+    component: core
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dlnk-orchestrator
+  template:
+    metadata:
+      labels:
+        app: dlnk-orchestrator
+        component: core
+    spec:
+      containers:
+      - name: orchestrator
+        image: dlnk-predator/orchestrator:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8001
+          name: http
+          protocol: TCP
+        env:
+        - name: REDIS_HOST
+          value: "redis-cluster"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: POSTGRES_HOST
+          value: "postgres-service"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_DB
+          value: "dlnk_predator"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: LLM_MODEL_PATH
+          value: "/models/llm"
+        - name: ORCHESTRATOR_MODE
+          value: "distributed"
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+        - name: llm-models
+          mountPath: /models
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8001
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      volumes:
+      - name: workspace
+        persistentVolumeClaim:
+          claimName: dlnk-workspace-pvc
+      - name: llm-models
+        persistentVolumeClaim:
+          claimName: llm-models-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orchestrator-service
+  namespace: dlnk-predator
+spec:
+  selector:
+    app: dlnk-orchestrator
+  ports:
+  - protocol: TCP
+    port: 8001
+    targetPort: 8001
+  type: ClusterIP
+

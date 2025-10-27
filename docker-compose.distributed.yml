@@ -1,0 +1,258 @@
+version: '3.8'
+
+services:
+  # Redis Cluster for context management and pub/sub
+  redis:
+    image: redis:7-alpine
+    container_name: dlnk-redis-cluster
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 2gb --maxmemory-policy allkeys-lru
+    networks:
+      - dlnk-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL for persistent storage
+  postgres:
+    image: postgres:15-alpine
+    container_name: dlnk-postgres
+    environment:
+      POSTGRES_DB: dlnk_dlnk
+      POSTGRES_USER: dlnk_user
+      POSTGRES_PASSWORD: dlnk_password_change_me
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dlnk-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dlnk_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Orchestrator Service
+  orchestrator:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.orchestrator
+    container_name: dlnk-orchestrator
+    ports:
+      - "8001:8001"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=dlnk_dlnk
+      - POSTGRES_USER=dlnk_user
+      - POSTGRES_PASSWORD=dlnk_password_change_me
+      - ORCHESTRATOR_MODE=distributed
+    volumes:
+      - ./workspace:/workspace
+      - ./core:/app/core
+      - ./agents:/app/agents
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+  # Agent Manager Service
+  agent-manager:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent-manager
+    container_name: dlnk-agent-manager
+    ports:
+      - "8002:8002"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MAX_CONCURRENT_AGENTS=100
+      - AGENT_TIMEOUT=3600
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - redis
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+
+  # AI Planner Service (requires GPU)
+  ai-planner:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ai-planner
+    container_name: dlnk-ai-planner
+    ports:
+      - "8003:8003"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=dlnk_dlnk
+      - POSTGRES_USER=dlnk_user
+      - POSTGRES_PASSWORD=dlnk_password_change_me
+      - LLM_MODEL_PATH=/models/llm/mistral-7b-instruct
+      - LLM_CONTEXT_LENGTH=8192
+      - LLM_TEMPERATURE=0.7
+      - RL_MODEL_PATH=/models/rl/attack_optimizer
+      - RL_ENGINE_ENABLED=true
+    volumes:
+      - llm-models:/models
+      - knowledge-base:/knowledge
+      - ./services:/app/services
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '8'
+          memory: 16G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # Threat Intelligence Service
+  threat-intel:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.threat-intel
+    container_name: dlnk-threat-intel
+    ports:
+      - "8006:8006"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+
+  # License Management Service
+  license-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.license
+    container_name: dlnk-license
+    ports:
+      - "8007:8007"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LICENSE_SECRET_KEY=${LICENSE_SECRET_KEY:-change_me_in_production}
+    depends_on:
+      - redis
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+
+  # API Gateway with Load Balancing
+  api-gateway:
+    image: nginx:alpine
+    container_name: dlnk-api-gateway
+    ports:
+      - "8000:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - orchestrator
+      - agent-manager
+      - ai-planner
+      - threat-intel
+      - license-service
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+
+  # Prometheus for monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: dlnk-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: dlnk-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin_change_me
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./config/grafana:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+    networks:
+      - dlnk-network
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+  postgres-data:
+  llm-models:
+  knowledge-base:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  dlnk-network:
+    driver: bridge
+

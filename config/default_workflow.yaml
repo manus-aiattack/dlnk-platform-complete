@@ -1,0 +1,60 @@
+workflow_name: "Default Attack Workflow"
+description: "A standard sequence of attack phases and agents with conditional and parallel execution."
+
+phases:
+  - name: "RECONNAISSANCE"
+    agents:
+      - name: "ReconnaissanceMaster"
+        directive: "Perform initial reconnaissance."
+        context: {}
+    on_success: "TriageAndResearch"
+    on_failure: "REPORTING"
+
+  - name: "TriageAndResearch"
+    parallel_agents:
+      - name: "TriageAgent"
+        directive: "Analyze reconnaissance data and prioritize findings."
+        context: {}
+      - name: "VulnerabilityResearcher"
+        directive: "Search for known vulnerabilities based on identified technologies."
+        context: {}
+    on_success: "INITIAL_FOOTHOLD"
+    on_failure: "REPORTING"
+
+  - name: "INITIAL_FOOTHOLD"
+    agents:
+      - name: "ExploitAgent"
+        directive: "Attempt to exploit identified vulnerabilities."
+        context: {}
+    on_success: "ESCALATION"
+    on_failure: "TryMetasploit"
+
+  - name: "TryMetasploit"
+    agents:
+      - name: "MetasploitAgent"
+        directive: "Utilize Metasploit for exploitation if applicable."
+        context: {}
+    on_success: "ESCALATION"
+    on_failure: "REPORTING"
+
+  - name: "ESCALATION"
+    agents:
+      - name: "PostExAgent"
+        directive: "Perform post-exploitation enumeration."
+        context: {}
+    on_success: "PrivilegeEscalation"
+    on_failure: "REPORTING"
+
+  - name: "PrivilegeEscalation"
+    agents:
+      - name: "PrivilegeEscalationAgent"
+        directive: "Attempt privilege escalation."
+        context: {}
+    on_success: "REPORTING"
+    on_failure: "REPORTING"
+
+  - name: "REPORTING"
+    agents:
+      - name: "ReportingAgent"
+        directive: "Generate final attack report."
+        context: {}

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Machine Access - Sandbox Control</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #00ff00;
+            color: #000;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .status {
+            font-size: 12px;
+        }
+        
+        .terminal {
+            padding: 15px;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+        
+        .output-line {
+            margin-bottom: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .output-line.command {
+            color: #ffff00;
+        }
+        
+        .output-line.error {
+            color: #ff0000;
+        }
+        
+        .output-line.success {
+            color: #00ff00;
+        }
+        
+        .input-area {
+            padding: 10px 15px;
+            background: #0a0a0a;
+            border-top: 1px solid #00ff00;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .prompt {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        #commandInput {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .controls {
+            padding: 10px 15px;
+            background: #0a0a0a;
+            border-top: 1px solid #00ff00;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 5px 15px;
+            background: #00ff00;
+            color: #000;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background: #00cc00;
+        }
+        
+        .btn.danger {
+            background: #ff0000;
+            color: #fff;
+        }
+        
+        .btn.danger:hover {
+            background: #cc0000;
+        }
+        
+        .info-panel {
+            padding: 15px;
+            background: #0a0a0a;
+            border-top: 1px solid #00ff00;
+            font-size: 12px;
+        }
+        
+        .info-item {
+            margin-bottom: 5px;
+        }
+        
+        .info-label {
+            color: #ffff00;
+            font-weight: bold;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span>🖥️ HOST MACHINE ACCESS - SANDBOX CONTROL</span>
+            <span class="status" id="status">● CONNECTED</span>
+        </div>
+        
+        <div class="terminal" id="terminal">
+            <div class="output-line success">╔═══════════════════════════════════════════════════════════╗</div>
+            <div class="output-line success">║   HOST MACHINE ACCESS TERMINAL v1.0                      ║</div>
+            <div class="output-line success">║   Direct access to host system for sandbox management    ║</div>
+            <div class="output-line success">╚═══════════════════════════════════════════════════════════╝</div>
+            <div class="output-line"></div>
+            <div class="output-line">Type 'help' for available commands</div>
+            <div class="output-line">Type 'info' for system information</div>
+            <div class="output-line"></div>
+        </div>
+        
+        <div class="input-area">
+            <span class="prompt">root@host:~#</span>
+            <input 
+                type="text" 
+                id="commandInput" 
+                placeholder="Enter command..."
+                autocomplete="off"
+                spellcheck="false"
+            >
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="executeQuickCommand('ps aux | grep python')">Show Processes</button>
+            <button class="btn" onclick="executeQuickCommand('df -h')">Disk Usage</button>
+            <button class="btn" onclick="executeQuickCommand('free -h')">Memory</button>
+            <button class="btn" onclick="executeQuickCommand('netstat -tulpn')">Network</button>
+            <button class="btn" onclick="executeQuickCommand('docker ps -a')">Docker Status</button>
+            <button class="btn danger" onclick="restartSandbox()">Restart Sandbox</button>
+            <button class="btn" onclick="clearTerminal()">Clear</button>
+        </div>
+        
+        <div class="info-panel">
+            <div class="info-item">
+                <span class="info-label">Sandbox Path:</span> /home/ubuntu/aiprojectattack
+            </div>
+            <div class="info-item">
+                <span class="info-label">API Endpoint:</span> <span id="apiEndpoint">-</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Last Command:</span> <span id="lastCommand">-</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://8000-i3ahfavoia7c7k1dxwwpn-567d442b.manus-asia.computer';
+        const terminal = document.getElementById('terminal');
+        const commandInput = document.getElementById('commandInput');
+        
+        // Update API endpoint display
+        document.getElementById('apiEndpoint').textContent = API_BASE;
+        
+        // Command history
+        let commandHistory = [];
+        let historyIndex = -1;
+        
+        // Execute command
+        async function executeCommand(command) {
+            if (!command.trim()) return;
+            
+            // Add to history
+            commandHistory.push(command);
+            historyIndex = commandHistory.length;
+            
+            // Display command
+            addOutput(`root@host:~# ${command}`, 'command');
+            document.getElementById('lastCommand').textContent = command;
+            
+            // Handle built-in commands
+            if (command === 'help') {
+                showHelp();
+                return;
+            }
+            
+            if (command === 'info') {
+                showInfo();
+                return;
+            }
+            
+            if (command === 'clear') {
+                clearTerminal();
+                return;
+            }
+            
+            // Execute via API
+            try {
+                const response = await fetch(`${API_BASE}/api/vanchin/command/execute`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        command: command,
+                        timeout: 30
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    if (data.stdout) {
+                        addOutput(data.stdout, 'success');
+                    }
+                    if (data.stderr) {
+                        addOutput(data.stderr, 'error');
+                    }
+                    if (!data.stdout && !data.stderr) {
+                        addOutput('[Command executed successfully - no output]', 'success');
+                    }
+                } else {
+                    addOutput(`Error (exit code ${data.returncode}):`, 'error');
+                    if (data.stderr) {
+                        addOutput(data.stderr, 'error');
+                    }
+                }
+            } catch (error) {
+                addOutput(`Connection error: ${error.message}`, 'error');
+            }
+            
+            addOutput(''); // Empty line
+        }
+        
+        // Add output to terminal
+        function addOutput(text, type = '') {
+            const line = document.createElement('div');
+            line.className = `output-line ${type}`;
+            line.textContent = text;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        // Show help
+        function showHelp() {
+            addOutput('═══════════════════════════════════════', 'success');
+            addOutput('AVAILABLE COMMANDS:', 'success');
+            addOutput('═══════════════════════════════════════', 'success');
+            addOutput('  help              - Show this help message');
+            addOutput('  info              - Show system information');
+            addOutput('  clear             - Clear terminal');
+            addOutput('');
+            addOutput('SANDBOX MANAGEMENT:', 'success');
+            addOutput('  ps aux            - Show all processes');
+            addOutput('  kill <pid>        - Kill process by PID');
+            addOutput('  docker ps         - Show Docker containers');
+            addOutput('  docker restart    - Restart Docker container');
+            addOutput('');
+            addOutput('SYSTEM MONITORING:', 'success');
+            addOutput('  df -h             - Disk usage');
+            addOutput('  free -h           - Memory usage');
+            addOutput('  netstat -tulpn    - Network connections');
+            addOutput('  tail -f <file>    - Monitor log file');
+            addOutput('');
+            addOutput('FILE OPERATIONS:', 'success');
+            addOutput('  ls -la            - List files');
+            addOutput('  cat <file>        - View file content');
+            addOutput('  nano <file>       - Edit file');
+            addOutput('');
+            addOutput('Any standard Linux command can be executed', 'success');
+            addOutput('');
+        }
+        
+        // Show system info
+        async function showInfo() {
+            addOutput('═══════════════════════════════════════', 'success');
+            addOutput('SYSTEM INFORMATION:', 'success');
+            addOutput('═══════════════════════════════════════', 'success');
+            
+            try {
+                // Get status from API
+                const response = await fetch(`${API_BASE}/api/vanchin/status`);
+                const data = await response.json();
+                
+                addOutput(`Version: ${data.version}`);
+                addOutput(`API Provider: ${data.api_provider}`);
+                addOutput(`Sandbox Path: ${data.sandbox_path}`);
+                addOutput(`Total API Clients: ${data.api_clients.total_clients}`);
+                addOutput(`Healthy Clients: ${data.api_clients.healthy_clients}`);
+                addOutput(`Current Client: ${data.api_clients.current_client}`);
+                addOutput('');
+                addOutput('Capabilities:', 'success');
+                data.capabilities.forEach(cap => {
+                    addOutput(`  ✓ ${cap}`);
+                });
+            } catch (error) {
+                addOutput(`Error fetching system info: ${error.message}`, 'error');
+            }
+            
+            addOutput('');
+        }
+        
+        // Clear terminal
+        function clearTerminal() {
+            terminal.innerHTML = '';
+        }
+        
+        // Execute quick command
+        function executeQuickCommand(command) {
+            commandInput.value = command;
+            executeCommand(command);
+            commandInput.value = '';
+        }
+        
+        // Restart sandbox
+        async function restartSandbox() {
+            if (!confirm('Are you sure you want to restart the sandbox? This will kill all running processes.')) {
+                return;
+            }
+            
+            addOutput('Restarting sandbox...', 'command');
+            
+            try {
+                await executeCommand('pkill -f "python.*integrated_server"');
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                await executeCommand('cd /home/ubuntu/aiprojectattack && python3.11 integrated_server.py > /tmp/server.log 2>&1 &');
+                addOutput('Sandbox restarted successfully', 'success');
+            } catch (error) {
+                addOutput(`Error restarting sandbox: ${error.message}`, 'error');
+            }
+        }
+        
+        // Handle Enter key
+        commandInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value;
+                executeCommand(command);
+                this.value = '';
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    this.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = commandHistory.length;
+                    this.value = '';
+                }
+            }
+        });
+        
+        // Auto-focus input
+        commandInput.focus();
+        document.addEventListener('click', () => commandInput.focus());
+    </script>
+</body>
+</html>
+

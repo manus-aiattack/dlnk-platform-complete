@@ -1,0 +1,64 @@
+# Mobile Application Compromise Workflow
+# Android and iOS app testing
+
+name: "Mobile Application Compromise"
+description: "Complete mobile app testing - static to dynamic analysis"
+version: "1.0.0"
+author: "dLNk HACK"
+target_type: "mobile"
+estimated_duration: 45
+success_rate: 0.75
+
+requirements:
+  app_file: required  # APK or IPA
+  platform: required  # android or ios
+
+phases:
+  - name: "static_analysis"
+    description: "Static analysis of mobile app"
+    agents:
+      - name: "APKAnalysisAgent"
+        condition: "platform == 'android'"
+        outputs:
+          - manifest
+          - permissions
+          - vulnerabilities
+      - name: "IPAAnalysisAgent"
+        condition: "platform == 'ios'"
+        outputs:
+          - info_plist
+          - entitlements
+          - vulnerabilities
+
+  - name: "dynamic_analysis"
+    description: "Runtime analysis"
+    agents:
+      - name: "AndroidDynamicAnalysisAgent"
+        condition: "platform == 'android'"
+      - name: "AndroidSSLPinningBypassAgent"
+        condition: "platform == 'android'"
+      - name: "iOSDynamicAnalysisAgent"
+        condition: "platform == 'ios'"
+      - name: "iOSSSLPinningBypassAgent"
+        condition: "platform == 'ios'"
+
+  - name: "exploitation"
+    description: "Exploit vulnerabilities"
+    agents:
+      - name: "AndroidIntentExploitAgent"
+        condition: "platform == 'android'"
+      - name: "AndroidRootDetectionBypassAgent"
+        condition: "platform == 'android'"
+      - name: "iOSJailbreakDetectionBypassAgent"
+        condition: "platform == 'ios'"
+
+  - name: "data_extraction"
+    description: "Extract sensitive data"
+    agents:
+      - name: "AndroidDataExtractionAgent"
+        condition: "platform == 'android'"
+      - name: "AdvancedDataExfiltrationAgent"
+
+success_criteria:
+  minimum_requirements:
+    - "vulnerabilities is not empty"

@@ -1,0 +1,328 @@
+# Full Auto Attack Workflow
+# Workflow อัตโนมัติ 100% สำหรับการโจมตีแบบครบวงจร
+# จาก Reconnaissance → Exploitation → Post-Exploitation
+
+name: "Full Auto Attack"
+description: "โจมตีอัตโนมัติแบบครบวงจร 100%"
+version: "1.0"
+
+phases:
+  # ===== PHASE 1: RECONNAISSANCE =====
+  - name: "reconnaissance"
+    description: "รวบรวมข้อมูลเป้าหมาย"
+    parallel: false
+    agents:
+      - agent: "NmapScanAgent"
+        directive: "สแกนพอร์ตและบริการทั้งหมด"
+        config:
+          scan_type: "aggressive"
+          ports: "1-65535"
+          scripts: "default,vuln"
+      
+      - agent: "TechnologyProfilerAgent"
+        directive: "ตรวจสอบเทคโนโลยีที่ใช้"
+        config:
+          deep_scan: true
+      
+      - agent: "WAFDetectorAgent"
+        directive: "ตรวจจับ WAF และ Security Controls"
+        config:
+          bypass_mode: true
+      
+      - agent: "WebCrawlerAgent"
+        directive: "รวบรวม URLs และ Endpoints"
+        config:
+          max_depth: 5
+          follow_redirects: true
+      
+      - agent: "APISchemaParserAgent"
+        directive: "วิเคราะห์ API Schema"
+        config:
+          auto_discover: true
+
+  # ===== PHASE 2: VULNERABILITY SCANNING =====
+  - name: "vulnerability_scanning"
+    description: "สแกนหาช่องโหว่ทุกประเภท"
+    parallel: true
+    agents:
+      - agent: "SQLInjectionExploiterAgent"
+        directive: "สแกนหาช่องโหว่ SQL Injection"
+        config:
+          aggressive: true
+          auto_exploit: false  # ยังไม่ exploit ในขั้นนี้
+      
+      - agent: "XSSAgent"
+        directive: "สแกนหาช่องโหว่ XSS"
+        config:
+          types: ["reflected", "stored", "dom"]
+          auto_exploit: false
+      
+      - agent: "SSRFAgentWeaponized"
+        directive: "สแกนหาช่องโหว่ SSRF"
+        config:
+          callback_server: "auto"
+          auto_exploit: false
+      
+      - agent: "IDORAgent"
+        directive: "สแกนหาช่องโหว่ IDOR"
+        config:
+          max_enum_tests: 20
+          auto_exploit: false
+      
+      - agent: "CommandInjectionExploiter"
+        directive: "สแกนหาช่องโหว่ Command Injection"
+        config:
+          payloads: "all"
+          auto_exploit: false
+      
+      - agent: "DeserializationExploiterAgent"
+        directive: "สแกนหาช่องโหว่ Deserialization"
+        config:
+          frameworks: ["java", "php", "python", ".net"]
+          auto_exploit: false
+      
+      - agent: "FileUploadAgent"
+        directive: "สแกนหาช่องโหว่ File Upload"
+        config:
+          bypass_techniques: "all"
+          auto_exploit: false
+      
+      - agent: "NucleiAgent"
+        directive: "สแกนด้วย Nuclei Templates"
+        config:
+          severity: ["critical", "high", "medium"]
+          auto_exploit: false
+
+  # ===== PHASE 3: VULNERABILITY ANALYSIS =====
+  - name: "vulnerability_analysis"
+    description: "วิเคราะห์และจัดลำดับความสำคัญของช่องโหว่"
+    parallel: false
+    agents:
+      - agent: "VulnerabilityPrioritizerAgent"
+        directive: "จัดลำดับความสำคัญของช่องโหว่"
+        config:
+          criteria: ["exploitability", "impact", "ease"]
+          auto_select_targets: true
+      
+      - agent: "ExploitHelperAgent"
+        directive: "ค้นหา Exploit ที่พร้อมใช้"
+        config:
+          sources: ["exploitdb", "metasploit", "github"]
+          auto_download: true
+
+  # ===== PHASE 4: EXPLOITATION =====
+  - name: "exploitation"
+    description: "ใช้ประโยชน์จากช่องโหว่ตามลำดับความสำคัญ"
+    parallel: false
+    agents:
+      # ลอง RCE ก่อน (ความสำคัญสูงสุด)
+      - agent: "CommandInjectionExploiter"
+        directive: "ใช้ประโยชน์จาก Command Injection"
+        config:
+          auto_exploit: true
+          get_shell: true
+          shell_type: "reverse"
+      
+      - agent: "DeserializationExploiterAgent"
+        directive: "ใช้ประโยชน์จาก Deserialization"
+        config:
+          auto_exploit: true
+          payload_type: "reverse_shell"
+      
+      # ลอง SQL Injection
+      - agent: "SQLMapAgent"
+        directive: "ใช้ประโยชน์จาก SQL Injection"
+        config:
+          auto_exploit: true
+          risk: 3
+          level: 5
+          os_shell: true
+          sql_shell: true
+      
+      # ลอง File Upload
+      - agent: "FileUploadExploiterAgent"
+        directive: "อัปโหลด Web Shell"
+        config:
+          auto_exploit: true
+          shell_types: ["php", "jsp", "aspx"]
+          obfuscation: true
+      
+      # ถ้ายังไม่ได้ Shell ลอง SSRF
+      - agent: "SSRFAgentWeaponized"
+        directive: "ใช้ประโยชน์จาก SSRF"
+        config:
+          auto_exploit: true
+          target_internal: true
+          cloud_metadata: true
+      
+      # ใช้ Metasploit ถ้ามี Exploit ที่เหมาะสม
+      - agent: "MetasploitAgent"
+        directive: "ใช้ Metasploit Exploits"
+        config:
+          auto_exploit: true
+          auto_select_exploit: true
+          payload: "reverse_tcp"
+
+  # ===== PHASE 5: SHELL UPGRADE =====
+  - name: "shell_upgrade"
+    description: "ยกระดับ Shell ให้เป็น Interactive"
+    parallel: false
+    condition: "has_shell"  # รันเฉพาะเมื่อได้ Shell แล้ว
+    agents:
+      - agent: "ShellUpgraderAgent"
+        directive: "ยกระดับ Shell เป็น Interactive"
+        config:
+          methods: ["python", "script", "socat"]
+          auto_stabilize: true
+      
+      - agent: "ShellManagerAgent"
+        directive: "จัดการและบันทึก Shell"
+        config:
+          persistent: true
+          backup_shells: 3
+
+  # ===== PHASE 6: PRIVILEGE ESCALATION =====
+  - name: "privilege_escalation"
+    description: "ยกระดับสิทธิ์เป็น root/SYSTEM"
+    parallel: false
+    condition: "has_shell"
+    agents:
+      - agent: "PrivilegeEscalationAgent"
+        directive: "สแกนหาช่องทางยกระดับสิทธิ์"
+        config:
+          methods: ["kernel", "suid", "sudo", "cron", "services"]
+          auto_exploit: false
+      
+      - agent: "PrivilegeEscalationExploiter"
+        directive: "ใช้ประโยชน์จากช่องทางที่พบ"
+        config:
+          auto_exploit: true
+          verify_root: true
+          fallback_methods: true
+
+  # ===== PHASE 7: PERSISTENCE =====
+  - name: "persistence"
+    description: "สร้าง Backdoor เพื่อเข้าถึงในอนาคต"
+    parallel: true
+    condition: "has_root"
+    agents:
+      - agent: "PersistenceAgent"
+        directive: "สร้าง Backdoor หลายวิธี"
+        config:
+          methods: ["ssh_key", "cron", "service", "user_account"]
+          stealth_mode: true
+      
+      - agent: "LivingOffTheLandAgent"
+        directive: "ใช้เครื่องมือของระบบสร้าง Backdoor"
+        config:
+          techniques: ["scheduled_tasks", "wmi", "registry"]
+          fileless: true
+
+  # ===== PHASE 8: LATERAL MOVEMENT =====
+  - name: "lateral_movement"
+    description: "เคลื่อนที่ไปยังเครื่องอื่นในเครือข่าย"
+    parallel: false
+    condition: "has_root"
+    agents:
+      - agent: "InternalNetworkMapperAgent"
+        directive: "สแกนเครือข่ายภายใน"
+        config:
+          scan_type: "stealth"
+          discover_services: true
+      
+      - agent: "CredentialHarvesterAgent"
+        directive: "รวบรวม Credentials"
+        config:
+          sources: ["memory", "files", "registry", "database"]
+          auto_crack: true
+      
+      - agent: "LateralMovementAgent"
+        directive: "เคลื่อนที่ไปยังเครื่องอื่น"
+        config:
+          methods: ["psexec", "wmi", "ssh", "rdp"]
+          auto_exploit: true
+
+  # ===== PHASE 9: DATA EXFILTRATION =====
+  - name: "data_exfiltration"
+    description: "ดึงข้อมูลสำคัญออกมา"
+    parallel: true
+    condition: "has_root"
+    agents:
+      - agent: "DataHarvesterAgent"
+        directive: "ค้นหาข้อมูลสำคัญ"
+        config:
+          targets: ["passwords", "keys", "configs", "databases", "documents"]
+          search_depth: 5
+      
+      - agent: "DatabaseDumperAgent"
+        directive: "Dump ฐานข้อมูล"
+        config:
+          databases: ["mysql", "postgresql", "mssql", "mongodb"]
+          compress: true
+      
+      - agent: "DataExfiltrationAgent"
+        directive: "ส่งข้อมูลกลับมา"
+        config:
+          methods: ["http", "dns", "icmp"]
+          encryption: true
+          split_files: true
+
+  # ===== PHASE 10: COVERING TRACKS =====
+  - name: "covering_tracks"
+    description: "ลบร่องรอย"
+    parallel: false
+    condition: "has_root"
+    agents:
+      - agent: "LogCleanerAgent"
+        directive: "ลบ Logs"
+        config:
+          targets: ["auth", "syslog", "apache", "nginx", "application"]
+          selective: true  # ลบเฉพาะส่วนที่เกี่ยวข้อง
+      
+      - agent: "AntiForensicsAgent"
+        directive: "ลบหลักฐาน"
+        config:
+          methods: ["timestomp", "secure_delete", "memory_cleanup"]
+          thorough: true
+
+  # ===== PHASE 11: REPORTING =====
+  - name: "reporting"
+    description: "สร้างรายงานผลการโจมตี"
+    parallel: false
+    agents:
+      - agent: "ReportingAgent"
+        directive: "สร้างรายงานแบบละเอียด"
+        config:
+          format: ["html", "pdf", "json"]
+          include_screenshots: true
+          include_evidence: true
+          severity_analysis: true
+      
+      - agent: "ThreatAssessorReporter"
+        directive: "ประเมินความเสี่ยง"
+        config:
+          risk_matrix: true
+          recommendations: true
+
+# Global Configuration
+config:
+  timeout_per_agent: 600  # 10 นาที
+  max_retries: 3
+  continue_on_failure: true  # ทำต่อแม้ agent บางตัวล้มเหลว
+  auto_adapt: true  # ปรับ strategy อัตโนมัติตามผลลัพธ์
+  stealth_mode: false  # ปิด stealth เพื่อความเร็ว
+  aggressive_mode: true  # เปิดโหมดรุนแรง
+  
+  # Callback Configuration
+  callback:
+    host: "auto"  # ใช้ IP ของเครื่องโจมตีอัตโนมัติ
+    port: 4444
+    protocol: "tcp"
+  
+  # Output Configuration
+  output:
+    directory: "workspace/loot"
+    organize_by_target: true
+    compress: true
+    encrypt: false
+

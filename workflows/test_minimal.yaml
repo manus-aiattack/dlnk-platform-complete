@@ -1,0 +1,93 @@
+# Minimal Test Workflow
+# Tests basic workflow execution with 3 simple agents
+
+name: "Minimal Test Workflow"
+description: "Simple 3-agent workflow to test basic functionality"
+version: "1.0.0"
+target_type: "web_application"
+estimated_duration: 5  # minutes
+
+# Global configuration
+config:
+  stealth_mode: false
+  max_retries: 1
+  timeout_per_phase: 300  # 5 minutes
+  stop_on_critical_failure: true
+
+# Target requirements
+requirements:
+  target_url: required
+
+# Attack phases
+phases:
+  # Phase 1: Port Scanning
+  - name: "reconnaissance"
+    description: "Basic port scanning"
+    agents:
+      - name: "PortScanAgent"
+        config:
+          ports: "80,443,8080"
+          timeout: 30
+        outputs:
+          - open_ports
+          - services
+    
+    success_criteria:
+      - "open_ports is not empty"
+    
+    on_failure:
+      action: "stop"
+
+  # Phase 2: Vulnerability Scanning
+  - name: "scanning"
+    description: "Basic vulnerability scan"
+    condition: "phase.reconnaissance.success == true"
+    
+    agents:
+      - name: "VulnerabilityScanAgent"
+        config:
+          scan_depth: "basic"
+          quick_scan: true
+        outputs:
+          - vulnerabilities
+          - findings
+    
+    success_criteria:
+      - "true"  # Always succeed even if no vulns found
+    
+    on_failure:
+      action: "continue"
+
+  # Phase 3: Reporting
+  - name: "reporting"
+    description: "Generate report"
+    
+    agents:
+      - name: "ReportingAgent"
+        config:
+          format: "json"
+          include_details: true
+        outputs:
+          - report_path
+          - summary
+    
+    success_criteria:
+      - "report_path is not empty"
+    
+    on_failure:
+      action: "continue"
+
+# Final outputs
+outputs:
+  - name: "scan_results"
+    from: "reconnaissance.open_ports"
+  - name: "vulnerabilities"
+    from: "scanning.vulnerabilities"
+  - name: "final_report"
+    from: "reporting.report_path"
+
+# Success definition
+success_definition:
+  minimum_phases_completed: 1
+  required_outputs: ["scan_results"]
+

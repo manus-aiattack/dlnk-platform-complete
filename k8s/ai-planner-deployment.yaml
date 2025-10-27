@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlnk-ai-planner
+  namespace: dlnk-predator
+  labels:
+    app: dlnk-ai-planner
+    component: ai-ml
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dlnk-ai-planner
+  template:
+    metadata:
+      labels:
+        app: dlnk-ai-planner
+        component: ai-ml
+    spec:
+      containers:
+      - name: ai-planner
+        image: dlnk-predator/ai-planner:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8003
+          name: http
+          protocol: TCP
+        env:
+        - name: REDIS_HOST
+          value: "redis-cluster"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: POSTGRES_HOST
+          value: "postgres-service"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_DB
+          value: "dlnk_predator"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: LLM_MODEL_PATH
+          value: "/models/llm/mistral-7b-instruct"
+        - name: LLM_CONTEXT_LENGTH
+          value: "8192"
+        - name: LLM_TEMPERATURE
+          value: "0.7"
+        - name: LLM_MAX_TOKENS
+          value: "2048"
+        - name: KNOWLEDGE_BASE_URL
+          value: "http://knowledge-base-service:8005"
+        - name: THREAT_INTEL_URL
+          value: "http://threat-intel-service:8006"
+        - name: RL_ENGINE_ENABLED
+          value: "true"
+        - name: RL_MODEL_PATH
+          value: "/models/rl/attack_optimizer"
+        resources:
+          requests:
+            memory: "8Gi"
+            cpu: "4000m"
+            nvidia.com/gpu: "1"
+          limits:
+            memory: "16Gi"
+            cpu: "8000m"
+            nvidia.com/gpu: "1"
+        volumeMounts:
+        - name: llm-models
+          mountPath: /models
+        - name: knowledge-base
+          mountPath: /knowledge
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8003
+          initialDelaySeconds: 60
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8003
+          initialDelaySeconds: 30
+          periodSeconds: 10
+      volumes:
+      - name: llm-models
+        persistentVolumeClaim:
+          claimName: llm-models-pvc
+      - name: knowledge-base
+        persistentVolumeClaim:
+          claimName: knowledge-base-pvc
+      nodeSelector:
+        gpu: "true"
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-planner-service
+  namespace: dlnk-predator
+spec:
+  selector:
+    app: dlnk-ai-planner
+  ports:
+  - protocol: TCP
+    port: 8003
+    targetPort: 8003
+  type: ClusterIP
+

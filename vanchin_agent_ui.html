@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanchin AI Agent - Sandbox Control Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border-right: 2px solid rgba(102, 126, 234, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .sidebar-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background: #f5f5f5;
+            border: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-tab.active {
+            background: white;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+        
+        /* File Browser */
+        .file-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+        
+        .file-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .file-item.directory {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .file-icon {
+            font-size: 18px;
+        }
+        
+        .file-name {
+            flex: 1;
+            font-size: 14px;
+        }
+        
+        .file-size {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        /* Settings */
+        .settings-section {
+            margin-bottom: 20px;
+        }
+        
+        .settings-section h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Main Area */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header h1 {
+            font-size: 24px;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            word-wrap: break-word;
+        }
+        
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .message.assistant .message-content {
+            background: white;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-content pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .tool-call {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+        
+        .tool-call-name {
+            font-weight: bold;
+            color: #856404;
+        }
+        
+        .chat-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        #messageInput {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        #messageInput:focus {
+            border-color: #667eea;
+        }
+        
+        #sendButton {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        #sendButton:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+        
+        #sendButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .path-breadcrumb {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .alert {
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>🤖 Vanchin Agent</h2>
+                <p>Sandbox Control Panel</p>
+            </div>
+            
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" onclick="switchTab('files')">📁 Files</button>
+                <button class="sidebar-tab" onclick="switchTab('settings')">⚙️ Settings</button>
+            </div>
+            
+            <div class="sidebar-content">
+                <!-- Files Tab -->
+                <div id="filesTab" class="tab-content">
+                    <div class="path-breadcrumb" id="currentPath">/home/ubuntu/aiprojectattack</div>
+                    <div id="fileList"></div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="tab-content" style="display: none;">
+                    <div class="settings-section">
+                        <h3>🔑 API Configuration</h3>
+                        <div class="alert alert-success">
+                            <strong>✅ Using Vanchin AI</strong><br>
+                            This agent is powered by Vanchin AI API.<br>
+                            No API key configuration needed!
+                        </div>
+                        <div class="form-group">
+                            <label>Model</label>
+                            <input type="text" value="Vanchin AI (ep-rtt0hh)" disabled>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>🎛️ Agent Settings</h3>
+                        <div class="form-group">
+                            <label for="temperature">Temperature (0-2)</label>
+                            <input type="number" id="temperature" value="1.0" min="0" max="2" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="maxTokens">Max Tokens (Unlimited)</label>
+                            <input type="number" id="maxTokens" value="8000" min="1000" max="16000" step="1000">
+                        </div>
+                        <button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>🖥️ Host Machine Access</h3>
+                        <p style="font-size: 13px; margin-bottom: 10px; color: #666;">
+                            Direct terminal access for sandbox management and troubleshooting
+                        </p>
+                        <a href="/host" target="_blank" class="btn btn-primary" style="display: inline-block; text-decoration: none; color: white;">
+                            🔧 Open Host Terminal
+                        </a>
+                    </div>
+                    
+                    <div id="settingsAlert"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Chat Area -->
+        <div class="main-area">
+            <div class="chat-header">
+                <h1>💬 Vanchin AI Agent Chat</h1>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Agent Active</span>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div class="message-content">
+                        <strong>👋 สวัสดีครับ!</strong><br><br>
+                        ผมคือ Vanchin AI Agent ที่มีความสามารถพิเศษในการ:<br>
+                        • 📁 เข้าถึงและจัดการไฟล์ใน Sandbox<br>
+                        • 📝 อ่านและแก้ไขโค้ด<br>
+                        • 💻 รันคำสั่ง Shell<br>
+                        • 🔧 ช่วยแก้ไขปัญหาและพัฒนาโปรเจค<br><br>
+                        ลองถามผมอะไรก็ได้เลยครับ!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        placeholder="พิมพ์ข้อความของคุณที่นี่..."
+                        onkeypress="if(event.key === 'Enter') sendMessage()"
+                    >
+                    <button id="sendButton" onclick="sendMessage()">ส่ง</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://8000-i3ahfavoia7c7k1dxwwpn-567d442b.manus-asia.computer';
+        let conversationHistory = [];
+        let currentPath = '/home/ubuntu/aiprojectattack';
+        
+        // Load saved settings
+        function loadSettings() {
+            const temperature = localStorage.getItem('vanchin_temperature') || '1.0';
+            const maxTokens = localStorage.getItem('vanchin_max_tokens') || '8000';
+            
+            document.getElementById('temperature').value = temperature;
+            document.getElementById('maxTokens').value = maxTokens;
+        }
+        
+        // Save settings
+        function saveSettings() {
+            const temperature = document.getElementById('temperature').value;
+            const maxTokens = document.getElementById('maxTokens').value;
+            
+            localStorage.setItem('vanchin_temperature', temperature);
+            localStorage.setItem('vanchin_max_tokens', maxTokens);
+            
+            showAlert('settingsAlert', 'Settings saved successfully!', 'success');
+        }
+        
+        // Show alert
+        function showAlert(elementId, message, type) {
+            const alertDiv = document.getElementById(elementId);
+            alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => alertDiv.innerHTML = '', 3000);
+        }
+        
+        // Switch sidebar tab
+        function switchTab(tab) {
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('filesTab').style.display = tab === 'files' ? 'block' : 'none';
+            document.getElementById('settingsTab').style.display = tab === 'settings' ? 'block' : 'none';
+            
+            if (tab === 'files') {
+                loadFiles(currentPath);
+            }
+        }
+        
+        // Load files
+        async function loadFiles(path) {
+            try {
+                const response = await fetch(`${API_BASE}/api/vanchin/files/list`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path, recursive: false })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentPath = data.path;
+                    document.getElementById('currentPath').textContent = currentPath;
+                    
+                    const fileList = document.getElementById('fileList');
+                    fileList.innerHTML = '';
+                    
+                    // Add parent directory link
+                    if (currentPath !== '/') {
+                        const parentItem = document.createElement('div');
+                        parentItem.className = 'file-item directory';
+                        parentItem.innerHTML = '<span class="file-icon">📁</span><span class="file-name">..</span>';
+                        parentItem.onclick = () => loadFiles(currentPath.split('/').slice(0, -1).join('/') || '/');
+                        fileList.appendChild(parentItem);
+                    }
+                    
+                    // Add files and directories
+                    data.files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = `file-item ${file.type}`;
+                        
+                        const icon = file.type === 'directory' ? '📁' : '📄';
+                        const size = file.type === 'file' ? formatSize(file.size) : '';
+                        
+                        fileItem.innerHTML = `
+                            <span class="file-icon">${icon}</span>
+                            <span class="file-name">${file.name}</span>
+                            <span class="file-size">${size}</span>
+                        `;
+                        
+                        fileItem.onclick = () => {
+                            if (file.type === 'directory') {
+                                loadFiles(file.path);
+                            } else {
+                                openFile(file.path);
+                            }
+                        };
+                        
+                        fileList.appendChild(fileItem);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading files:', error);
+            }
+        }
+        
+        // Format file size
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+        
+        // Open file
+        async function openFile(path) {
+            const message = `Please show me the content of file: ${path}`;
+            document.getElementById('messageInput').value = message;
+            sendMessage();
+        }
+        
+        // Send message
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // No API key needed for Vanchin AI
+            
+            // Add user message to UI
+            addMessage('user', message);
+            input.value = '';
+            
+            // Add to conversation history
+            conversationHistory.push({ role: 'user', content: message });
+            
+            // Disable send button
+            const sendButton = document.getElementById('sendButton');
+            sendButton.disabled = true;
+            sendButton.innerHTML = '<span class="loading"></span>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/vanchin/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: conversationHistory,
+                        temperature: parseFloat(localStorage.getItem('vanchin_temperature') || '1.0'),
+                        max_tokens: parseInt(localStorage.getItem('vanchin_max_tokens') || '8000')
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Add assistant message
+                    addMessage('assistant', data.content, data.actions_taken);
+                    conversationHistory.push({ role: 'assistant', content: data.content });
+                } else {
+                    addMessage('assistant', `Error: ${data.detail || 'Unknown error'}`, null, true);
+                }
+            } catch (error) {
+                addMessage('assistant', `Error: ${error.message}`, null, true);
+            } finally {
+                sendButton.disabled = false;
+                sendButton.textContent = 'ส่ง';
+            }
+        }
+        
+        // Add message to UI
+        function addMessage(role, content, toolCalls = null, isError = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            let messageContent = content;
+            
+            // Add tool calls if present
+            if (toolCalls && toolCalls.length > 0) {
+                const toolCallsHtml = toolCalls.map(tc => `
+                    <div class="tool-call">
+                        <span class="tool-call-name">🔧 ${tc.function}</span>
+                        <pre>${JSON.stringify(tc.arguments, null, 2)}</pre>
+                    </div>
+                `).join('');
+                messageContent = toolCallsHtml + (content || '');
+            }
+            
+            // Format code blocks
+            messageContent = messageContent.replace(/```(\w+)?\n([\s\S]+?)```/g, '<pre>$2</pre>');
+            
+            messageDiv.innerHTML = `<div class="message-content ${isError ? 'error' : ''}">${messageContent}</div>`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        // Initialize
+        loadSettings();
+        loadFiles(currentPath);
+    </script>
+</body>
+</html>
+

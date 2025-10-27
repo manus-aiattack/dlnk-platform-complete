@@ -1,0 +1,14 @@
+[Unit]
+Description=dLNk Web Terminal (ttyd)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+ExecStart=/usr/bin/ttyd -p 7681 -c admin_key_001: bash
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

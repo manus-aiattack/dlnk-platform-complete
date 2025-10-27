@@ -1,0 +1,479 @@
+# Full Web Application Compromise Workflow
+# Complete attack chain from reconnaissance to data exfiltration
+# Uses 20+ agents in coordinated sequence
+
+name: "Web Application Full Compromise"
+description: "Complete attack chain for web applications - from recon to backdoor and data exfil"
+version: "1.0.0"
+author: "dLNk HACK"
+target_type: "web_application"
+estimated_duration: 120  # minutes
+success_rate: 0.75
+
+# Global configuration
+config:
+  stealth_mode: false
+  max_retries: 3
+  timeout_per_phase: 1800  # 30 minutes
+  stop_on_critical_failure: false
+  enable_evasion: true
+  enable_adaptive_planning: true
+
+# Target requirements
+requirements:
+  target_url: required
+  credentials: optional
+  api_key: optional
+
+# Attack phases
+phases:
+  # ============================================================================
+  # PHASE 1: RECONNAISSANCE
+  # ============================================================================
+  - name: "reconnaissance"
+    description: "Gather intelligence about target"
+    agents:
+      - name: "WebCrawlerAgent"
+        config:
+          max_depth: 5
+          max_pages: 1000
+          follow_external: false
+        outputs:
+          - urls
+          - forms
+          - endpoints
+      
+      - name: "TechnologyProfilerAgent"
+        depends_on: ["WebCrawlerAgent"]
+        config:
+          detect_frameworks: true
+          detect_cms: true
+          detect_server: true
+        outputs:
+          - technologies
+          - versions
+          - server_info
+      
+      - name: "WafDetectorAgent"
+        parallel: true
+        config:
+          test_payloads: true
+        outputs:
+          - waf_detected
+          - waf_type
+    
+    success_criteria:
+      - "urls is not empty"
+      - "technologies is not empty"
+    
+    on_failure:
+      action: "continue"
+      fallback_agents: ["PortScanAgent"]
+
+  # ============================================================================
+  # PHASE 2: SCANNING & ENUMERATION
+  # ============================================================================
+  - name: "scanning"
+    description: "Comprehensive vulnerability scanning"
+    condition: "phase.reconnaissance.success == true"
+    
+    agents:
+      - name: "VulnerabilityScanAgent"
+        config:
+          scan_depth: "deep"
+          check_all_endpoints: true
+        outputs:
+          - vulnerabilities
+          - severity_scores
+      
+      - name: "NucleiAgent"
+        parallel: true
+        config:
+          templates: ["cves", "vulnerabilities", "exposures"]
+          severity: ["critical", "high", "medium"]
+        outputs:
+          - nuclei_findings
+      
+      - name: "SkipfishAgent"
+        parallel: true
+        config:
+          scan_mode: "comprehensive"
+        outputs:
+          - skipfish_report
+      
+      - name: "APIFuzzerAgent"
+        condition: "endpoints contains 'api'"
+        config:
+          fuzz_parameters: true
+          fuzz_headers: true
+        outputs:
+          - api_vulnerabilities
+    
+    # WAF Bypass if detected
+    conditional_agents:
+      - condition: "waf_detected == true"
+        agent: "WAFBypassAgent"
+        config:
+          bypass_techniques: ["encoding", "chunking", "case_variation"]
+    
+    success_criteria:
+      - "vulnerabilities is not empty OR nuclei_findings is not empty"
+
+  # ============================================================================
+  # PHASE 3: VULNERABILITY MAPPING
+  # ============================================================================
+  - name: "vulnerability_mapping"
+    description: "Map and prioritize vulnerabilities"
+    
+    agents:
+      - name: "VulnerabilityMappingAgent"
+        config:
+          prioritize_by: "exploitability"
+          filter_severity: ["critical", "high"]
+        outputs:
+          - prioritized_vulns
+          - exploit_paths
+      
+      - name: "ExploitDatabaseAgent"
+        parallel: true
+        config:
+          search_cves: true
+          download_exploits: true
+        outputs:
+          - available_exploits
+
+  # ============================================================================
+  # PHASE 4: EXPLOITATION
+  # ============================================================================
+  - name: "exploitation"
+    description: "Exploit identified vulnerabilities"
+    
+    agents:
+      # SQL Injection
+      - name: "SqlmapAgent"
+        condition: "vulnerabilities contains 'sql_injection'"
+        config:
+          level: 5
+          risk: 3
+          tamper: "space2comment"
+          dump_all: false
+        outputs:
+          - sql_injection_success
+          - databases
+          - tables
+        on_success:
+          next: ["DataDumperAgent"]
+      
+      # XSS
+      - name: "XSS_Agent"
+        condition: "vulnerabilities contains 'xss'"
+        parallel: true
+        config:
+          test_stored: true
+          test_reflected: true
+          test_dom: true
+        outputs:
+          - xss_payloads
+      
+      # SSRF
+      - name: "SSRFAgent"
+        condition: "vulnerabilities contains 'ssrf'"
+        parallel: true
+        config:
+          internal_scan: true
+          cloud_metadata: true
+        outputs:
+          - ssrf_endpoints
+          - internal_services
+      
+      # Deserialization
+      - name: "DeserializationExploiterAgent"
+        condition: "vulnerabilities contains 'deserialization'"
+        parallel: true
+        outputs:
+          - deserialization_success
+      
+      # Authentication Bypass
+      - name: "Auth_Agent"
+        condition: "vulnerabilities contains 'auth_bypass'"
+        config:
+          test_jwt: true
+          test_session: true
+        outputs:
+          - auth_bypass_success
+          - admin_access
+      
+      # IDOR/BOLA
+      - name: "IDORAgent"
+        parallel: true
+        config:
+          test_all_endpoints: true
+        outputs:
+          - idor_vulns
+      
+      - name: "BOLAAgent"
+        condition: "endpoints contains 'api'"
+        parallel: true
+        outputs:
+          - bola_vulns
+      
+      # Generic Exploitation
+      - name: "ExploitAgent"
+        config:
+          use_metasploit: true
+          auto_exploit: true
+        outputs:
+          - exploit_success
+          - shell_obtained
+    
+    success_criteria:
+      - "sql_injection_success == true OR exploit_success == true OR auth_bypass_success == true"
+    
+    on_failure:
+      action: "retry"
+      max_retries: 2
+      fallback_agents: ["MetasploitAgent"]
+
+  # ============================================================================
+  # PHASE 5: POST-EXPLOITATION
+  # ============================================================================
+  - name: "post_exploitation"
+    description: "Establish foothold and deploy backdoor"
+    condition: "phase.exploitation.success == true"
+    
+    agents:
+      # Upgrade shell
+      - name: "ShellUpgraderAgent"
+        condition: "shell_obtained == true"
+        config:
+          upgrade_to: "meterpreter"
+          stabilize: true
+        outputs:
+          - stable_shell
+      
+      # Deploy backdoor
+      - name: "AdvancedBackdoorAgent"
+        config:
+          backdoor_types: ["web_shell", "reverse_shell", "persistent"]
+          obfuscate: true
+          fileless: true
+        outputs:
+          - backdoor_deployed
+          - backdoor_urls
+          - backdoor_credentials
+      
+      # Establish C2
+      - name: "AdvancedC2Agent"
+        depends_on: ["AdvancedBackdoorAgent"]
+        config:
+          c2_channels: ["http", "dns"]
+          encryption: true
+          domain_fronting: true
+        outputs:
+          - c2_established
+          - c2_endpoints
+      
+      # Internal network mapping
+      - name: "InternalNetworkMapperAgent"
+        parallel: true
+        config:
+          scan_internal: true
+          identify_targets: true
+        outputs:
+          - internal_hosts
+          - internal_services
+
+  # ============================================================================
+  # PHASE 6: PRIVILEGE ESCALATION
+  # ============================================================================
+  - name: "privilege_escalation"
+    description: "Escalate privileges to admin/root"
+    
+    agents:
+      - name: "EnhancedPrivilegeEscalationAgent"
+        config:
+          auto_exploit: true
+          techniques: ["sudo", "suid", "kernel", "service"]
+        outputs:
+          - privesc_success
+          - admin_access
+      
+      # Credential harvesting
+      - name: "CredentialHarvesterAgent"
+        parallel: true
+        config:
+          harvest_memory: true
+          harvest_files: true
+          harvest_browser: true
+        outputs:
+          - credentials
+          - tokens
+      
+      - name: "CredentialParserAgent"
+        depends_on: ["CredentialHarvesterAgent"]
+        outputs:
+          - parsed_credentials
+
+  # ============================================================================
+  # PHASE 7: LATERAL MOVEMENT (if internal network exists)
+  # ============================================================================
+  - name: "lateral_movement"
+    description: "Move to other systems in the network"
+    condition: "internal_hosts is not empty"
+    
+    agents:
+      - name: "LateralMovementAgent"
+        config:
+          use_credentials: true
+          techniques: ["ssh", "rdp", "smb"]
+        outputs:
+          - compromised_hosts
+      
+      - name: "LivingOffTheLandAgent"
+        parallel: true
+        config:
+          use_native_tools: true
+        outputs:
+          - lolbin_success
+
+  # ============================================================================
+  # PHASE 8: PERSISTENCE
+  # ============================================================================
+  - name: "persistence"
+    description: "Maintain long-term access"
+    
+    agents:
+      - name: "PersistenceAgent"
+        config:
+          mechanisms: ["cron", "systemd", "startup", "registry"]
+          stealth: true
+        outputs:
+          - persistence_established
+      
+      - name: "BotDeploymentAgent"
+        parallel: true
+        config:
+          bot_type: "advanced"
+          auto_update: true
+        outputs:
+          - bot_deployed
+
+  # ============================================================================
+  # PHASE 9: DATA EXFILTRATION
+  # ============================================================================
+  - name: "data_exfiltration"
+    description: "Identify and exfiltrate sensitive data"
+    
+    agents:
+      # Data identification
+      - name: "DataHarvesterAgent"
+        config:
+          search_patterns: ["password", "api_key", "secret", "token", "credential"]
+          file_types: [".env", ".config", ".sql", ".db"]
+        outputs:
+          - sensitive_files
+          - databases
+      
+      # Database dumping
+      - name: "DataDumperAgent"
+        condition: "databases is not empty"
+        config:
+          dump_all: true
+          compress: true
+        outputs:
+          - dumped_data
+      
+      # Data exfiltration
+      - name: "AdvancedDataExfiltrationAgent"
+        depends_on: ["DataHarvesterAgent", "DataDumperAgent"]
+        config:
+          channels: ["http", "dns", "icmp"]
+          encrypt: true
+          compress: true
+          chunk_size: 1048576  # 1MB
+        outputs:
+          - exfil_success
+          - exfil_size
+          - exfil_location
+
+  # ============================================================================
+  # PHASE 10: REPORTING
+  # ============================================================================
+  - name: "reporting"
+    description: "Generate comprehensive attack report"
+    always_run: true
+    
+    agents:
+      - name: "ReportingAgent"
+        config:
+          format: ["html", "pdf", "json"]
+          include_screenshots: true
+          include_logs: true
+        outputs:
+          - report_path
+
+# ============================================================================
+# EVASION & STEALTH
+# ============================================================================
+evasion:
+  enabled: true
+  techniques:
+    - name: "EDRDetectionAgent"
+      run_before: "exploitation"
+      on_detection:
+        - "AMSIBypassAgent"
+        - "ETWBypassAgent"
+        - "UnhookingAgent"
+    
+    - name: "SandboxDetectionAgent"
+      run_before: "exploitation"
+      on_detection:
+        action: "abort"
+    
+    - name: "ObfuscationAgent"
+      apply_to: ["payloads", "scripts"]
+    
+    - name: "PolymorphicPayloadAgent"
+      apply_to: ["exploits"]
+
+# ============================================================================
+# ERROR HANDLING & RECOVERY
+# ============================================================================
+error_handling:
+  on_agent_failure:
+    action: "retry"
+    max_retries: 2
+    retry_delay: 30  # seconds
+  
+  on_phase_failure:
+    action: "continue"  # or "abort", "fallback"
+  
+  critical_failures:
+    - "target_unreachable"
+    - "authentication_required"
+    - "sandbox_detected"
+
+# ============================================================================
+# SUCCESS CRITERIA
+# ============================================================================
+success_criteria:
+  minimum_requirements:
+    - "backdoor_deployed == true"
+    - "c2_established == true"
+  
+  optimal_requirements:
+    - "backdoor_deployed == true"
+    - "c2_established == true"
+    - "admin_access == true"
+    - "exfil_success == true"
+
+# ============================================================================
+# OUTPUT
+# ============================================================================
+outputs:
+  workspace: "workspace/{target}/web_full_compromise"
+  logs: "logs/web_full_compromise_{timestamp}.log"
+  reports: "reports/web_full_compromise_{timestamp}.html"
+  loot: "workspace/{target}/loot"
+  screenshots: "workspace/{target}/screenshots"
+

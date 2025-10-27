@@ -1,0 +1,92 @@
+
+venv/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+# *.json  # Commented out to allow package.json and other config files
+# Ignore specific JSON files instead:
+tsconfig.tsbuildinfo
+
+# Workspace
+workspace/
+data/
+reports/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Docker
+# .dockerignore - commented out to allow .dockerignore files
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+results/
+targets/
+payloads/
+
+
+.gemini/
+gha-creds-*.json
+.env
+kubectl
+minikube-linux-amd64
+
+kubectl
+minikube-linux-amd64
+kubectl
+minikube-linux-amd64

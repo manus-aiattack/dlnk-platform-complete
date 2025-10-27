@@ -1,0 +1,210 @@
+# Service Account for Manus API
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: manus-api-sa
+  namespace: manus-ai-attack
+  labels:
+    app: manus-api
+    component: service-account
+
+---
+# Role for Manus API
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: manus-ai-attack
+  name: manus-api-role
+  labels:
+    app: manus-api
+    component: role
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "update"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "create", "delete"]
+
+---
+# Role Binding for Manus API
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: manus-api-rolebinding
+  namespace: manus-ai-attack
+  labels:
+    app: manus-api
+    component: role-binding
+subjects:
+- kind: ServiceAccount
+  name: manus-api-sa
+  namespace: manus-ai-attack
+roleRef:
+  kind: Role
+  name: manus-api-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Cluster Role for Platform Operations
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manus-platform-clusterrole
+  labels:
+    component: cluster-role
+    platform: manus-ai-attack
+rules:
+# Pod operations
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+# Monitoring and logging
+- apiGroups: [""]
+  resources: ["events", "nodes"]
+  verbs: ["get", "list", "watch"]
+# Custom metrics
+- apiGroups: ["metrics.k8s.io"]
+  resources: ["pods", "nodes"]
+  verbs: ["get", "list"]
+# Custom resource operations
+- apiGroups: ["apiextensions.k8s.io"]
+  resources: ["customresourcedefinitions"]
+  verbs: ["get", "list"]
+
+---
+# Cluster Role Binding for Platform Operations
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: manus-platform-clusterrolebinding
+  labels:
+    component: cluster-role-binding
+    platform: manus-ai-attack
+subjects:
+- kind: ServiceAccount
+  name: manus-api-sa
+  namespace: manus-ai-attack
+roleRef:
+  kind: ClusterRole
+  name: manus-platform-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Service Account for Monitoring
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: monitoring-sa
+  namespace: manus-ai-attack
+  labels:
+    app: monitoring
+    component: service-account
+
+---
+# Role for Monitoring
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: manus-ai-attack
+  name: monitoring-role
+  labels:
+    app: monitoring
+    component: role
+rules:
+# Scrape metrics from pods
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+# Access configmaps for configuration
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+# Create and manage alerts
+- apiGroups: ["monitoring.coreos.com"]
+  resources: ["prometheusrules", "alertmanagers"]
+  verbs: ["get", "list", "create", "update", "delete"]
+
+---
+# Role Binding for Monitoring
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: monitoring-rolebinding
+  namespace: manus-ai-attack
+  labels:
+    app: monitoring
+    component: role-binding
+subjects:
+- kind: ServiceAccount
+  name: monitoring-sa
+  namespace: manus-ai-attack
+roleRef:
+  kind: Role
+  name: monitoring-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Service Account for Database Backup
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backup-sa
+  namespace: manus-ai-attack
+  labels:
+    app: backup
+    component: service-account
+
+---
+# Role for Database Backup
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: manus-ai-attack
+  name: backup-role
+  labels:
+    app: backup
+    component: role
+rules:
+# Access to database pods
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+# Access to persistent volumes
+- apiGroups: [""]
+  resources: ["persistentvolumes", "persistentvolumeclaims"]
+  verbs: ["get", "list"]
+# Create and manage backup jobs
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "create", "delete"]
+# Access to storage secrets
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get"]
+# Access to configmaps for backup configuration
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+
+---
+# Role Binding for Database Backup
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: backup-rolebinding
+  namespace: manus-ai-attack
+  labels:
+    app: backup
+    component: role-binding
+subjects:
+- kind: ServiceAccount
+  name: backup-sa
+  namespace: manus-ai-attack
+roleRef:
+  kind: Role
+  name: backup-role
+  apiGroup: rbac.authorization.k8s.io

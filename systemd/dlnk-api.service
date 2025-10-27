@@ -1,0 +1,28 @@
+[Unit]
+Description=dLNk Attack Platform API Server
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/manus
+Environment="PYTHONPATH=/home/ubuntu/manus"
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+ExecStart=/usr/bin/python3 /home/ubuntu/manus/main.py server
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/ubuntu/manus/logs/api.log
+StandardError=append:/home/ubuntu/manus/logs/api-error.log
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/ubuntu/manus/workspace /home/ubuntu/manus/logs /home/ubuntu/manus/data /home/ubuntu/manus/reports
+
+[Install]
+WantedBy=multi-user.target
+

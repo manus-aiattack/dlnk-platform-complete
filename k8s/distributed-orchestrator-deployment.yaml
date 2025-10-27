@@ -1,0 +1,593 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dlnk-predator
+  labels:
+    name: dlnk-predator
+    environment: production
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dlnk-config
+  namespace: dlnk-predator
+data:
+  settings.yaml: |
+    redis:
+      host: redis-cluster
+      port: 6379
+      db: 0
+      pool_size: 50
+      
+    orchestrator:
+      max_concurrent_agents: 20
+      agent_timeout: 900
+      retry_attempts: 3
+      distributed_mode: true
+      
+    api:
+      host: 0.0.0.0
+      port: 8000
+      workers: 4
+      cors_enabled: true
+      
+    logging:
+      level: INFO
+      format: json
+      output: stdout
+      
+    ai:
+      provider: openai
+      model: gpt-4
+      temperature: 0.7
+      max_tokens: 2000
+      
+    threat_intel:
+      enabled: true
+      feeds:
+        - nvd
+        - exploitdb
+        - vulndb
+        - mitre
+      update_interval: 3600
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dlnk-secrets
+  namespace: dlnk-predator
+type: Opaque
+stringData:
+  redis-password: ""  # Set in production
+  openai-api-key: ""  # Set in production
+  license-key: ""  # Set in production
+  threat-intel-api-keys: ""  # Set in production
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-cluster
+  namespace: dlnk-predator
+spec:
+  serviceName: redis-cluster
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis
+      role: cluster
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: cluster
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+          name: client
+        - containerPort: 16379
+          name: gossip
+        command:
+        - redis-server
+        - --cluster-enabled
+        - "yes"
+        - --cluster-config-file
+        - /data/nodes.conf
+        - --cluster-node-timeout
+        - "5000"
+        - --appendonly
+        - "yes"
+        - --maxmemory
+        - "2gb"
+        - --maxmemory-policy
+        - allkeys-lru
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cluster
+  namespace: dlnk-predator
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: client
+  - port: 16379
+    targetPort: 16379
+    name: gossip
+  selector:
+    app: redis
+    role: cluster
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orchestrator
+  namespace: dlnk-predator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dlnk-predator
+      component: orchestrator
+  template:
+    metadata:
+      labels:
+        app: dlnk-predator
+        component: orchestrator
+    spec:
+      serviceAccountName: dlnk-orchestrator
+      containers:
+      - name: orchestrator
+        image: dlnk-predator/orchestrator:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+        - containerPort: 9090
+          name: metrics
+        env:
+        - name: REDIS_HOST
+          value: redis-cluster
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dlnk-secrets
+              key: redis-password
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dlnk-secrets
+              key: openai-api-key
+        - name: LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dlnk-secrets
+              key: license-key
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+        - name: workspace
+          mountPath: /app/workspace
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2000m"
+          limits:
+            memory: "8Gi"
+            cpu: "4000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+      volumes:
+      - name: config
+        configMap:
+          name: dlnk-config
+      - name: workspace
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orchestrator
+  namespace: dlnk-predator
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    name: http
+  - port: 9090
+    targetPort: 9090
+    name: metrics
+  selector:
+    app: dlnk-predator
+    component: orchestrator
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-worker
+  namespace: dlnk-predator
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: dlnk-predator
+      component: agent-worker
+  template:
+    metadata:
+      labels:
+        app: dlnk-predator
+        component: agent-worker
+    spec:
+      serviceAccountName: dlnk-worker
+      containers:
+      - name: worker
+        image: dlnk-predator/worker:latest
+        imagePullPolicy: Always
+        env:
+        - name: REDIS_HOST
+          value: redis-cluster
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dlnk-secrets
+              key: redis-password
+        - name: WORKER_TYPE
+          value: "agent-executor"
+        - name: WORKER_CONCURRENCY
+          value: "5"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+        - name: workspace
+          mountPath: /app/workspace
+        - name: tools
+          mountPath: /app/tools
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+      volumes:
+      - name: config
+        configMap:
+          name: dlnk-config
+      - name: workspace
+        emptyDir: {}
+      - name: tools
+        emptyDir: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-planner
+  namespace: dlnk-predator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dlnk-predator
+      component: ai-planner
+  template:
+    metadata:
+      labels:
+        app: dlnk-predator
+        component: ai-planner
+    spec:
+      serviceAccountName: dlnk-ai-planner
+      containers:
+      - name: ai-planner
+        image: dlnk-predator/ai-planner:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8001
+          name: http
+        env:
+        - name: REDIS_HOST
+          value: redis-cluster
+        - name: REDIS_PORT
+          value: "6379"
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dlnk-secrets
+              key: openai-api-key
+        - name: AI_MODEL
+          value: "gpt-4"
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8001
+          initialDelaySeconds: 15
+          periodSeconds: 10
+      volumes:
+      - name: config
+        configMap:
+          name: dlnk-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-planner
+  namespace: dlnk-predator
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8001
+    targetPort: 8001
+    name: http
+  selector:
+    app: dlnk-predator
+    component: ai-planner
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: orchestrator-hpa
+  namespace: dlnk-predator
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orchestrator
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: agent-worker-hpa
+  namespace: dlnk-predator
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: agent-worker
+  minReplicas: 10
+  maxReplicas: 50
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dlnk-orchestrator
+  namespace: dlnk-predator
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dlnk-worker
+  namespace: dlnk-predator
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dlnk-ai-planner
+  namespace: dlnk-predator
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dlnk-orchestrator-role
+  namespace: dlnk-predator
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dlnk-orchestrator-binding
+  namespace: dlnk-predator
+subjects:
+- kind: ServiceAccount
+  name: dlnk-orchestrator
+  namespace: dlnk-predator
+roleRef:
+  kind: Role
+  name: dlnk-orchestrator-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dlnk-ingress
+  namespace: dlnk-predator
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - dlnk.yourdomain.com
+    secretName: dlnk-tls
+  rules:
+  - host: dlnk.yourdomain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: orchestrator
+            port:
+              number: 8000
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dlnk-workspace
+  namespace: dlnk-predator
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: nfs-client
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: orchestrator-pdb
+  namespace: dlnk-predator
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: dlnk-predator
+      component: orchestrator
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: redis-pdb
+  namespace: dlnk-predator
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: redis
+      role: cluster
+

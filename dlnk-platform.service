@@ -1,0 +1,20 @@
+[Unit]
+Description=dLNk Attack Platform - AI-Powered Autonomous Attack System
+After=network.target postgresql.service redis-server.service
+Wants=postgresql.service redis-server.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/aiprojectattack
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/usr/bin/python3.11 /home/ubuntu/aiprojectattack/run_production_fixed.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/var/log/dlnk/platform.log
+StandardError=append:/var/log/dlnk/platform-error.log
+
+[Install]
+WantedBy=multi-user.target
+

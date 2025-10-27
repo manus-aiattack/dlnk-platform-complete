@@ -1,0 +1,57 @@
+# EDR/XDR Evasion Attack Workflow
+# Specialized workflow for targets with advanced defenses
+
+name: "EDR Evasion Attack"
+description: "Attack chain optimized for EDR/XDR evasion"
+version: "1.0.0"
+author: "dLNk HACK"
+target_type: "hardened"
+estimated_duration: 90
+success_rate: 0.60
+
+config:
+  stealth_mode: true
+  max_retries: 5
+  enable_evasion: true
+
+phases:
+  - name: "defense_detection"
+    description: "Detect defensive tools"
+    agents:
+      - name: "EDRDetectionAgent"
+        outputs:
+          - edr_detected
+          - edr_type
+      - name: "SandboxDetectionAgent"
+        outputs:
+          - sandbox_detected
+
+  - name: "evasion_preparation"
+    description: "Prepare evasion techniques"
+    agents:
+      - name: "AMSIBypassAgent"
+      - name: "ETWBypassAgent"
+      - name: "UnhookingAgent"
+      - name: "ObfuscationAgent"
+
+  - name: "stealthy_exploitation"
+    description: "Exploit with evasion"
+    agents:
+      - name: "ProcessInjectionAgent"
+        config:
+          technique: "process_hollowing"
+      - name: "DirectSyscallAgent"
+      - name: "MemoryOnlyExecutionAgent"
+      - name: "SignedBinaryProxyAgent"
+
+  - name: "persistence"
+    description: "Establish stealthy persistence"
+    agents:
+      - name: "PolymorphicPayloadAgent"
+      - name: "PersistenceAgent"
+        config:
+          stealth: true
+
+success_criteria:
+  minimum_requirements:
+    - "edr_detected == false OR evasion_success == true"

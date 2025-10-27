@@ -1,0 +1,269 @@
+{
+  "timestamp": "2025-10-27T16:20:52.602655",
+  "checks": {
+    "mock_data": {
+      "status": "FAIL",
+      "issues_found": 15,
+      "details": [
+        {
+          "pattern": "mock",
+          "count": 230,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/advanced_agents/exploit_gen/rop_generator.py:        # For now, return mock gadgets",
+            "/home/ubuntu/aiprojectattack/advanced_agents/exploit_gen/rop_generator.py:        gadgets = await self._mock_find_gadgets(binary_path)",
+            "/home/ubuntu/aiprojectattack/advanced_agents/exploit_gen/rop_generator.py:    async def _mock_find_gadgets(self, binary_path: str) -> List[Dict]:"
+          ]
+        },
+        {
+          "pattern": "Mock",
+          "count": 179,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/advanced_agents/exploit_gen/rop_generator.py:            chain.append(0x600000)  # Mock address",
+            "/home/ubuntu/aiprojectattack/advanced_agents/exploit_gen/rop_generator.py:                chain.append(0x600000)  # Mock address of argument string",
+            "/home/ubuntu/aiprojectattack/advanced_agents/exploit_validation/exploit_tester.py:        # Mock exploit execution"
+          ]
+        },
+        {
+          "pattern": "MOCK",
+          "count": 2,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/analyze_project.py:        \"mock\", \"Mock\", \"MOCK\",",
+            "/home/ubuntu/aiprojectattack/quality_check.py:            \"mock\", \"Mock\", \"MOCK\","
+          ]
+        },
+        {
+          "pattern": "fake",
+          "count": 13,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/agents/rate_limit_agent_weaponized.py:        self.fake_ips = [",
+            "/home/ubuntu/aiprojectattack/agents/rate_limit_agent_weaponized.py:        fake_ip = random.choice(self.fake_ips)",
+            "/home/ubuntu/aiprojectattack/agents/rate_limit_agent_weaponized.py:            \"X-Forwarded-For\": fake_ip,"
+          ]
+        },
+        {
+          "pattern": "Fake",
+          "count": 2,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/analyze_project.py:        \"fake\", \"Fake\", \"FAKE\",",
+            "/home/ubuntu/aiprojectattack/quality_check.py:            \"fake\", \"Fake\", \"FAKE\","
+          ]
+        },
+        {
+          "pattern": "FAKE",
+          "count": 2,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/analyze_project.py:        \"fake\", \"Fake\", \"FAKE\",",
+            "/home/ubuntu/aiprojectattack/quality_check.py:            \"fake\", \"Fake\", \"FAKE\","
+          ]
+        },
+        {
+          "pattern": "dummy",
+          "count": 2,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/analyze_project.py:        \"dummy\", \"Dummy\", \"DUMMY\",",
+            "/home/ubuntu/aiprojectattack/quality_check.py:            \"dummy\", \"Dummy\", \"DUMMY\","
+          ]
+        },
+        {
+          "pattern": "Dummy",
+          "count": 3,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/protocol_exploits/rdp_exploit.py:# --- Dummy BaseAgent Class for Context ---",
+            "/home/ubuntu/aiprojectattack/analyze_project.py:        \"dummy\", \"Dummy\", \"DUMMY\",",
+            "/home/ubuntu/aiprojectattack/quality_check.py:            \"dummy\", \"Dummy\", \"DUMMY\","
+          ]
+        },
+        {
+          "pattern": "DUMMY",
+          "count": 2,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/analyze_project.py:        \"dummy\", \"Dummy\", \"DUMMY\",",
+            "/home/ubuntu/aiprojectattack/quality_check.py:            \"dummy\", \"Dummy\", \"DUMMY\","
+          ]
+        },
+        {
+          "pattern": "test_key",
+          "count": 20,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/api/services/mock_database.py:        admin_key = \"admin_test_key_12345\"",
+            "/home/ubuntu/aiprojectattack/api/services/mock_database.py:        user_key = \"user_test_key_67890\"",
+            "/home/ubuntu/aiprojectattack/api/test_server.py:    print(\"  Admin: admin_test_key_12345\")"
+          ]
+        },
+        {
+          "pattern": "test_api",
+          "count": 22,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/setup_database.py:async def test_api_endpoints():",
+            "/home/ubuntu/aiprojectattack/setup_database.py:        asyncio.run(test_api_endpoints())",
+            "/home/ubuntu/aiprojectattack/test_frontend.py:async def test_api_endpoint(session, method, endpoint, data=None, expected_success=True):"
+          ]
+        },
+        {
+          "pattern": "admin_test",
+          "count": 5,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/api/services/mock_database.py:        admin_key = \"admin_test_key_12345\"",
+            "/home/ubuntu/aiprojectattack/api/test_server.py:    print(\"  Admin: admin_test_key_12345\")",
+            "/home/ubuntu/aiprojectattack/api/test_server.py:                    <strong>Admin:</strong> admin_test_key_12345"
+          ]
+        },
+        {
+          "pattern": "user_test",
+          "count": 5,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/api/services/mock_database.py:        user_key = \"user_test_key_67890\"",
+            "/home/ubuntu/aiprojectattack/api/test_server.py:    print(\"  User:  user_test_key_67890\")",
+            "/home/ubuntu/aiprojectattack/api/test_server.py:                    <strong>User:</strong> user_test_key_67890"
+          ]
+        },
+        {
+          "pattern": "simulate",
+          "count": 101,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/agents/ai_testing_agent.py:                test_result = await self._simulate_performance_test(agent, strategy)",
+            "/home/ubuntu/aiprojectattack/agents/ai_testing_agent.py:    async def _simulate_performance_test(self, agent: str, strategy: Dict[str, Any]) -> Dict[str, Any]:",
+            "/home/ubuntu/aiprojectattack/agents/ai_testing_agent.py:                test_result = await self._simulate_security_test(agent, strategy)"
+          ]
+        },
+        {
+          "pattern": "simulation",
+          "count": 49,
+          "examples": [
+            "/home/ubuntu/aiprojectattack/advanced_agents/symbolic/angr_executor.py:            # Create simulation manager with exploration technique",
+            "/home/ubuntu/aiprojectattack/advanced_agents/symbolic/angr_executor.py:            self.simgr = self.project.factory.simulation_manager(state)",
+            "/home/ubuntu/aiprojectattack/advanced_agents/symbolic/angr_executor.py:            log.error(\"[AngrExecutor] No simulation manager available\")"
+          ]
+        }
+      ]
+    },
+    "database": {
+      "status": "WARN",
+      "findings": {
+        "postgresql": 93,
+        "sqlite": 27,
+        "in_memory": 21,
+        "hardcoded_data": 299
+      }
+    },
+    "ai_integration": {
+      "status": "PASS",
+      "findings": {
+        "vanchin": 75,
+        "llm_service": 11,
+        "ai_analysis": 46
+      }
+    },
+    "agent_structure": {
+      "status": "WARN",
+      "total_agents": 183,
+      "compliant_agents": 7,
+      "compliance_rate": 3.825136612021858,
+      "issues": [
+        {
+          "file": "agents/advanced_backdoor_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            null
+          ]
+        },
+        {
+          "file": "agents/advanced_c2_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            null
+          ]
+        },
+        {
+          "file": "agents/advanced_data_exfiltration_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            null
+          ]
+        },
+        {
+          "file": "agents/afl_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            null
+          ]
+        },
+        {
+          "file": "agents/api_fuzzer_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            null
+          ]
+        },
+        {
+          "file": "agents/auth_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            "AgentData"
+          ]
+        },
+        {
+          "file": "agents/bola_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            "AgentData"
+          ]
+        },
+        {
+          "file": "agents/bola_agent_weaponized.py",
+          "missing": [
+            null,
+            "execute()",
+            null
+          ]
+        },
+        {
+          "file": "agents/bot_deployment_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            "AgentData"
+          ]
+        },
+        {
+          "file": "agents/code_writer_agent.py",
+          "missing": [
+            null,
+            "execute()",
+            null
+          ]
+        }
+      ]
+    },
+    "code_quality": {
+      "status": "INFO",
+      "total_files": 571,
+      "total_lines": 146416,
+      "avg_lines_per_file": 256
+    },
+    "security": {
+      "status": "WARN",
+      "findings": {
+        "hardcoded_passwords": 52,
+        "hardcoded_keys": 3,
+        "sql_injection": 114,
+        "command_injection": 0
+      },
+      "total_issues": 169
+    }
+  },
+  "summary": {
+    "PASS": 1,
+    "WARN": 3,
+    "FAIL": 1,
+    "INFO": 1
+  },
+  "issues": []
+}

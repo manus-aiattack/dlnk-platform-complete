@@ -1,0 +1,150 @@
+name: "Attack Scan Workflow"
+description: "Comprehensive vulnerability scanning workflow for attack mode"
+version: "1.0"
+
+phases:
+  - name: "Reconnaissance"
+    agents:
+      - name: "NmapAgent"
+        config:
+          scan_type: "aggressive"
+          ports: "1-65535"
+          scripts: "default,vuln"
+      
+      - name: "WafDetectorAgent"
+        config:
+          detection_level: "thorough"
+      
+      - name: "WhatwebAgent"
+        config:
+          aggression: 3
+      
+      - name: "SubdomainEnumeratorAgent"
+        config:
+          wordlist: "medium"
+      
+      - name: "DirsearchAgent"
+        config:
+          extensions: "php,asp,aspx,jsp,html,js"
+          threads: 50
+      
+      - name: "CrawlerAgent"
+        config:
+          max_depth: 3
+          follow_redirects: true
+
+  - name: "Vulnerability Detection"
+    agents:
+      - name: "SQLMapAgent"
+        config:
+          level: 5
+          risk: 3
+          tamper: "space2comment,between"
+      
+      - name: "XSSAgent"
+        config:
+          payloads: "all"
+          contexts: ["html", "attribute", "script", "url"]
+      
+      - name: "SSRFAgentWeaponized"
+        config:
+          callback_server: "auto"
+          protocols: ["http", "https", "file", "gopher"]
+      
+      - name: "IDORAgent"
+        config:
+          fuzzing_depth: "deep"
+      
+      - name: "BOLAAgentWeaponized"
+        config:
+          test_methods: ["GET", "POST", "PUT", "DELETE"]
+      
+      - name: "FileUploadAgent"
+        config:
+          payloads: ["php", "jsp", "aspx", "svg"]
+          bypass_techniques: "all"
+      
+      - name: "RCEAgent"
+        config:
+          command_injection: true
+          code_injection: true
+          template_injection: true
+      
+      - name: "LFIAgent"
+        config:
+          depth: 10
+          null_byte: true
+          wrappers: true
+      
+      - name: "XXEAgent"
+        config:
+          oob_detection: true
+          entity_expansion: true
+      
+      - name: "DeserializationAgent"
+        config:
+          languages: ["java", "php", "python", "ruby"]
+      
+      - name: "CORSAgent"
+        config:
+          test_credentials: true
+          test_null_origin: true
+
+  - name: "API Security Testing"
+    agents:
+      - name: "APIFuzzerAgent"
+        config:
+          test_authentication: true
+          test_authorization: true
+          test_rate_limiting: true
+      
+      - name: "GraphQLAgent"
+        config:
+          introspection: true
+          batching_attacks: true
+          depth_limit_bypass: true
+      
+      - name: "JWTAgent"
+        config:
+          algorithms: ["none", "HS256", "RS256"]
+          key_confusion: true
+
+  - name: "Advanced Scanning"
+    agents:
+      - name: "NucleiAgent"
+        config:
+          templates: "all"
+          severity: ["critical", "high", "medium"]
+      
+      - name: "MetasploitScannerAgent"
+        config:
+          auxiliary_modules: true
+          exploit_check: true
+      
+      - name: "CVEScannerAgent"
+        config:
+          year_range: "2020-2024"
+          severity_min: 7.0
+
+  - name: "Analysis & Reporting"
+    agents:
+      - name: "VulnerabilityAnalyzerAgent"
+        config:
+          prioritize: true
+          exploit_availability: true
+      
+      - name: "ReportingAgent"
+        config:
+          format: "json"
+          include_evidence: true
+          include_remediation: true
+
+settings:
+  parallel_execution: true
+  max_concurrent_agents: 10
+  timeout_per_agent: 600
+  retry_on_failure: true
+  max_retries: 2
+  continue_on_error: true
+  save_intermediate_results: true
+

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dLNk HACK - Advanced Attack Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Login Screen */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .logo-ascii {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.2;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            margin-bottom: 40px;
+            white-space: pre;
+            text-align: center;
+        }
+
+        .login-box {
+            background: rgba(26, 31, 58, 0.9);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        }
+
+        .login-box h2 {
+            color: #00ff88;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(10, 14, 39, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border: none;
+            border-radius: 8px;
+            color: #0a0e27;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Main Dashboard */
+        .dashboard {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .dashboard.active {
+            display: flex;
+        }
+
+        .header {
+            background: rgba(26, 31, 58, 0.95);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-logo {
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #00ff88;
+        }
+
+        .btn-logout {
+            padding: 8px 16px;
+            background: rgba(255, 59, 48, 0.2);
+            border: 1px solid #ff3b30;
+            border-radius: 6px;
+            color: #ff3b30;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 59, 48, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .welcome-section h1 {
+            font-size: 36px;
+            color: #00ff88;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section p {
+            font-size: 16px;
+            color: #b0b0b0;
+        }
+
+        .tips-section {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .tips-section h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tips-list li {
+            padding: 10px 0;
+            color: #e0e0e0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tips-list li::before {
+            content: "▸ ";
+            color: #00ff88;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .action-card {
+            background: rgba(26, 31, 58, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            border-color: #00ff88;
+        }
+
+        .action-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .action-title {
+            font-size: 20px;
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .action-description {
+            font-size: 14px;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(26, 31, 58, 0.95);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #00ff88;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            color: #ff3b30;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(10, 14, 39, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border: none;
+            border-radius: 8px;
+            color: #0a0e27;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid rgba(0, 255, 136, 0.3);
+            border-top: 3px solid #00ff88;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-ascii {
+                font-size: 8px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="logo-ascii">
+     ██████╗ ██╗     ███╗   ██╗██╗  ██╗    ██╗  ██╗ █████╗  ██████╗██╗  ██╗
+     ██╔══██╗██║     ████╗  ██║██║ ██╔╝    ██║  ██║██╔══██╗██╔════╝██║ ██╔╝
+     ██║  ██║██║     ██╔██╗ ██║█████╔╝     ███████║███████║██║     █████╔╝ 
+     ██║  ██║██║     ██║╚██╗██║██╔═██╗     ██╔══██║██╔══██║██║     ██╔═██╗ 
+     ██████╔╝███████╗██║ ╚████║██║  ██╗    ██║  ██║██║  ██║╚██████╗██║  ██╗
+     ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+                                                                              
+              Advanced Attack Framework - Enterprise Edition
+        </div>
+
+        <div class="login-box">
+            <h2>🔐 Authentication Required</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="apiKey">API Key</label>
+                    <input 
+                        type="password" 
+                        id="apiKey" 
+                        placeholder="Enter your API key..."
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn-primary">
+                    🚀 Launch Framework
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <header class="header">
+            <div class="header-logo">dLNk HACK</div>
+            <div class="header-actions">
+                <span class="status-badge">● ONLINE</span>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-section">
+                <h1>Welcome to dLNk HACK Framework</h1>
+                <p>Advanced AI-Driven Attack Platform</p>
+            </div>
+
+            <div class="tips-section">
+                <h3>💡 Tips for getting started:</h3>
+                <ul class="tips-list">
+                    <li>ลิ้งเป้าหมาย - ระบุ URL หรือ IP ของเป้าหมายที่ต้องการโจมตี</li>
+                    <li>ZERODAY (นาน) - ค้นหาช่องโหว่ Zero-Day ใหม่ๆ (ใช้เวลานาน)</li>
+                    <li>โจมตี CVE ทั้งหมด - โจมตีด้วยช่องโหว่ CVE ที่รู้จักทั้งหมด</li>
+                    <li>ความสามารถทั้งหมด - ใช้ความสามารถของ Framework ทั้งหมด 62+ Agents</li>
+                    <li>อัตโนมัติทั้งหมด 100% - ให้ AI วางแผนและดำเนินการโจมตีอัตโนมัติ</li>
+                    <li>สร้างคีย์ (admin) - สร้าง API Key ใหม่สำหรับผู้ใช้งาน</li>
+                </ul>
+            </div>
+
+            <div class="action-grid">
+                <!-- Action 1: Target Link -->
+                <div class="action-card" onclick="openModal('targetModal')">
+                    <div class="action-icon">🎯</div>
+                    <div class="action-title">1. ลิ้งเป้าหมาย</div>
+                    <div class="action-description">
+                        ระบุ URL หรือ IP Address ของเป้าหมายที่ต้องการโจมตี พร้อม reconnaissance อัตโนมัติ
+                    </div>
+                </div>
+
+                <!-- Action 2: Zero-Day Hunt -->
+                <div class="action-card" onclick="openModal('zerodayModal')">
+                    <div class="action-icon">🔍</div>
+                    <div class="action-title">2. ZERODAY (นาน)</div>
+                    <div class="action-description">
+                        ค้นหาช่องโหว่ Zero-Day ใหม่ๆ ด้วย AI และ Fuzzing (ใช้เวลานาน แต่มีประสิทธิภาพสูง)
+                    </div>
+                </div>
+
+                <!-- Action 3: CVE Attack -->
+                <div class="action-card" onclick="openModal('cveModal')">
+                    <div class="action-icon">💥</div>
+                    <div class="action-title">3. โจมตี CVE ทั้งหมด</div>
+                    <div class="action-description">
+                        โจมตีด้วยช่องโหว่ CVE ที่รู้จักทั้งหมดจาก Threat Intelligence Database
+                    </div>
+                </div>
+
+                <!-- Action 4: Full Capabilities -->
+                <div class="action-card" onclick="openModal('fullCapModal')">
+                    <div class="action-icon">⚡</div>
+                    <div class="action-title">4. ความสามารถทั้งหมด</div>
+                    <div class="action-description">
+                        ใช้ความสามารถทั้งหมด 62+ Agents รวมถึง Backdoor, C2, Privilege Escalation, Data Exfiltration
+                    </div>
+                </div>
+
+                <!-- Action 5: Full Auto -->
+                <div class="action-card" onclick="openModal('autoModal')">
+                    <div class="action-icon">🤖</div>
+                    <div class="action-title">5. อัตโนมัติทั้งหมด 100%</div>
+                    <div class="action-description">
+                        ให้ AI วางแผนและดำเนินการโจมตีอัตโนมัติ 100% ตั้งแต่ Recon จนถึง Exfiltration
+                    </div>
+                </div>
+
+                <!-- Action 6: Generate Key -->
+                <div class="action-card" onclick="openModal('keygenModal')">
+                    <div class="action-icon">🔑</div>
+                    <div class="action-title">6. สร้างคีย์ (admin)</div>
+                    <div class="action-description">
+                        สร้าง API Key ใหม่สำหรับผู้ใช้งาน (ต้องมีสิทธิ์ Admin)
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Target Modal -->
+    <div class="modal" id="targetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">🎯 ระบุเป้าหมาย</h2>
+                <button class="btn-close" onclick="closeModal('targetModal')">×</button>
+            </div>
+            <form id="targetForm" onsubmit="submitTarget(event)">
+                <div class="form-group">
+                    <label>Target URL/IP</label>
+                    <input type="text" placeholder="https://target.com หรือ 192.168.1.100" required>
+                </div>
+                <div class="form-group">
+                    <label>Attack Type</label>
+                    <select>
+                        <option>Reconnaissance Only</option>
+                        <option>Reconnaissance + Exploitation</option>
+                        <option>Full Attack Chain</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">🚀 เริ่มโจมตี</button>
+            </form>
+            <div class="loading" id="targetLoading">
+                <div class="spinner"></div>
+                <p>กำลังดำเนินการ...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zero-Day Modal -->
+    <div class="modal" id="zerodayModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">🔍 Zero-Day Hunt</h2>
+                <button class="btn-close" onclick="closeModal('zerodayModal')">×</button>
+            </div>
+            <form id="zerodayForm" onsubmit="submitZeroday(event)">
+                <div class="form-group">
+                    <label>Target URL/IP</label>
+                    <input type="text" placeholder="https://target.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Hunt Mode</label>
+                    <select>
+                        <option>Fast Scan (2-4 hours)</option>
+                        <option>Deep Scan (8-12 hours)</option>
+                        <option>Comprehensive Scan (24+ hours)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Focus Areas</label>
+                    <textarea placeholder="เช่น: Authentication, File Upload, SQL Injection, XSS, etc."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">🔍 เริ่มค้นหา Zero-Day</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CVE Attack Modal -->
+    <div class="modal" id="cveModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">💥 โจมตี CVE</h2>
+                <button class="btn-close" onclick="closeModal('cveModal')">×</button>
+            </div>
+            <form id="cveForm" onsubmit="submitCVE(event)">
+                <div class="form-group">
+                    <label>Target URL/IP</label>
+                    <input type="text" placeholder="https://target.com" required>
+                </div>
+                <div class="form-group">
+                    <label>CVE Selection</label>
+                    <select>
+                        <option>All Known CVEs</option>
+                        <option>Critical CVEs Only</option>
+                        <option>Recent CVEs (Last 30 days)</option>
+                        <option>Custom CVE List</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Attack Intensity</label>
+                    <select>
+                        <option>Stealth (Slow, Low Detection)</option>
+                        <option>Normal (Balanced)</option>
+                        <option>Aggressive (Fast, High Detection)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">💥 เริ่มโจมตี</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Full Capabilities Modal -->
+    <div class="modal" id="fullCapModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">⚡ ความสามารถทั้งหมด</h2>
+                <button class="btn-close" onclick="closeModal('fullCapModal')">×</button>
+            </div>
+            <form id="fullCapForm" onsubmit="submitFullCap(event)">
+                <div class="form-group">
+                    <label>Target URL/IP</label>
+                    <input type="text" placeholder="https://target.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Attack Phases</label>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked> Reconnaissance
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked> Vulnerability Scanning
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked> Exploitation
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked> Backdoor Deployment
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked> Privilege Escalation
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" checked> Data Exfiltration
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">⚡ เริ่มโจมตีเต็มรูปแบบ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Full Auto Modal -->
+    <div class="modal" id="autoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">🤖 โหมดอัตโนมัติ 100%</h2>
+                <button class="btn-close" onclick="closeModal('autoModal')">×</button>
+            </div>
+            <form id="autoForm" onsubmit="submitAuto(event)">
+                <div class="form-group">
+                    <label>Target URL/IP</label>
+                    <input type="text" placeholder="https://target.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Objective</label>
+                    <select>
+                        <option>Backdoor & Persistence</option>
+                        <option>Data Exfiltration</option>
+                        <option>Full Compromise</option>
+                        <option>Lateral Movement</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>AI Strategy</label>
+                    <select>
+                        <option>Adaptive (AI decides everything)</option>
+                        <option>Stealth Priority</option>
+                        <option>Speed Priority</option>
+                        <option>Maximum Impact</option>
+                    </select>
+                </div>
+                <div style="background: rgba(255, 152, 0, 0.1); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px; padding: 15px; margin-top: 15px;">
+                    <p style="color: #ff9800; font-size: 14px; margin: 0;">
+                        ⚠️ โหมดนี้จะให้ AI ควบคุมทั้งหมด รวมถึงการตัดสินใจโจมตี, หลบหลีก, และ exfiltration ข้อมูล
+                    </p>
+                </div>
+                <button type="submit" class="btn-submit">🤖 เริ่มโหมดอัตโนมัติ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Keygen Modal -->
+    <div class="modal" id="keygenModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">🔑 สร้าง API Key</h2>
+                <button class="btn-close" onclick="closeModal('keygenModal')">×</button>
+            </div>
+            <form id="keygenForm" onsubmit="submitKeygen(event)">
+                <div class="form-group">
+                    <label>Organization Name</label>
+                    <input type="text" placeholder="ชื่อองค์กร" required>
+                </div>
+                <div class="form-group">
+                    <label>License Type</label>
+                    <select>
+                        <option>Trial (30 days)</option>
+                        <option>Basic (1 year)</option>
+                        <option>Professional (1 year)</option>
+                        <option>Enterprise (1 year)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Max Agents</label>
+                    <select>
+                        <option>10 (Trial)</option>
+                        <option>30 (Basic)</option>
+                        <option>62 (Professional)</option>
+                        <option>Unlimited (Enterprise)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">🔑 สร้าง API Key</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const apiKey = document.getElementById('apiKey').value;
+            
+            // Validate API key (in production, this should call your backend)
+            if (apiKey.length > 0) {
+                localStorage.setItem('apiKey', apiKey);
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+            } else {
+                alert('กรุณากรอก API Key');
+            }
+        });
+
+        // Check if already logged in
+        window.addEventListener('load', function() {
+            const apiKey = localStorage.getItem('apiKey');
+            if (apiKey) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+            }
+        });
+
+        // Logout functionality
+        function logout() {
+            if (confirm('ต้องการออกจากระบบหรือไม่?')) {
+                localStorage.removeItem('apiKey');
+                document.getElementById('dashboard').classList.remove('active');
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('apiKey').value = '';
+            }
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Form submissions
+        async function submitTarget(e) {
+            e.preventDefault();
+            const form = e.target;
+            const loading = document.getElementById('targetLoading');
+            
+            form.style.display = 'none';
+            loading.classList.add('active');
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('เริ่มโจมตีเป้าหมายแล้ว! ติดตามความคืบหน้าได้ที่แดชบอร์ด');
+                closeModal('targetModal');
+                form.style.display = 'block';
+                loading.classList.remove('active');
+                form.reset();
+            }, 2000);
+        }
+
+        async function submitZeroday(e) {
+            e.preventDefault();
+            alert('เริ่มค้นหา Zero-Day แล้ว! กระบวนการนี้จะใช้เวลานาน กรุณาติดตามผลที่แดชบอร์ด');
+            closeModal('zerodayModal');
+            e.target.reset();
+        }
+
+        async function submitCVE(e) {
+            e.preventDefault();
+            alert('เริ่มโจมตีด้วย CVE ทั้งหมดแล้ว! ติดตามความคืบหน้าได้ที่แดชบอร์ด');
+            closeModal('cveModal');
+            e.target.reset();
+        }
+
+        async function submitFullCap(e) {
+            e.preventDefault();
+            alert('เริ่มโจมตีเต็มรูปแบบแล้ว! ใช้ความสามารถทั้งหมด 62+ Agents');
+            closeModal('fullCapModal');
+            e.target.reset();
+        }
+
+        async function submitAuto(e) {
+            e.preventDefault();
+            if (confirm('ยืนยันการเริ่มโหมดอัตโนมัติ 100%? AI จะควบคุมทั้งหมด')) {
+                alert('เริ่มโหมดอัตโนมัติแล้ว! AI กำลังวางแผนและดำเนินการโจมตี');
+                closeModal('autoModal');
+                e.target.reset();
+            }
+        }
+
+        async function submitKeygen(e) {
+            e.preventDefault();
+            const newKey = 'DLNK-' + Math.random().toString(36).substring(2, 15).toUpperCase();
+            alert('สร้าง API Key สำเร็จ!\n\nAPI Key: ' + newKey + '\n\nกรุณาเก็บรักษา Key นี้ไว้อย่างปลอดภัย');
+            closeModal('keygenModal');
+            e.target.reset();
+        }
+
+        // Close modal on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
