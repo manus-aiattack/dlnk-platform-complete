@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AI Testing & Validation System for dLNk dLNk Framework
+AI Testing & Validation System for Connext Connext Framework
 Tests LLM responses for accuracy, relevance, and completeness
 """
 
@@ -53,7 +53,7 @@ class AITestingSystem:
         self.test_results: List[TestResult] = []
         
     def create_test_cases(self) -> List[TestCase]:
-        """Create comprehensive test cases for dLNk dLNk scenarios"""
+        """Create comprehensive test cases for Connext scenarios"""
         
         test_cases = [
             # 1. Reconnaissance Planning
@@ -377,7 +377,7 @@ class AITestingSystem:
         """Run all test cases and generate report"""
         
         print("\n" + "="*80)
-        print("dLNk DLNK AI TESTING SYSTEM")
+        print("Connext CONNEXT AI TESTING SYSTEM")
         print("Testing LLM responses for accuracy, relevance, and completeness")
         print("="*80)
         
@@ -502,7 +502,7 @@ class AITestingSystem:
     def generate_markdown_report(self, results: List[TestResult], summary: Dict[str, Any]):
         """Generate markdown report"""
         
-        report = f"""# dLNk dLNk AI Testing Report
+        report = f"""# Connext AI Testing Report
 
 **Date:** {time.strftime('%Y-%m-%d %H:%M:%S')}
 **Model:** {summary['model']}

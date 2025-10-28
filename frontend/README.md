@@ -1,6 +1,6 @@
-# dLNk Attack Platform - Frontend
+# Connext Security Platform - Frontend
 
-Modern React-based frontend for the dLNk Attack Platform with real-time monitoring, AI-powered attack suggestions, and comprehensive security testing capabilities.
+Modern React-based frontend for the Connext Security Platform with real-time monitoring, AI-powered attack suggestions, and comprehensive security testing capabilities.
 
 ## 🚀 Features
 
@@ -197,7 +197,7 @@ All components are fully responsive and optimized for mobile devices.
 
 ## 📝 License
 
-This project is part of the dLNk Attack Platform.
+This project is part of the Connext Security Platform.
 
 ## 🤝 Contributing
 

@@ -1,7 +1,7 @@
-# Prometheus Alert Rules for dLNk Attack Platform
+# Prometheus Alert Rules for Connext Security Platform
 
 groups:
-  - name: dlnk_backend_alerts
+  - name: connext_backend_alerts
     interval: 30s
     rules:
       - alert: BackendDown
@@ -44,7 +44,7 @@ groups:
           summary: "High memory usage"
           description: "Backend memory usage is above 2GB"
 
-  - name: dlnk_database_alerts
+  - name: connext_database_alerts
     interval: 30s
     rules:
       - alert: DatabaseDown
@@ -77,7 +77,7 @@ groups:
           summary: "Slow database queries detected"
           description: "Average query execution time is above 1 second"
 
-  - name: dlnk_redis_alerts
+  - name: connext_redis_alerts
     interval: 30s
     rules:
       - alert: RedisDown
@@ -100,7 +100,7 @@ groups:
           summary: "High Redis memory usage"
           description: "Redis memory usage is above 90%"
 
-  - name: dlnk_system_alerts
+  - name: connext_system_alerts
     interval: 30s
     rules:
       - alert: HighCPUUsage

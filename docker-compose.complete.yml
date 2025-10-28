@@ -6,16 +6,16 @@ services:
     image: postgres:14-alpine
     container_name: dlnk-postgres
     environment:
-      POSTGRES_USER: dlnk_user
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-dlnk_secure_password}
-      POSTGRES_DB: dlnk_attack_platform
+      POSTGRES_USER: connext_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-connext_secure_password}
+      POSTGRES_DB: connext_attack_platform
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./api/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dlnk_user"]
+      test: ["CMD-SHELL", "pg_isready -U connext_user"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -69,12 +69,12 @@ services:
     container_name: dlnk-api
     environment:
       # Database
-      DATABASE_URL: postgresql://dlnk_user:${DB_PASSWORD:-dlnk_secure_password}@postgres:5432/dlnk_attack_platform
+      DATABASE_URL: postgresql://connext_user:${DB_PASSWORD:-connext_secure_password}@postgres:5432/connext_attack_platform
       DB_HOST: postgres
       DB_PORT: 5432
-      DB_USER: dlnk_user
-      DB_PASSWORD: ${DB_PASSWORD:-dlnk_secure_password}
-      DB_NAME: dlnk_attack_platform
+      DB_USER: connext_user
+      DB_PASSWORD: ${DB_PASSWORD:-connext_secure_password}
+      DB_NAME: connext_attack_platform
       
       # Redis
       REDIS_HOST: redis

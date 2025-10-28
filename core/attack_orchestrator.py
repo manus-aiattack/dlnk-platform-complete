@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Attack Orchestrator
+Connext Security Platform - Attack Orchestrator
 Orchestrates the entire attack workflow from reconnaissance to data exfiltration
 """
 

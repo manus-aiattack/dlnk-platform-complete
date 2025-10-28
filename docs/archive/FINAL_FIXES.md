@@ -1,4 +1,4 @@
-# การแก้ไขครั้งสุดท้าย - โปรเจ็ค dLNk Attack Platform
+# การแก้ไขครั้งสุดท้าย - โปรเจ็ค Connext Security Platform
 
 ## ✅ การแก้ไขเพิ่มเติมในรอบที่ 2
 
@@ -6,7 +6,7 @@
 **ไฟล์ที่แก้ไข:**
 - `apex_ai_system_local.py`
 - `api/routes/attack_v2.py`
-- `cli/dlnk.py`
+- `cli/connext.py`
 - `cli/interactive_console.py`
 - `core/advanced_reporting.py`
 - `core/ai_integration.py`

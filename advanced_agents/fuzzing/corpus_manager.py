@@ -1,5 +1,5 @@
 """
-Corpus Manager for dLNk Attack Platform
+Corpus Manager for Connext Security Platform
 Manages fuzzing corpus with intelligent selection and minimization
 """
 
@@ -29,7 +29,7 @@ class CorpusManager:
     - Deduplication
     """
     
-    def __init__(self, corpus_dir: str = "/tmp/dlnk_corpus"):
+    def __init__(self, corpus_dir: str = "/tmp/connext_corpus"):
         self.corpus_dir = Path(corpus_dir)
         self.corpus_dir.mkdir(parents=True, exist_ok=True)
         

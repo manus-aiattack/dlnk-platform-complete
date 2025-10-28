@@ -11,7 +11,7 @@
 - Fixed import placement (moved imports after docstrings)
 
 ### Removed
-- Removed duplicate dlnk_FINAL folder (300+ files)
+- Removed duplicate connext_FINAL folder (300+ files)
 - Removed unused global declarations
 - Removed redundant backup code
 

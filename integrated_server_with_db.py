@@ -160,7 +160,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="dLNk Integrated Server with PostgreSQL",
+    title="Connext Integrated Server with PostgreSQL",
     description="Production backend with PostgreSQL database",
     version="2.0.0",
     lifespan=lifespan

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# dLNk - Complete Dependencies Installation Script
+# Connext - Complete Dependencies Installation Script
 # For Python 3.11
 
 set -e
 
-echo "🚀 dLNk Dependencies Installation"
+echo "🚀 Connext Dependencies Installation"
 echo "=================================="
 echo ""
 
@@ -66,7 +66,7 @@ echo ""
 echo "✅ Installation complete!"
 echo ""
 echo "Next steps:"
-echo "  1. Setup PostgreSQL: docker run -d --name dlnk_postgres ..."
+echo "  1. Setup PostgreSQL: docker run -d --name connext_postgres ..."
 echo "  2. Setup environment: export DATABASE_URL=..."
 echo "  3. Start server: python -m uvicorn api.main:app --host 0.0.0.0 --port 8000"
 echo ""

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk C2 Integration
+Connext C2 Integration
 เชื่อมต่อ C2 กับระบบโจมตีหลัก (Attack Manager)
 """
 

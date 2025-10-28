@@ -14,7 +14,7 @@ class Database:
     """Database service for SQLite"""
     
     def __init__(self):
-        self.db_path = os.getenv("DATABASE_URL", "postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db").replace("sqlite:///", "")
+        self.db_path = os.getenv("DATABASE_URL", "postgresql://connext_user:connext_password@localhost/connext_attack_db").replace("sqlite:///", "")
         self.connection = None
     
     async def connect(self):

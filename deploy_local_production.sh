@@ -1,11 +1,11 @@
 #!/bin/bash
-# dLNk Attack Platform - Local Production Deployment Script
+# Connext Security Platform - Local Production Deployment Script
 # For WSL2 Ubuntu with Ollama
 
 set -e
 
 echo "=========================================="
-echo "dLNk Attack Platform - Production Deploy"
+echo "Connext Security Platform - Production Deploy"
 echo "=========================================="
 echo ""
 
@@ -78,7 +78,7 @@ echo -e "${BLUE}[5/8] Configuring environment...${NC}"
 # Create .env file if not exists
 if [ ! -f "$PROJECT_DIR/.env" ]; then
     cat > "$PROJECT_DIR/.env" << 'ENVEOF'
-# dLNk Attack Platform - Production Configuration
+# Connext Security Platform - Production Configuration
 
 # LLM Configuration (Ollama)
 LLM_PROVIDER=localai
@@ -116,7 +116,7 @@ ALLOWED_HOSTS=*
 
 # Logging
 LOG_LEVEL=INFO
-LOG_FILE=logs/dlnk.log
+LOG_FILE=logs/connext.log
 
 # Attack Configuration
 MAX_CONCURRENT_ATTACKS=5

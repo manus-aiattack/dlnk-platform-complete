@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Command Line Interface
+Connext Security Platform - Command Line Interface
 Full-featured CLI for managing attacks, campaigns, and agents
 """
 
@@ -19,8 +19,8 @@ from rich import print as rprint
 console = Console()
 
 
-class DLNKClient:
-    """dLNk API Client"""
+class CONNEXTClient:
+    """Connext API Client"""
     
     def __init__(self, base_url: str = "http://localhost:8000", api_key: Optional[str] = None):
         self.base_url = base_url
@@ -72,13 +72,13 @@ class DLNKClient:
 
 
 @click.group()
-@click.option('--api-key', envvar='DLNK_API_KEY', help='API Key for authentication')
-@click.option('--base-url', default='http://localhost:8000', help='Base URL of dLNk API')
+@click.option('--api-key', envvar='CONNEXT_API_KEY', help='API Key for authentication')
+@click.option('--base-url', default='http://localhost:8000', help='Base URL of Connext API')
 @click.pass_context
 def cli(ctx, api_key, base_url):
-    """dLNk Attack Platform CLI - เครื่องมือโจมตีอัตโนมัติ"""
+    """Connext Security Platform CLI - เครื่องมือโจมตีอัตโนมัติ"""
     ctx.ensure_object(dict)
-    ctx.obj['client'] = DLNKClient(base_url, api_key)
+    ctx.obj['client'] = CONNEXTClient(base_url, api_key)
 
 
 @cli.group()
@@ -365,7 +365,7 @@ def status(ctx):
     try:
         health = client.get("/health")
         
-        table = Table(title="สถานะระบบ dLNk")
+        table = Table(title="สถานะระบบ Connext")
         table.add_column("รายการ", style="cyan")
         table.add_column("ค่า", style="green")
         

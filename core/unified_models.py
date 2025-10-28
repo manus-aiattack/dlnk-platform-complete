@@ -1,5 +1,5 @@
 """
-Unified Data Models for dLNk Attack Platform
+Unified Data Models for Connext Security Platform
 Standardized Pydantic models for all agent reports and system data
 """
 

@@ -133,7 +133,7 @@ async def test_cli_commands():
 async def main():
     """Run all tests"""
     print("=" * 60)
-    print("🧪 dLNk dLNk Framework - System Test")
+    print("🧪 Connext Connext Framework - System Test")
     print("=" * 60)
     
     results = []

@@ -1,5 +1,5 @@
 [Unit]
-Description=dLNk Attack Platform API Server
+Description=Connext Security Platform API Server
 After=network.target postgresql.service redis.service
 Wants=postgresql.service redis.service
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WebSocket Test Script for dLNk Attack Platform
+WebSocket Test Script for Connext Security Platform
 Tests all WebSocket connections and verifies functionality
 """
 

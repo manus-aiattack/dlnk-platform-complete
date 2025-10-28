@@ -3,9 +3,9 @@
 
 echo "=== Cleaning Up Duplicates ==="
 
-# 1. Remove dlnk_FINAL (already migrated better files)
-echo "Removing dlnk_FINAL directory..."
-rm -rf dlnk_FINAL/
+# 1. Remove connext_FINAL (already migrated better files)
+echo "Removing connext_FINAL directory..."
+rm -rf connext_FINAL/
 
 # 2. Remove duplicate API files (keep main_complete.py as main.py)
 echo "Cleaning up API files..."
@@ -50,14 +50,14 @@ if [ -d "apex_predator_FINAL" ]; then
 fi
 
 # 7. Remove dlnk symlink/directory if exists
-if [ -e "dlnk" ]; then
-    echo "Removing dlnk..."
+if [ -e "connext" ]; then
+    echo "Removing connext..."
     rm -rf dlnk
 fi
 
 echo "=== Cleanup Complete ==="
 echo "Removed:"
-echo "  - dlnk_FINAL/"
+echo "  - connext_FINAL/"
 echo "  - Duplicate API files"
 echo "  - Test files from root"
 echo "  - Temporary files"

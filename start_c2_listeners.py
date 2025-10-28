@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk C2 Listeners Auto-Start
+Connext C2 Listeners Auto-Start
 Automatically starts C2 listeners on system boot
 """
 

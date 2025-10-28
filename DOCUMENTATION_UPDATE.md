@@ -33,7 +33,7 @@ serve -s dist -l 3000
 ```bash
 sudo apt install postgresql
 sudo -u postgres psql
-CREATE DATABASE dlnk_attack_platform;
+CREATE DATABASE connext_attack_platform;
 ```
 
 ### 3. TESTING_GUIDE.md
@@ -49,7 +49,7 @@ CREATE DATABASE dlnk_attack_platform;
 **ใช้งาน**:
 ```bash
 # ทดสอบ agent
-./dlnk agent sqlmap_agent scan --url https://testphp.vulnweb.com
+./connext agent sqlmap_agent scan --url https://testphp.vulnweb.com
 
 # Load testing
 locust -f locustfile.py --host=http://localhost:8000

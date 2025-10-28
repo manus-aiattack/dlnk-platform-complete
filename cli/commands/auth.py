@@ -21,7 +21,7 @@ def auth_commands():
 @auth_commands.command(name='login')
 @click.option('--api-key', help='API key for authentication')
 def login(api_key):
-    """Login to dLNk platform"""
+    """Login to Connext platform"""
     config = get_config()
     client = get_client()
     
@@ -56,7 +56,7 @@ def login(api_key):
 
 @auth_commands.command(name='logout')
 def logout():
-    """Logout from dLNk platform"""
+    """Logout from Connext platform"""
     config = get_config()
     
     if not config.is_authenticated():

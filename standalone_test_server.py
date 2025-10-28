@@ -80,8 +80,8 @@ class Storage:
     def _initialize_production_keys(self):
         """Initialize production API keys"""
         import secrets
-        admin_key = f"dlnk_live_{secrets.token_hex(32)}"
-        user_key = f"dlnk_live_{secrets.token_hex(32)}"
+        admin_key = f"connext_live_{secrets.token_hex(32)}"
+        user_key = f"connext_live_{secrets.token_hex(32)}"
         
         self.api_keys[admin_key] = {"user_id": "admin_prod", "role": "admin"}
         self.api_keys[user_key] = {"user_id": "user_prod", "role": "user"}
@@ -143,7 +143,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="dLNk Standalone Test Server",
+    title="Connext Standalone Test Server",
     description="Minimal test server with working endpoints",
     version="1.0.0",
     lifespan=lifespan
@@ -181,7 +181,7 @@ async def root():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>dLNk Standalone Test Server</title>
+        <title>Connext Standalone Test Server</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -215,7 +215,7 @@ async def root():
     </head>
     <body>
         <div class="container">
-            <h1>🧪 dLNk Standalone Test Server</h1>
+            <h1>🧪 Connext Standalone Test Server</h1>
             <p style="text-align: center;">Minimal test environment with working endpoints</p>
             
             <h3>📋 Test API Keys</h3>

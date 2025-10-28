@@ -5,7 +5,7 @@
 name: "Active Directory Domain Takeover"
 description: "Complete AD attack chain - from domain user to Domain Admin"
 version: "1.0.0"
-author: "dLNk HACK"
+author: "Connext HACK"
 target_type: "windows_domain"
 estimated_duration: 90  # minutes
 success_rate: 0.80

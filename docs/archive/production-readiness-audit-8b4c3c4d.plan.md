@@ -2,19 +2,19 @@
 
 ## Executive Summary
 
-แพลนแม่บทสำหรับการผสานรวมและปรับปรุงระบบ dLNk Attack Platform ให้เป็นระบบเดียวที่สมบูรณ์ ทำงานผ่านทุกช่องทาง (Terminal CLI, Web Interface, REST API) พร้อมระบบจัดการผู้ใช้ ลิขสิทธิ์ และการแสดงผลแบบ unified
+แพลนแม่บทสำหรับการผสานรวมและปรับปรุงระบบ Connext Security Platform ให้เป็นระบบเดียวที่สมบูรณ์ ทำงานผ่านทุกช่องทาง (Terminal CLI, Web Interface, REST API) พร้อมระบบจัดการผู้ใช้ ลิขสิทธิ์ และการแสดงผลแบบ unified
 
 ## Current Project Structure Analysis
 
 ### Existing Projects in C:\projecattack\Manus\
 1. **apex_dashboard** - Dashboard เก่า (ไม่ใช้แล้ว)
 2. **apex_predator_FINAL** - โปรเจคเก่า (ไม่ใช้แล้ว)
-3. **dlnk_FINAL** - โปรเจคหลักปัจจุบัน ✅
+3. **connext_FINAL** - โปรเจคหลักปัจจุบัน ✅
 4. **venv** - Virtual environment ระดับ Manus
 
 ### Documentation Files to Review/Consolidate
 - `BUG_FIX_SUMMARY.md`
-- `DLNK_COMPLETE_FIX.md`
+- `CONNEXT_COMPLETE_FIX.md`
 - `FINAL_RELEASE_NOTES.md`
 - `NEWPLAN.MD`
 - `PRODUCTION_DEPLOYMENT_GUIDE.md`
@@ -37,7 +37,7 @@
 ```
 C:\projecattack\Manus\apex_dashboard\          → DELETE
 C:\projecattack\Manus\apex_predator_FINAL\     → DELETE
-C:\projecattack\Manus\venv\                    → DELETE (ใช้ venv ใน dlnk_FINAL)
+C:\projecattack\Manus\venv\                    → DELETE (ใช้ venv ใน connext_FINAL)
 ```
 
 ### 1.2 Consolidate Documentation
@@ -45,28 +45,28 @@ C:\projecattack\Manus\venv\                    → DELETE (ใช้ venv ใน
 
 **เก็บไว้:**
 - `README.md` → อัพเดทเป็น master README
-- `PRODUCTION_DEPLOYMENT_GUIDE.md` → รวมเข้า dlnk_FINAL/docs/
+- `PRODUCTION_DEPLOYMENT_GUIDE.md` → รวมเข้า connext_FINAL/docs/
 
 **ลบ/รวม:**
 - `BUG_FIX_SUMMARY.md` → รวมเข้า CHANGELOG
-- `DLNK_COMPLETE_FIX.md` → รวมเข้า CHANGELOG
+- `CONNEXT_COMPLETE_FIX.md` → รวมเข้า CHANGELOG
 - `FINAL_RELEASE_NOTES.md` → รวมเข้า CHANGELOG
 - `NEWPLAN.MD` → ลบ (outdated)
 - `PRODUCTION_QUICK_START.md` → รวมเข้า README
 - `TESTING_AND_DEPLOYMENT_GUIDE.md` → รวมเข้า docs/
 
-### 1.3 Clean dlnk_FINAL Directory
+### 1.3 Clean connext_FINAL Directory
 
 **ลบไฟล์ซ้ำซ้อน:**
 ```
-dlnk_FINAL/
+connext_FINAL/
 ├── api/routes/
 │   ├── admin.py          → ลบ (ใช้ admin_v2.py)
 │   └── attack.py         → ลบ (ใช้ attack_v2.py)
 ├── README.old.md         → ลบ
-├── dLNkV1.MD            → ลบ
-├── dlnk.db              → ลบ (development database)
-├── logs/dlnk.json       → ลบ (old logs)
+├── ConnextV1.MD            → ลบ
+├── connext.db              → ลบ (development database)
+├── logs/connext.json       → ลบ (old logs)
 └── test_*.py            → ลบทั้งหมด (moved to tests/)
 ```
 
@@ -81,7 +81,7 @@ attack_v2.py → attack.py
 ```
 C:\projecattack\
 └── Manus\
-    └── dlnk_FINAL\                    # Main project
+    └── connext_FINAL\                    # Main project
         ├── api\                       # Backend API (FastAPI)
         ├── cli\                       # Command-line interface
         ├── web\                       # Web frontend
@@ -243,7 +243,7 @@ class DatabaseService:
 - `cli/main.py` - Entry point
 - `cli/attack_cli.py` - Attack commands
 - `cli/license_cli.py` - License commands
-- `cli/dlnk.py` - Main CLI
+- `cli/connext.py` - Main CLI
 - `cli/ui.py` - UI components
 
 **Improvements:**
@@ -329,11 +329,11 @@ dlnk                                # Start interactive shell
 ```
 
 ### 3.2 CLI Configuration
-สร้าง `~/.dlnk/config.yaml` สำหรับ CLI settings
+สร้าง `~/.connext/config.yaml` สำหรับ CLI settings
 ```yaml
 api:
   url: http://localhost:8000
-  key: DLNK-xxxxx
+  key: CONNEXT-xxxxx
   
 user:
   username: admin
@@ -350,10 +350,10 @@ notifications:
 ```
 
 ### 3.3 CLI Session Management
-เก็บ session state ใน `~/.dlnk/session.json`
+เก็บ session state ใน `~/.connext/session.json`
 ```json
 {
-  "api_key": "DLNK-xxxxx",
+  "api_key": "CONNEXT-xxxxx",
   "token": "jwt-token",
   "user_id": 1,
   "expires_at": "2024-12-31T23:59:59Z"
@@ -584,7 +584,7 @@ class HTMLFormatter(OutputFormatter):
 class UnifiedLogger:
     def __init__(self):
         self.handlers = [
-            FileHandler("logs/dlnk.log"),
+            FileHandler("logs/connext.log"),
             RedisHandler(redis_client),
             ConsoleHandler(),
             WebSocketHandler()
@@ -869,7 +869,7 @@ services:
 ### Week 1-2: Cleanup & Foundation
 - [ ] Remove old projects
 - [ ] Consolidate documentation
-- [ ] Clean dlnk_FINAL directory
+- [ ] Clean connext_FINAL directory
 - [ ] Create unified services layer
 - [ ] Setup testing infrastructure
 

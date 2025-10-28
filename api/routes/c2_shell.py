@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - C2 Shell Management API Routes
+Connext Security Platform - C2 Shell Management API Routes
 """
 
 from fastapi import APIRouter, HTTPException

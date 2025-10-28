@@ -17,25 +17,25 @@
 | Root/advanced_agents/ | 33 | ✅ Advanced attacks |
 | Root/core/ | 118 | ⚠️ Mix of old & new |
 | Root/api/ | 45 | ⚠️ Multiple main*.py |
-| **dlnk_FINAL/** | **282** | ⚠️ **Has newer versions** |
-| dlnk_FINAL/core/ | 100 | ⚠️ Some files newer than root |
+| **connext_FINAL/** | **282** | ⚠️ **Has newer versions** |
+| connext_FINAL/core/ | 100 | ⚠️ Some files newer than root |
 
 ---
 
 ## 🔍 Critical Findings
 
-### 1. dlnk_FINAL is NOT just a backup!
+### 1. connext_FINAL is NOT just a backup!
 
 **Evidence:**
-- `dlnk_FINAL/core/orchestrator.py` (635 lines) > `root/core/orchestrator.py` (424 lines)
-- dlnk_FINAL has **AI-Driven Intelligent Orchestrator** with:
+- `connext_FINAL/core/orchestrator.py` (635 lines) > `root/core/orchestrator.py` (424 lines)
+- connext_FINAL has **AI-Driven Intelligent Orchestrator** with:
   - Ollama AI integration
   - AI context understanding
   - Adaptive strategies
   - Learning memory system
 - Root version is older and lacks AI intelligence
 
-### 2. Root has unique files not in dlnk_FINAL
+### 2. Root has unique files not in connext_FINAL
 
 **Files only in root/core/:**
 - `self_healing.py` ⭐ (NEW - just created)
@@ -62,7 +62,7 @@ agents/
   └── post_exploitation/
 ```
 
-**dlnk_FINAL structure:**
+**connext_FINAL structure:**
 ```
 agents/
   ├── deserialization_agent.py  (flat)
@@ -70,7 +70,7 @@ agents/
   └── xxe_agent.py  (flat)
 ```
 
-Root has better organization (categorized), dlnk_FINAL is flat.
+Root has better organization (categorized), connext_FINAL is flat.
 
 ---
 
@@ -78,7 +78,7 @@ Root has better organization (categorized), dlnk_FINAL is flat.
 
 ### Phase 1: Detailed File Comparison
 
-Need to compare EVERY file between root and dlnk_FINAL:
+Need to compare EVERY file between root and connext_FINAL:
 
 1. **Core files** - Check which version is newer/better
 2. **Agents** - Root has better structure, but check content
@@ -89,7 +89,7 @@ Need to compare EVERY file between root and dlnk_FINAL:
 
 **For each file:**
 1. If only in root → Keep
-2. If only in dlnk_FINAL → Copy to root
+2. If only in connext_FINAL → Copy to root
 3. If in both:
    - Compare file size and modification date
    - Compare features and functionality
@@ -121,7 +121,7 @@ Manus/
 ## 🎯 Action Plan
 
 ### Step 1: Create comparison script
-- Compare all files between root and dlnk_FINAL
+- Compare all files between root and connext_FINAL
 - Generate report of differences
 - Identify which version is better for each file
 
@@ -139,7 +139,7 @@ Manus/
 - Test each module
 
 ### Step 5: Clean up
-- Remove dlnk_FINAL after merging
+- Remove connext_FINAL after merging
 - Remove duplicate API files
 - Archive old documentation
 
@@ -151,7 +151,7 @@ Manus/
 
 1. **core/orchestrator.py**
    - Root: 424 lines (older, no AI)
-   - dlnk_FINAL: 635 lines (newer, AI-driven) ✅ Use this
+   - connext_FINAL: 635 lines (newer, AI-driven) ✅ Use this
 
 2. **core/ai_attack_planner.py**
    - Need to compare
@@ -167,11 +167,11 @@ Manus/
 
 ## 📊 Comparison Matrix
 
-| File | Root Size | dlnk_FINAL Size | Winner | Action |
+| File | Root Size | connext_FINAL Size | Winner | Action |
 |------|-----------|-----------------|--------|--------|
 | main.py | 16 | 16 | Same | Keep root |
 | startup.py | 307 | 297 | Root | Keep root |
-| core/orchestrator.py | 424 | 635 | dlnk_FINAL | **Use dlnk_FINAL** |
+| core/orchestrator.py | 424 | 635 | connext_FINAL | **Use connext_FINAL** |
 | core/self_healing.py | EXISTS | N/A | Root | Keep root (new) |
 | core/self_learning.py | EXISTS | N/A | Root | Keep root |
 
@@ -193,9 +193,9 @@ Manus/
 ## Status: Phase 1 - Detailed Analysis Required
 
 **Current understanding:** 
-- Both root and dlnk_FINAL have important files
+- Both root and connext_FINAL have important files
 - Need file-by-file comparison
-- Cannot simply delete dlnk_FINAL
+- Cannot simply delete connext_FINAL
 - Must merge intelligently
 
 **Next:** Create comparison script to analyze all files

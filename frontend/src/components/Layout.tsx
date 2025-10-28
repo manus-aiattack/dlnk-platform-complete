@@ -37,7 +37,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="flex items-center space-x-3">
               <Shield className="w-8 h-8 text-cyan-400" />
               <Link to="/" className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-xl">
-                dLNk Attack Platform
+                Connext Security Platform
               </Link>
             </div>
 
@@ -141,7 +141,7 @@ export default function Layout({ children }: LayoutProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © 2025 dLNk Attack Platform. All rights reserved.
+              © 2025 Connext Security Platform. All rights reserved.
             </div>
             <div className="flex items-center space-x-6 text-sm text-gray-400">
               <a href="#" className="hover:text-cyan-400 transition-colors">Documentation</a>

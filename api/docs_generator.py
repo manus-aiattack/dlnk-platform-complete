@@ -17,10 +17,10 @@ def custom_openapi(app: FastAPI) -> Dict[str, Any]:
         return app.openapi_schema
     
     openapi_schema = get_openapi(
-        title="dLNk Attack Platform API",
+        title="Connext Security Platform API",
         version="2.0.0",
         description="""
-# dLNk Attack Platform API
+# Connext Security Platform API
 
 AI-Powered Cybersecurity Testing Platform
 
@@ -29,7 +29,7 @@ AI-Powered Cybersecurity Testing Platform
 All API endpoints require an API key. Include your key in the `X-API-Key` header:
 
 ```bash
-curl -H "X-API-Key: your-api-key" https://api.dlnk.com/api/v1/attacks
+curl -H "X-API-Key: your-api-key" https://api.connext.com/api/v1/attacks
 ```
 
 ## Rate Limiting
@@ -97,7 +97,7 @@ All errors follow this format:
 ### Launch Attack
 
 ```bash
-curl -X POST https://api.dlnk.com/api/v1/attacks \\
+curl -X POST https://api.connext.com/api/v1/attacks \\
   -H "X-API-Key: your-api-key" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -109,14 +109,14 @@ curl -X POST https://api.dlnk.com/api/v1/attacks \\
 ### Get Attack Status
 
 ```bash
-curl https://api.dlnk.com/api/v1/attacks/abc123 \\
+curl https://api.connext.com/api/v1/attacks/abc123 \\
   -H "X-API-Key: your-api-key"
 ```
 
 ### List Attacks
 
 ```bash
-curl https://api.dlnk.com/api/v1/attacks?limit=10&status=running \\
+curl https://api.connext.com/api/v1/attacks?limit=10&status=running \\
   -H "X-API-Key: your-api-key"
 ```
 
@@ -130,9 +130,9 @@ Official SDKs available for:
 
 ## Support
 
-- Documentation: https://docs.dlnk.com
-- API Status: https://status.dlnk.com
-- Support: support@dlnk.com
+- Documentation: https://docs.connext.com
+- API Status: https://status.connext.com
+- Support: support@connext.com
         """,
         routes=app.routes,
     )

@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Attack API Routes
+Connext Security Platform - Attack API Routes
 API endpoints for launching and managing attacks
 """
 

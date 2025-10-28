@@ -28,7 +28,7 @@ except ImportError as e:
 def create_database_if_not_exists():
     """Create database if it doesn't exist"""
     # Connect to PostgreSQL server (not specific database)
-    postgres_url = "postgresql://dlnk_user:dlnk_secure_password_2024@localhost:5432/postgres"
+    postgres_url = "postgresql://connext_user:connext_secure_password_2024@localhost:5432/postgres"
     
     try:
         temp_engine = create_engine(postgres_url)
@@ -38,15 +38,15 @@ def create_database_if_not_exists():
             
             # Check if database exists
             result = conn.execute(text(
-                "SELECT 1 FROM pg_database WHERE datname='dlnk_attack_db'"
+                "SELECT 1 FROM pg_database WHERE datname='connext_attack_db'"
             ))
             
             if not result.fetchone():
-                print("📦 Creating database 'dlnk_attack_db'...")
-                conn.execute(text("CREATE DATABASE dlnk_attack_db"))
+                print("📦 Creating database 'connext_attack_db'...")
+                conn.execute(text("CREATE DATABASE connext_attack_db"))
                 print("✅ Database created successfully")
             else:
-                print("ℹ️  Database 'dlnk_attack_db' already exists")
+                print("ℹ️  Database 'connext_attack_db' already exists")
                 
     except OperationalError as e:
         print(f"❌ Failed to connect to PostgreSQL: {e}")
@@ -55,15 +55,15 @@ def create_database_if_not_exists():
         print("   sudo systemctl start postgresql")
         print("\n💡 Create the database user:")
         print("   sudo -u postgres psql")
-        print("   CREATE USER dlnk_user WITH PASSWORD 'dlnk_secure_password_2024';")
-        print("   ALTER USER dlnk_user CREATEDB;")
+        print("   CREATE USER connext_user WITH PASSWORD 'connext_secure_password_2024';")
+        print("   ALTER USER connext_user CREATEDB;")
         sys.exit(1)
 
 
 def setup_production_database():
     """Setup production database with tables and initial data"""
     print("\n" + "="*60)
-    print("🚀 dLNk Attack Platform - Production Database Setup")
+    print("🚀 Connext Security Platform - Production Database Setup")
     print("="*60 + "\n")
     
     # Step 1: Create database if needed
@@ -103,7 +103,7 @@ def setup_production_database():
             # Create admin user
             admin_user = User(
                 username="admin",
-                email="admin@dlnk.local",
+                email="admin@connext.local",
                 full_name="System Administrator",
                 role=UserRole.ADMIN,
                 is_active=True
@@ -113,7 +113,7 @@ def setup_production_database():
             db.refresh(admin_user)
             
             # Generate admin API key
-            admin_key = f"dlnk_live_{secrets.token_hex(32)}"
+            admin_key = f"connext_live_{secrets.token_hex(32)}"
             
             # Hash the key
             import hashlib
@@ -144,7 +144,7 @@ def setup_production_database():
             
             # Save to file
             with open("/home/ubuntu/aiprojectattack/ADMIN_CREDENTIALS.txt", "w") as f:
-                f.write("dLNk Attack Platform - Admin Credentials\n")
+                f.write("Connext Security Platform - Admin Credentials\n")
                 f.write("="*60 + "\n")
                 f.write(f"Username: {admin_user.username}\n")
                 f.write(f"Email: {admin_user.email}\n")
@@ -161,7 +161,7 @@ def setup_production_database():
         settings_to_create = [
             {
                 "key": "line_contact_url",
-                "value": {"url": "https://line.me/ti/p/~dlnk_admin"},
+                "value": {"url": "https://line.me/ti/p/~connext_admin"},
                 "description": "LINE contact URL for purchasing API keys"
             },
             {

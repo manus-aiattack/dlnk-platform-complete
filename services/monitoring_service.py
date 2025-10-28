@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Production Monitoring Service
+Connext Security Platform - Production Monitoring Service
 Comprehensive monitoring, logging, and alerting system
 """
 

@@ -1,8 +1,8 @@
-# dLNk dLNk Framework - Quick Start Guide
+# Connext Connext Framework - Quick Start Guide
 
 **Version:** 3.0 (Final)
 
-Welcome to the dLNk dLNk Framework! This guide will get you up and running in minutes, allowing you to launch your first automated penetration test.
+Welcome to the Connext Connext Framework! This guide will get you up and running in minutes, allowing you to launch your first automated penetration test.
 
 ---
 
@@ -12,8 +12,8 @@ This is the fastest way to get started. Make sure you have Docker and Docker Com
 
 1.  **Unzip the package:**
     ```bash
-    unzip dlnk_dlnk_framework_v3_final.zip
-    cd dlnk_dlnk
+    unzip connext_connext_framework_v3_final.zip
+    cd connext_dlnk
     ```
 
 2.  **Build and run the containers:**
@@ -70,7 +70,7 @@ Once the attack is launched, you can monitor its progress in real-time in two wa
 
 ### **What's Next?**
 
-Congratulations! You have successfully launched your first automated attack with the dLNk dLNk Framework.
+Congratulations! You have successfully launched your first automated attack with the Connext Connext Framework.
 
 To explore the full capabilities of the framework, please refer to the following documents:
 

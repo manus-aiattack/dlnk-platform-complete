@@ -1,5 +1,5 @@
 """
-Database Configuration for dLNk Attack Platform
+Database Configuration for Connext Security Platform
 Real PostgreSQL connection instead of mock in-memory storage
 """
 
@@ -12,7 +12,7 @@ from typing import Generator
 # Database URL from environment or default
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://dlnk_user:dlnk_secure_password_2024@localhost:5432/dlnk_attack_db"
+    "postgresql://connext_user:connext_secure_password_2024@localhost:5432/connext_attack_db"
 )
 
 # Create SQLAlchemy engine

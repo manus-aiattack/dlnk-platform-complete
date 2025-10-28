@@ -1,6 +1,6 @@
 # 🚀 Future Enhancements - Implementation Guide
 
-This document describes the 8 Future Enhancements implemented in the dLNk Attack Platform frontend.
+This document describes the 8 Future Enhancements implemented in the Connext Security Platform frontend.
 
 ---
 
@@ -119,7 +119,7 @@ const handleClick = useMemoizedCallback(() => {
 VitePWA({
   registerType: 'autoUpdate',
   manifest: {
-    name: 'dLNk Attack Platform',
+    name: 'Connext Security Platform',
     theme_color: '#06B6D4',
     display: 'standalone',
   },

@@ -1,13 +1,13 @@
-# dLNk dLNk: Developer Guide
+# Connext: Developer Guide
 
-This guide provides instructions and best practices for developing and extending the dLNk dLNk framework.
+This guide provides instructions and best practices for developing and extending the Connext framework.
 
 ## Project Structure
 
 The project is organized into the following key directories:
 
 ```
-/dlnk_dlnk
+/connext_dlnk
 ├── /agents/           # All individual agent modules
 ├── /api/              # FastAPI application and endpoints
 ├── /cli/              # Command-line interface logic
@@ -23,7 +23,7 @@ The project is organized into the following key directories:
 
 To create a new agent, follow these steps:
 
-1.  **Create a new Python file** in the `dlnk_dlnk/agents/` directory (e.g., `my_new_agent.py`).
+1.  **Create a new Python file** in the `connext_connext/agents/` directory (e.g., `my_new_agent.py`).
 2.  **Define a new class** that inherits from `BaseAgent`.
 3.  **Implement the `run` method**. This is the main entry point for your agent's logic.
 4.  **Define the `validate_strategy` method** to ensure the agent receives the necessary context and parameters.
@@ -74,7 +74,7 @@ The framework will automatically discover this new agent when it starts.
 The framework uses `pytest` for testing. To run the full test suite:
 
 ```bash
-cd /path/to/dlnk_dlnk
+cd /path/to/connext_dlnk
 pytest
 ```
 
@@ -100,7 +100,7 @@ log.error("This indicates an error.")
 log.phase("This is for marking major phases.")
 ```
 
-Logs are automatically streamed to the console, a file (`logs/dlnk_dlnk.log`), and the web dashboard via WebSockets.
+Logs are automatically streamed to the console, a file (`logs/connext_connext.log`), and the web dashboard via WebSockets.
 
 ## Context Management
 

@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Database Service
+Connext Security Platform - Database Service
 Handles all database operations
 """
 
@@ -13,7 +13,7 @@ from .decorators import require_pool
 
 
 class DatabaseService:
-    """Database service for dLNk Attack Platform"""
+    """Database service for Connext Security Platform"""
     
     def __init__(self):
         self.pool: Optional[asyncpg.Pool] = None
@@ -22,9 +22,9 @@ class DatabaseService:
         if not db_url:
             db_host = os.getenv("DB_HOST", "localhost")
             db_port = os.getenv("DB_PORT", "5432")
-            db_user = os.getenv("DB_USER", "dlnk_user")
+            db_user = os.getenv("DB_USER", "connext_user")
             db_password = os.getenv("DB_PASSWORD", "")
-            db_name = os.getenv("DB_NAME", "dlnk")
+            db_name = os.getenv("DB_NAME", "connext")
             db_url = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
         self.db_url = db_url
     

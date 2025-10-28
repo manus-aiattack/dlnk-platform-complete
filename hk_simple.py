@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 """
-dLNk Attack Platform - HK CLI (Simple Version)
+Connext Security Platform - HK CLI (Simple Version)
 Command: hk
 Interactive conversation logger - answers provided by Manus AI directly
 """
@@ -93,7 +93,7 @@ class SimpleAIAssistant:
 **ตัวอย่าง:**
 
 ```
-You: สรุปภาพรวมโปรเจค dLNk
+You: สรุปภาพรวมโปรเจค Connext
 [คัดลอกไปถาม Manus]
 
 Manus Answer (paste here): [วางคำตอบ]

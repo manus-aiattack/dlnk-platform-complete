@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 """
-Comprehensive Integration Test Suite for dLNk Attack Platform
+Comprehensive Integration Test Suite for Connext Security Platform
 Tests all major components and their interactions
 """
 
@@ -25,7 +25,7 @@ class IntegrationTestSuite:
         """Run all integration tests"""
         
         print("=" * 80)
-        print("  dLNk Attack Platform - Integration Test Suite")
+        print("  Connext Security Platform - Integration Test Suite")
         print("=" * 80)
         print()
         

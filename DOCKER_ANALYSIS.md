@@ -23,7 +23,7 @@
 
 #### 1.2.2 docker-compose.yml
 - **ปัญหาหลัก**:
-  1. **Database Name Inconsistency**: ใช้ชื่อ `dlnk_dlnk` ซึ่งดูซ้ำซ้อน
+  1. **Database Name Inconsistency**: ใช้ชื่อ `connext_dlnk` ซึ่งดูซ้ำซ้อน
   2. **Missing Environment Variables**: ไม่มี `.env` file reference
   3. **Port Conflicts**: Metasploit service ใช้ port 5432 ซึ่งซ้ำกับ PostgreSQL
   4. **Command Path Issue**: `api/main.py` อาจไม่ถูกต้องในบาง context
@@ -72,7 +72,7 @@
 
 ### 3.1 อัพเดท Repository Links
 - แทนที่ URL ทั้งหมดจาก `vtvx4myqq9-stack/Manus` เป็น `donlasahachat1-sys/manus`
-- อัพเดทเส้นทาง directory จาก `Manus/dlnk_dlnk_FINAL` เป็น `manus`
+- อัพเดทเส้นทาง directory จาก `Manus/connext_connext_FINAL` เป็น `manus`
 
 ### 3.2 แก้ไข Dockerfile
 ```dockerfile
@@ -87,7 +87,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 
 ### 3.3 แก้ไข docker-compose.yml
 - เพิ่ม `.env` file support
-- แก้ไข database name จาก `dlnk_dlnk` เป็น `manus_db`
+- แก้ไข database name จาก `connext_dlnk` เป็น `manus_db`
 - แก้ไข port conflict ของ Metasploit
 - เพิ่ม volume permissions
 

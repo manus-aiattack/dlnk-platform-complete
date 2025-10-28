@@ -1,5 +1,5 @@
 """
-Performance Monitor for dLNk Attack Platform
+Performance Monitor for Connext Security Platform
 Tracks performance metrics and identifies bottlenecks
 """
 

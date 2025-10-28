@@ -15,7 +15,7 @@ describe('Login Component', () => {
   it('renders login form', () => {
     render(<Login onLogin={mockOnLogin} />);
     
-    expect(screen.getByText('dLNk Attack Platform')).toBeInTheDocument();
+    expect(screen.getByText('Connext Security Platform')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Enter username')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Enter password')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();

@@ -35,7 +35,7 @@ spec:
         - name: POSTGRES_PORT
           value: "5432"
         - name: POSTGRES_DB
-          value: "dlnk_predator"
+          value: "connext_predator"
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:

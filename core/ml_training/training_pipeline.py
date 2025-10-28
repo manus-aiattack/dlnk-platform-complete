@@ -1,5 +1,5 @@
 """
-ML Training Pipeline for dLNk Attack Platform
+ML Training Pipeline for Connext Security Platform
 Trains models on attack data for continuous improvement
 """
 
@@ -25,7 +25,7 @@ class MLTrainingPipeline:
     - Model versioning and deployment
     """
     
-    def __init__(self, data_dir: str = "/tmp/dlnk_training_data"):
+    def __init__(self, data_dir: str = "/tmp/connext_training_data"):
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
         

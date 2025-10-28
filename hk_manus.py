@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 """
-dLNk Attack Platform - HK CLI with Manus Integration
+Connext Security Platform - HK CLI with Manus Integration
 Command: hk
 Interactive AI assistant powered by Manus (no external API needed)
 """
@@ -93,7 +93,7 @@ class ManusAIAssistant:
 
 **ตัวอย่างการใช้งาน:**
 
-- "สรุปภาพรวมโปรเจค dLNk"
+- "สรุปภาพรวมโปรเจค Connext"
 - "สร้างไฟล์ test.py"
 - "แก้ไข config.json"
 - "ตรวจสอบสถานะระบบ"

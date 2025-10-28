@@ -1,5 +1,5 @@
 """
-License Manager for dLNk dLNk Framework
+License Manager for Connext Connext Framework
 Handles license key generation, validation, and terminal locking
 """
 
@@ -39,7 +39,7 @@ class LicenseManager:
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
-            salt=b'dlnk_salt_2024',
+            salt=b'connext_salt_2024',
             iterations=100000,
         )
         return kdf.derive(machine_id.encode())

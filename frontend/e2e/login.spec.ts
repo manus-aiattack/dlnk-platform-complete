@@ -4,7 +4,7 @@ test.describe('Login Flow', () => {
   test('should display login page', async ({ page }) => {
     await page.goto('/');
     
-    await expect(page.getByText('dLNk Attack Platform')).toBeVisible();
+    await expect(page.getByText('Connext Security Platform')).toBeVisible();
     await expect(page.getByPlaceholder('Enter username')).toBeVisible();
     await expect(page.getByPlaceholder('Enter password')).toBeVisible();
     await expect(page.getByRole('button', { name: /login/i })).toBeVisible();

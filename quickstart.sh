@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# dLNk dLNk Attack Platform - Quick Start Script
+# Connext Connext Security Platform - Quick Start Script
 # สำหรับ Ubuntu/Debian/WSL
 
 set -e
@@ -14,7 +14,7 @@ echo "║     ██╔══██║██╔═══╝ ██╔══╝  
 echo "║     ██║  ██║██║     ███████╗██╔╝ ██╗                        ║"
 echo "║     ╚═╝  ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝                        ║"
 echo "║                                                               ║"
-echo "║        DLNK ATTACK PLATFORM v2.0                         ║"
+echo "║        CONNEXT ATTACK PLATFORM v2.0                         ║"
 echo "║        Quick Start Installation                              ║"
 echo "║                                                               ║"
 echo "╚═══════════════════════════════════════════════════════════════╝"
@@ -136,7 +136,7 @@ if [ ! -f ".env" ]; then
         echo "⚠️  env.template not found, creating basic .env..."
         cat > .env << EOF
 SIMULATION_MODE=False
-DATABASE_URL=postgresql://dlnk:dlnk_password@localhost:5432/dlnk_dlnk
+DATABASE_URL=postgresql://connext:connext_password@localhost:5432/connext_dlnk
 OLLAMA_HOST=http://localhost:11434
 OLLAMA_MODEL=mixtral:latest
 LLM_PROVIDER=ollama

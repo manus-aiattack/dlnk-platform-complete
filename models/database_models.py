@@ -1,5 +1,5 @@
 """
-Database Models for dLNk Attack Platform
+Database Models for Connext Security Platform
 Real database models replacing mock in-memory storage
 """
 

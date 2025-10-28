@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Automated Quality Check Script
-Comprehensive quality assurance for dLNk Attack Platform
+Comprehensive quality assurance for Connext Security Platform
 """
 
 import os

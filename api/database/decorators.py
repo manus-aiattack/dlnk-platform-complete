@@ -1,5 +1,5 @@
 """
-Database decorators for dLNk Attack Platform
+Database decorators for Connext Security Platform
 Ensures database pool is available before operations
 """
 

@@ -35,7 +35,7 @@ class HelpSystem:
         self.help_topics = {
             "getting_started": {
                 "title": "Getting Started",
-                "description": "เริ่มต้นใช้งาน dLNk dLNk v5 LLM",
+                "description": "เริ่มต้นใช้งาน Connext v5 LLM",
                 "content": """
 # Getting Started
 
@@ -200,7 +200,7 @@ class HelpSystem:
 
 ### ตรวจสอบ Logs
 ```bash
-tail -f logs/dlnk.log
+tail -f logs/connext.log
 ```
 
 ### ตรวจสอบ Configuration
@@ -245,8 +245,8 @@ python main.py --status
         """โหลด FAQ"""
         self.faq = {
             "what_is_dlnk": {
-                "question": "dLNk dLNk v5 LLM คืออะไร?",
-                "answer": "dLNk dLNk v5 LLM เป็นระบบทดสอบความปลอดภัยแบบอัตโนมัติที่ใช้ AI และ LLM เพื่อทำการทดสอบความปลอดภัยแบบครอบคลุม"
+                "question": "Connext v5 LLM คืออะไร?",
+                "answer": "Connext v5 LLM เป็นระบบทดสอบความปลอดภัยแบบอัตโนมัติที่ใช้ AI และ LLM เพื่อทำการทดสอบความปลอดภัยแบบครอบคลุม"
             },
             "how_to_use": {
                 "question": "วิธีใช้งานระบบ?",

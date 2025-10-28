@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Project Progress Checker
+Connext Security Platform - Project Progress Checker
 ตรวจสอบความคืบหน้าของโปรเจคทุกส่วน
 """
 
@@ -22,7 +22,7 @@ def check_database():
     """Check database status"""
     try:
         import psycopg2
-        conn = psycopg2.connect("postgresql://dlnk:dlnk_password@localhost/dlnk")
+        conn = psycopg2.connect("postgresql://connext:connext_password@localhost/connext")
         cur = conn.cursor()
         
         # Count tables
@@ -229,7 +229,7 @@ def check_self_healing():
 def main():
     """Main function"""
     print("=" * 70)
-    print("dLNk Attack Platform - Project Progress Report")
+    print("Connext Security Platform - Project Progress Report")
     print("=" * 70)
     print(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 70)

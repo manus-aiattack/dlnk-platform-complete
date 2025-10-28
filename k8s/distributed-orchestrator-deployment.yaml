@@ -537,10 +537,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - dlnk.yourdomain.com
+    - connext.yourdomain.com
     secretName: dlnk-tls
   rules:
-  - host: dlnk.yourdomain.com
+  - host: connext.yourdomain.com
     http:
       paths:
       - path: /

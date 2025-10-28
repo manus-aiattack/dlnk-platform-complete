@@ -71,7 +71,7 @@ export const NewAuthPanel: React.FC = () => {
             color: theme.colors.primary,
             marginBottom: theme.spacing.sm
           }}>
-            dLNk Attack Platform
+            Connext Security Platform
           </h1>
           <p style={{
             color: theme.colors.textSecondary,
@@ -271,10 +271,10 @@ export const NewAuthPanel: React.FC = () => {
           fontSize: '14px'
         }}>
           <p style={{ margin: 0 }}>
-            🔒 Secured by dLNk Security Platform
+            🔒 Secured by Connext Security Platform
           </p>
           <p style={{ margin: `${theme.spacing.sm} 0 0 0`, fontSize: '12px' }}>
-            © 2025 dLNk. All rights reserved.
+            © 2025 Connext. All rights reserved.
           </p>
         </div>
       </div>

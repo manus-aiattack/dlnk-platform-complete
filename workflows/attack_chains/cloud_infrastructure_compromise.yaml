@@ -4,7 +4,7 @@
 name: "Cloud Infrastructure Compromise"
 description: "Complete cloud attack chain - IAM escalation to resource compromise"
 version: "1.0.0"
-author: "dLNk HACK"
+author: "Connext HACK"
 target_type: "cloud"
 estimated_duration: 60
 success_rate: 0.70

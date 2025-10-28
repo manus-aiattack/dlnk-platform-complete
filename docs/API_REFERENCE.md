@@ -1,9 +1,9 @@
-# dLNk dLNk Framework - API Reference
+# Connext Connext Framework - API Reference
 
 **Version:** 1.0.0
 **Base URL:** `/`
 
-This document provides a detailed reference for the RESTful API of the dLNk dLNk Framework. The API allows for programmatic interaction with the framework, enabling integration with other tools and automation of complex attack workflows.
+This document provides a detailed reference for the RESTful API of the Connext Connext Framework. The API allows for programmatic interaction with the framework, enabling integration with other tools and automation of complex attack workflows.
 
 ---
 
@@ -26,7 +26,7 @@ This document provides a detailed reference for the RESTful API of the dLNk dLNk
   {
     "status": "healthy",
     "version": "1.0.0",
-    "framework": "dLNk dLNk"
+    "framework": "Connext"
   }
   ```
 

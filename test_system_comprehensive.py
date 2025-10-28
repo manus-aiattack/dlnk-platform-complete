@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Comprehensive System Test for dLNk Attack Platform
+Comprehensive System Test for Connext Security Platform
 Tests all components without requiring database connection
 """
 
@@ -182,7 +182,7 @@ def test_system_integrity():
 
 async def main():
     """Run all tests"""
-    print("🎯 dLNk Attack Platform - Comprehensive System Test")
+    print("🎯 Connext Security Platform - Comprehensive System Test")
     print("=" * 70)
     print(f"Test Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()

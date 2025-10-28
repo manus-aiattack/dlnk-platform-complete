@@ -1,5 +1,5 @@
 """
-Configuration settings for dLNk dLNk Framework
+Configuration settings for Connext Connext Framework
 """
 
 import os
@@ -27,18 +27,18 @@ os.makedirs(REPORTS_DIR, exist_ok=True)
 
 # Logging configuration
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
-LOG_FILE = os.path.join(LOGS_DIR, "dlnk.log")
-JSON_LOG_FILE = os.path.join(LOGS_DIR, "dlnk.json")
+LOG_FILE = os.path.join(LOGS_DIR, "connext.log")
+JSON_LOG_FILE = os.path.join(LOGS_DIR, "connext.json")
 
 # Database configuration
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://connext_user:connext_password@localhost/connext_attack_db")
 
 # PostgreSQL individual settings (for legacy code compatibility)
 DATABASE_HOST = os.getenv("DB_HOST", "localhost")
 DATABASE_PORT = int(os.getenv("DB_PORT", 5432))
-DATABASE_USER = os.getenv("DB_USER", "dlnk_user")
+DATABASE_USER = os.getenv("DB_USER", "connext_user")
 DATABASE_PASSWORD = os.getenv("DB_PASSWORD", "")
-DATABASE_NAME = os.getenv("DB_NAME", "dlnk")
+DATABASE_NAME = os.getenv("DB_NAME", "connext")
 
 # Redis configuration
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")

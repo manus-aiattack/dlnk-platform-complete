@@ -1,5 +1,5 @@
 /**
- * Theme Configuration for dLNk Attack Platform
+ * Theme Configuration for Connext Security Platform
  * Dark theme with green, black, and red color scheme
  */
 

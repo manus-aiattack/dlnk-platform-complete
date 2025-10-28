@@ -203,7 +203,7 @@ class NotificationService:
                 "color": color,
                 "timestamp": datetime.now().isoformat(),
                 "footer": {
-                    "text": "dLNk dLNk Attack Platform"
+                    "text": "Connext Connext Security Platform"
                 }
             }
             
@@ -225,7 +225,7 @@ class NotificationService:
         results = {}
         
         test_title = "🧪 Test Notification"
-        test_message = "This is a test notification from dLNk dLNk Attack Platform."
+        test_message = "This is a test notification from Connext Connext Security Platform."
         
         if "email" in self.enabled_channels and self.smtp_user:
             try:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Production Server
+Connext Security Platform - Production Server
 Integrates all components with full Agent support
 """
 
@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 # Set environment
 os.environ.setdefault("VC_API_KEY", "8-WmOAVImJdRrqBybLj55n-QDu1Y-WYnQNRb280wLhU")
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379")
-os.environ.setdefault("DATABASE_URL", "postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db")
+os.environ.setdefault("DATABASE_URL", "postgresql://connext_user:connext_password@localhost/connext_attack_db")
 
 import uvicorn
 from fastapi import FastAPI
@@ -29,11 +29,11 @@ try:
 except Exception as e:
     print(f"[ERROR] Failed to load API: {e}")
     # Create minimal app
-    api_app = FastAPI(title="dLNk Attack Platform")
+    api_app = FastAPI(title="Connext Security Platform")
 
 # Create main app
 app = FastAPI(
-    title="dLNk Attack Platform - Production",
+    title="Connext Security Platform - Production",
     description="AI-Powered Autonomous Attack Platform with 163+ Agents",
     version="3.0.0-production"
 )
@@ -55,7 +55,7 @@ async def serve_frontend():
         with open("frontend_hacker.html", "r") as f:
             return HTMLResponse(content=f.read())
     except:
-        return HTMLResponse(content="<h1>dLNk Attack Platform</h1><p>Frontend not found</p>")
+        return HTMLResponse(content="<h1>Connext Security Platform</h1><p>Frontend not found</p>")
 
 @app.get("/admin", response_class=HTMLResponse)
 async def serve_admin():
@@ -72,11 +72,11 @@ app.mount("/api", api_app)
 # Health check
 @app.get("/health")
 async def health():
-    return {"status": "operational", "platform": "dLNk Attack Platform"}
+    return {"status": "operational", "platform": "Connext Security Platform"}
 
 if __name__ == "__main__":
     print("=" * 70)
-    print("dLNk Attack Platform - Production Server")
+    print("Connext Security Platform - Production Server")
     print("=" * 70)
     print("Frontend: http://0.0.0.0:8000/")
     print("Admin Panel: http://0.0.0.0:8000/admin")

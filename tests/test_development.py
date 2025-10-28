@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 """
-dLNk Attack Platform - Development Testing Suite
+Connext Security Platform - Development Testing Suite
 Comprehensive testing for all components
 """
 
@@ -467,7 +467,7 @@ def run_all_tests():
     """Run all tests"""
     
     print("\n" + "="*80)
-    print("  dLNk Attack Platform - Development Testing Suite")
+    print("  Connext Security Platform - Development Testing Suite")
     print("="*80)
     
     start_time = time.time()

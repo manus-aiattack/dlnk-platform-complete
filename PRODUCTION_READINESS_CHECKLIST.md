@@ -1,6 +1,6 @@
 # Production Readiness Checklist
 
-**Project**: dLNk Attack Platform  
+**Project**: Connext Security Platform  
 **Date**: October 25, 2025  
 **Status**: 🔄 In Progress
 
@@ -49,7 +49,7 @@ nano .env
 **Critical environment variables**:
 ```env
 # Database
-DATABASE_URL=postgresql://user:password@localhost:5432/dlnk
+DATABASE_URL=postgresql://user:password@localhost:5432/connext
 REDIS_URL=redis://localhost:6379/0
 
 # API Configuration
@@ -95,8 +95,8 @@ sudo -u postgres psql
 
 # In PostgreSQL prompt:
 CREATE DATABASE dlnk;
-CREATE USER dlnk_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE dlnk TO dlnk_user;
+CREATE USER connext_user WITH PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE dlnk TO connext_user;
 \q
 ```
 
@@ -217,7 +217,7 @@ dlnk attack list
 python3 -c "import secrets; print(secrets.token_urlsafe(32))"
 
 # Generate API keys
-python3 -c "import secrets; print('DLNK-' + secrets.token_hex(16))"
+python3 -c "import secrets; print('CONNEXT-' + secrets.token_hex(16))"
 ```
 
 #### 7.2 Configure Firewall
@@ -257,8 +257,8 @@ mkdir -p logs/system/
 
 #### 8.2 Configure Log Rotation
 ```bash
-# Create /etc/logrotate.d/dlnk
-sudo nano /etc/logrotate.d/dlnk
+# Create /etc/logrotate.d/connext
+sudo nano /etc/logrotate.d/connext
 ```
 
 Content:
@@ -293,7 +293,7 @@ python3 -m core.monitoring.prometheus_exporter
 cat > backup_db.sh << 'EOF'
 #!/bin/bash
 DATE=$(date +%Y%m%d_%H%M%S)
-pg_dump -U dlnk_user dlnk > backups/db_$DATE.sql
+pg_dump -U connext_user dlnk > backups/db_$DATE.sql
 gzip backups/db_$DATE.sql
 # Keep only last 30 days
 find backups/ -name "db_*.sql.gz" -mtime +30 -delete
@@ -376,7 +376,7 @@ services:
     image: postgres:15
     environment:
       POSTGRES_DB: dlnk
-      POSTGRES_USER: dlnk_user
+      POSTGRES_USER: connext_user
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -396,7 +396,7 @@ services:
       - postgres
       - redis
     environment:
-      DATABASE_URL: postgresql://dlnk_user:${DB_PASSWORD}@postgres:5432/dlnk
+      DATABASE_URL: postgresql://connext_user:${DB_PASSWORD}@postgres:5432/connext
       REDIS_URL: redis://redis:6379/0
     ports:
       - "8000:8000"
@@ -476,7 +476,7 @@ dlnk system status
 sudo systemctl status postgresql
 
 # Check connection
-psql -U dlnk_user -d dlnk -h localhost
+psql -U connext_user -d dlnk -h localhost
 ```
 
 ### Redis Connection Error

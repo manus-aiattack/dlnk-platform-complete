@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Production Runner
+Connext Security Platform - Production Runner
 Runs the complete system with all 163 Agents and full API endpoints
 """
 
@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 # Set environment variables
 os.environ.setdefault("VC_API_KEY", "8-WmOAVImJdRrqBybLj55n-QDu1Y-WYnQNRb280wLhU")
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379")
-os.environ.setdefault("DATABASE_URL", "postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db")
+os.environ.setdefault("DATABASE_URL", "postgresql://connext_user:connext_password@localhost/connext_attack_db")
 os.environ.setdefault("PYTHONUNBUFFERED", "1")
 
 import uvicorn
@@ -23,7 +23,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 print("=" * 80)
-print("dLNk Attack Platform - Production Mode")
+print("Connext Security Platform - Production Mode")
 print("=" * 80)
 print("Loading API with 163 Agents and Attack Orchestrator...")
 
@@ -34,11 +34,11 @@ try:
 except Exception as e:
     print(f"[✗] Failed to load API: {e}")
     print("Creating minimal fallback...")
-    api_app = FastAPI(title="dLNk Attack Platform - Fallback")
+    api_app = FastAPI(title="Connext Security Platform - Fallback")
 
 # Create wrapper app
 app = FastAPI(
-    title="dLNk Attack Platform",
+    title="Connext Security Platform",
     description="AI-Powered Autonomous Attack Platform with 163+ Agents",
     version="3.0.0-production",
     docs_url=None,  # Disable root docs
@@ -62,7 +62,7 @@ async def serve_frontend():
         with open("frontend_hacker.html", "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
     except Exception as e:
-        return HTMLResponse(content=f"<h1>dLNk Attack Platform</h1><p>Error: {e}</p>")
+        return HTMLResponse(content=f"<h1>Connext Security Platform</h1><p>Error: {e}</p>")
 
 @app.get("/admin", response_class=HTMLResponse)
 async def serve_admin():
@@ -81,7 +81,7 @@ app.mount("/api", api_app)
 async def health():
     return {
         "status": "operational",
-        "platform": "dLNk Attack Platform",
+        "platform": "Connext Security Platform",
         "agents": 163,
         "version": "3.0.0-production"
     }

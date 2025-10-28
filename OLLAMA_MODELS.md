@@ -167,7 +167,7 @@ ollama rm <model-name>
 
 ---
 
-## Integration กับ dLNk Attack Platform
+## Integration กับ Connext Security Platform
 
 ### ใน `llm_config.py`:
 ```python

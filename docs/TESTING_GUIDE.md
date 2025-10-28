@@ -1,6 +1,6 @@
 # Testing Guide
 
-คู่มือการทดสอบสำหรับ dLNk Attack Platform
+คู่มือการทดสอบสำหรับ Connext Security Platform
 
 ---
 
@@ -494,7 +494,7 @@ pytest tests/ -s
 
 หากพบปัญหา:
 
-- **GitHub Issues:** [Repository Issues](https://github.com/yourusername/dlnk-platform/issues)
+- **GitHub Issues:** [Repository Issues](https://github.com/yourusername/connext-platform/issues)
 - **Documentation:** [Full Docs](../README.md)
 
 ---

@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Reverse Shell Handler
+Connext Security Platform - Reverse Shell Handler
 Handles incoming reverse shells from compromised targets
 """
 

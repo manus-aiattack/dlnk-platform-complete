@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Integrated Server
+Connext Security Platform - Integrated Server
 Combines Backend API, Frontend, Admin Panel, and Attack Orchestrator
 """
 
@@ -26,7 +26,7 @@ from core.ai_service import ai_service
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="dLNk Attack Platform",
+    title="Connext Security Platform",
     description="AI-Powered Autonomous Attack Platform",
     version="3.0.0"
 )
@@ -72,7 +72,7 @@ async def get_admin_key(request: Request) -> Dict[str, Any]:
 @sio.event
 async def connect(sid, environ):
     log.info(f"Socket.IO client connected: {sid}")
-    await sio.emit("status", {"message": "Connected to dLNk Attack Platform"}, to=sid)
+    await sio.emit("status", {"message": "Connected to Connext Security Platform"}, to=sid)
 
 @sio.event
 async def disconnect(sid):
@@ -93,7 +93,7 @@ async def serve_admin_panel():
 # --- Health Check --- #
 @app.get("/health", tags=["System"])
 async def health_check():
-    return {"status": "dLNk Attack Platform is operational"}
+    return {"status": "Connext Security Platform is operational"}
 
 # --- Admin API Endpoints --- #
 @app.post("/api/admin/verify", tags=["Admin"])
@@ -219,13 +219,13 @@ async def generate_payload_with_ai(data: Dict[str, Any], key: Dict[str, Any] = D
 @app.on_event("startup")
 async def startup_event():
     if attack_orchestrator:
-        log.info("Initializing dLNk Attack Orchestrator...")
+        log.info("Initializing Connext Attack Orchestrator...")
         try:
             await attack_orchestrator.initialize()
             log.info("Orchestrator initialized successfully")
         except Exception as e:
             log.warning(f"Orchestrator initialization failed: {e}")
-    log.info("dLNk Integrated Server is running.")
+    log.info("Connext Integrated Server is running.")
 
 # --- Main Execution --- #
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-# คำสั่งรันระบบ dLNk Attack Platform
+# คำสั่งรันระบบ Connext Security Platform
 
 ## ✅ ระบบพร้อมใช้งาน Production
 
@@ -55,7 +55,7 @@ cd manus
 cp env.template .env
 
 # 3. Build Docker image
-docker build -t dlnk-platform .
+docker build -t connext-platform .
 
 # 4. รัน container
 docker run -d \
@@ -64,7 +64,7 @@ docker run -d \
   -v $(pwd)/workspace:/app/workspace \
   -v $(pwd)/loot:/app/loot \
   --env-file .env \
-  dlnk-platform
+  connext-platform
 
 # 5. ตรวจสอบ logs
 docker logs -f dlnk
@@ -155,7 +155,7 @@ C2_PROTOCOL=http
 # ============================================================================
 # Database (Optional - ถ้าไม่มีจะใช้ in-memory)
 # ============================================================================
-DATABASE_URL=postgresql://user:pass@localhost:5432/dlnk
+DATABASE_URL=postgresql://user:pass@localhost:5432/connext
 
 # ============================================================================
 # Redis (Optional - ถ้าไม่มีจะใช้ in-memory)
@@ -203,7 +203,7 @@ curl http://localhost:8000/api/agents
 docker logs -f dlnk
 
 # ถ้ารันแบบ manual
-tail -f logs/dlnk.log
+tail -f logs/connext.log
 ```
 
 ---
@@ -293,7 +293,7 @@ pip install -r requirements-production.txt
 pg_isready
 
 # หรือใช้ in-memory mode (ไม่ต้องมี database)
-# แก้ไข .env: DATABASE_URL=sqlite:///dlnk.db
+# แก้ไข .env: DATABASE_URL=sqlite:///connext.db
 ```
 
 ---

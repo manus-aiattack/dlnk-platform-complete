@@ -1,5 +1,5 @@
 """
-Alembic Environment Configuration for dLNk Attack Platform
+Alembic Environment Configuration for Connext Security Platform
 """
 
 from logging.config import fileConfig

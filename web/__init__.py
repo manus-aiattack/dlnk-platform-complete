@@ -1,5 +1,5 @@
 """
-Web module for dLNk dLNk Framework
+Web module for Connext Connext Framework
 Contains REST API and dashboard components
 """
 

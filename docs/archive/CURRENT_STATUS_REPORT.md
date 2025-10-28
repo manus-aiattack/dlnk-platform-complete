@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Current Status Report
+# Connext Security Platform - Current Status Report
 ## รายงานสถานะปัจจุบันและสิ่งที่ต้องทำต่อ
 
 **วันที่:** 25 ตุลาคม 2568  
@@ -100,7 +100,7 @@
 "/home/*/Documents/"  # ❌
 ```
 
-**3. `dlnk_FINAL/ai_testing_system.py` (3 จุด)**
+**3. `connext_FINAL/ai_testing_system.py` (3 จุด)**
 ```python
 # Line 485
 with open('/home/ubuntu/ai_test_results.json', 'w') as f:  # ❌
@@ -112,19 +112,19 @@ with open('/home/ubuntu/ai_test_summary.json', 'w') as f:  # ❌
 with open('/home/ubuntu/ai_test_report.md', 'w') as f:  # ❌
 ```
 
-**4. `dlnk_FINAL/agents/advanced_data_exfiltration_agent.py` (1 จุด)**
+**4. `connext_FINAL/agents/advanced_data_exfiltration_agent.py` (1 จุด)**
 ```python
 # Line 119
 "/home/*/Documents/"  # ❌
 ```
 
-**5. `dlnk_FINAL/agents/deserialization_exploiter.py` (1 จุด)**
+**5. `connext_FINAL/agents/deserialization_exploiter.py` (1 จุด)**
 ```python
 # Line 39
 "/home/ubuntu/ysoserial.jar"  # ❌
 ```
 
-**6. `dlnk_FINAL/agents/lfi_agent.py` (2 จุด)**
+**6. `connext_FINAL/agents/lfi_agent.py` (2 จุด)**
 ```python
 # Line 68
 '/home/*/.ssh/id_rsa'  # ❌
@@ -134,7 +134,7 @@ with open('/home/ubuntu/ai_test_report.md', 'w') as f:  # ❌
 ```
 
 **7. อื่นๆ (3 จุด)**
-- ตรวจสอบเพิ่มเติมใน `dlnk_FINAL/` directory
+- ตรวจสอบเพิ่มเติมใน `connext_FINAL/` directory
 
 ---
 
@@ -220,7 +220,7 @@ from pwn import context, process, remote, ELF, ROP, p64, u64
 
 ### 6. File Operations (1 จุด)
 
-**ไฟล์:** `dlnk_FINAL/core/payload_manager.py` (Line 15)
+**ไฟล์:** `connext_FINAL/core/payload_manager.py` (Line 15)
 
 **ปัญหา:** `os.makedirs()` ไม่มี `exist_ok=True`
 
@@ -256,17 +256,17 @@ base_dir = os.getenv('WORKSPACE_DIR', os.path.expanduser('~/workspace'))
 
 ---
 
-#### Task 1.2: แก้ไข Hardcoded Paths ใน dlnk_FINAL (10 จุด)
+#### Task 1.2: แก้ไข Hardcoded Paths ใน connext_FINAL (10 จุด)
 ```bash
 # ไฟล์ที่ต้องแก้
-1. dlnk_FINAL/ai_testing_system.py (3 จุด)
-2. dlnk_FINAL/agents/advanced_data_exfiltration_agent.py (1 จุด)
-3. dlnk_FINAL/agents/deserialization_exploiter.py (1 จุด)
-4. dlnk_FINAL/agents/lfi_agent.py (2 จุด)
+1. connext_FINAL/ai_testing_system.py (3 จุด)
+2. connext_FINAL/agents/advanced_data_exfiltration_agent.py (1 จุด)
+3. connext_FINAL/agents/deserialization_exploiter.py (1 จุด)
+4. connext_FINAL/agents/lfi_agent.py (2 จุด)
 5. อื่นๆ (3 จุด)
 ```
 
-**หมายเหตุ:** `dlnk_FINAL/` เป็น legacy code อาจพิจารณาลบทิ้งหรือ migrate
+**หมายเหตุ:** `connext_FINAL/` เป็น legacy code อาจพิจารณาลบทิ้งหรือ migrate
 
 ---
 
@@ -395,11 +395,11 @@ vim agents/advanced_data_exfiltration_agent.py
 
 **Afternoon:**
 ```bash
-# 2. แก้ไข hardcoded paths ใน dlnk_FINAL
-vim dlnk_FINAL/ai_testing_system.py
-vim dlnk_FINAL/agents/advanced_data_exfiltration_agent.py
-vim dlnk_FINAL/agents/deserialization_exploiter.py
-vim dlnk_FINAL/agents/lfi_agent.py
+# 2. แก้ไข hardcoded paths ใน connext_FINAL
+vim connext_FINAL/ai_testing_system.py
+vim connext_FINAL/agents/advanced_data_exfiltration_agent.py
+vim connext_FINAL/agents/deserialization_exploiter.py
+vim connext_FINAL/agents/lfi_agent.py
 ```
 
 **Evening:**

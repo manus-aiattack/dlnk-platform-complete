@@ -1,5 +1,5 @@
 """
-Self-Healing System for dLNk Attack Platform
+Self-Healing System for Connext Security Platform
 Auto-detect และ auto-recovery จากข้อผิดพลาด
 """
 

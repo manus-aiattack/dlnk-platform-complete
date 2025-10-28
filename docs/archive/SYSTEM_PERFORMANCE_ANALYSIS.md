@@ -1,4 +1,4 @@
-# 📊 dLNk Attack Platform - การวิเคราะห์ประสิทธิภาพและการใช้งาน
+# 📊 Connext Security Platform - การวิเคราะห์ประสิทธิภาพและการใช้งาน
 
 ## 🔍 ผลการทดสอบระบบ (ล่าสุด)
 
@@ -34,7 +34,7 @@ nano .env
 **ค่าที่ต้องตั้ง:**
 ```bash
 # Database
-DATABASE_URL=postgresql://dlnk_user:18122542@localhost:5432/dlnk
+DATABASE_URL=postgresql://connext_user:18122542@localhost:5432/connext
 
 # Workspace
 WORKSPACE_DIR=/mnt/c/projecattack/manus/workspace
@@ -75,7 +75,7 @@ python3 -m uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 INFO:     Started server process [xxxxx]
 INFO:     Waiting for application startup.
-INFO     [API] Starting dLNk Attack Platform API...
+INFO     [API] Starting Connext Security Platform API...
 SUCCESS  [Database] Connected to PostgreSQL
 SUCCESS  [Database] Schema initialized
 SUCCESS  [API] Database connected

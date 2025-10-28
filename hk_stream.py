@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 """
-dLNk Attack Platform - HK CLI (Stream Version)
+Connext Security Platform - HK CLI (Stream Version)
 Command: hk
 Interactive AI assistant using stdin/stdout to communicate with Manus
 """
@@ -88,7 +88,7 @@ class StreamAIAssistant:
 
 **ตัวอย่าง:**
 
-- "สรุปภาพรวมโปรเจค dLNk"
+- "สรุปภาพรวมโปรเจค Connext"
 - "สร้างไฟล์ test.py"
 - "ตรวจสอบสถานะระบบ"
 - "วิธีใช้งาน C2"

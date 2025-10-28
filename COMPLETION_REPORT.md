@@ -163,7 +163,7 @@ VANCHIN_RATE_LIMIT = 20
 ```python
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    log.info("[API] Starting dLNk Attack Platform API...")
+    log.info("[API] Starting Connext Security Platform API...")
     try:
         await db.connect()
         log.success("[API] Database connected")

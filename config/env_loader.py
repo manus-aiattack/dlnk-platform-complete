@@ -1,6 +1,6 @@
 """
 Environment Variable Loader with Validation
-Centralized configuration management for dLNk Attack Platform
+Centralized configuration management for Connext Security Platform
 """
 import os
 from typing import Optional
@@ -188,9 +188,9 @@ def get_database_url() -> str:
     # Build from components
     db_host = get_env('DB_HOST', 'localhost')
     db_port = get_env_int('DB_PORT', 5432)
-    db_user = get_env('DB_USER', 'dlnk')
+    db_user = get_env('DB_USER', 'connext')
     db_password = get_env('DB_PASSWORD', '')
-    db_name = get_env('DB_NAME', 'dlnk_db')
+    db_name = get_env('DB_NAME', 'connext_db')
     
     if db_password:
         return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"

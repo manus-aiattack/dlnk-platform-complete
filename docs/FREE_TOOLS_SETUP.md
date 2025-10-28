@@ -1,4 +1,4 @@
-# การใช้เครื่องมือฟรีทั้งหมด - dLNk Attack Platform
+# การใช้เครื่องมือฟรีทั้งหมด - Connext Security Platform
 ## 100% Free & Open Source - ไม่ต้องเสียเงินเลย
 
 **หลักการ**: ระบบนี้ออกแบบให้ใช้เครื่องมือฟรีและ open source ทั้งหมด ไม่ต้องพึ่งพา API ที่เสียเงิน
@@ -412,7 +412,7 @@ OLLAMA_MODEL=mixtral:latest
 
 ## ✅ สรุป
 
-ระบบ dLNk Attack Platform ใช้เครื่องมือฟรีทั้งหมด:
+ระบบ Connext Security Platform ใช้เครื่องมือฟรีทั้งหมด:
 - ✅ ไม่ต้องเสียเงินเลย (0 บาท)
 - ✅ ไม่ต้องพึ่งพา API ที่เสียเงิน
 - ✅ ใช้ Local AI (Ollama) แทน OpenAI

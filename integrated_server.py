@@ -91,8 +91,8 @@ class Storage:
         """Initialize production API keys"""
         import secrets
         # Generate secure admin key
-        admin_key = f"dlnk_live_{secrets.token_hex(32)}"
-        user_key = f"dlnk_live_{secrets.token_hex(32)}"
+        admin_key = f"connext_live_{secrets.token_hex(32)}"
+        user_key = f"connext_live_{secrets.token_hex(32)}"
         
         self.api_keys[admin_key] = {"user_id": "admin_prod", "role": "admin"}
         self.api_keys[user_key] = {"user_id": "user_prod", "role": "user"}
@@ -159,7 +159,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="dLNk Integrated Server",
+    title="Connext Integrated Server",
     description="Backend API + Frontend in one server",
     version="1.0.0",
     lifespan=lifespan

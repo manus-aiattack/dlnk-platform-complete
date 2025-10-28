@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk HACK Dashboard Server
+Connext HACK Dashboard Server
 Simple HTTP server for the web dashboard
 """
 import http.server
@@ -24,16 +24,16 @@ if __name__ == '__main__':
         print(f"""
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║              dLNk HACK Dashboard Server                      ║
+║              Connext HACK Dashboard Server                      ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
 
 🚀 Server started successfully!
 
 📍 Access the dashboard at:
-   → http://localhost:{PORT}/dashboard_dlnk.html
+   → http://localhost:{PORT}/dashboard_connext.html
 
-🔑 Default API Key: DLNK-DEMO-KEY-12345
+🔑 Default API Key: CONNEXT-DEMO-KEY-12345
 
 ⚠️  Press Ctrl+C to stop the server
 

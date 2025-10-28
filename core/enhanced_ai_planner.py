@@ -11,7 +11,7 @@ from dataclasses import dataclass, asdict
 from enum import Enum
 import logging
 
-logger = logging.getLogger("dLNk")
+logger = logging.getLogger("Connext")
 
 
 class AttackPhase(Enum):

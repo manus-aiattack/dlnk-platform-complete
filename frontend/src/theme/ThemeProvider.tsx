@@ -1,5 +1,5 @@
 /**
- * Theme Provider for dLNk Attack Platform
+ * Theme Provider for Connext Security Platform
  * Provides dark theme context to React components
  */
 
@@ -15,11 +15,11 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isDark] = useState(true); // Always dark theme for dLNk
+  const [isDark] = useState(true); // Always dark theme for Connext
 
   const toggleTheme = () => {
-    // Theme is always dark for dLNk, but keeping this for future extensibility
-    console.log('Theme is always dark for dLNk Attack Platform');
+    // Theme is always dark for Connext, but keeping this for future extensibility
+    console.log('Theme is always dark for Connext Security Platform');
   };
 
   const value = {

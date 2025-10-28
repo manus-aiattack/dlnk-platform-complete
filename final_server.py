@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Final Integrated Server
+Connext Security Platform - Final Integrated Server
 Combines all components with simplified architecture
 """
 
@@ -17,7 +17,7 @@ from core.ai_service import ai_service
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="dLNk Attack Platform",
+    title="Connext Security Platform",
     description="AI-Powered Autonomous Attack Platform",
     version="3.0.0"
 )
@@ -69,7 +69,7 @@ async def serve_admin_panel():
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    return {"status": "dLNk Attack Platform is operational"}
+    return {"status": "Connext Security Platform is operational"}
 
 @app.get("/api/statistics")
 async def get_statistics(key: Dict[str, Any] = Depends(get_api_key)):
@@ -246,7 +246,7 @@ async def hunt_for_zerodays(request: Request, key: Dict[str, Any] = Depends(get_
 @app.on_event("startup")
 async def startup_event():
     print("=" * 60)
-    print("dLNk Attack Platform - Final Integrated Server")
+    print("Connext Security Platform - Final Integrated Server")
     print("=" * 60)
     print("Frontend: http://0.0.0.0:8000/")
     print("Admin Panel: http://0.0.0.0:8000/admin")

@@ -1,5 +1,5 @@
 """
-Resource Monitor for dLNk Attack Platform
+Resource Monitor for Connext Security Platform
 Monitors CPU, Memory, Disk, and Network resources
 """
 

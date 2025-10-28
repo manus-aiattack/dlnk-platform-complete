@@ -1,5 +1,5 @@
 """
-dLNk dLNk - Autonomous Penetration Testing Framework
+Connext - Autonomous Penetration Testing Framework
 Core module containing all base classes, managers, and utilities
 """
 
@@ -11,7 +11,7 @@ from .context_manager import ContextManager
 from .config_manager import ConfigManager
 
 __version__ = "1.0.0"
-__author__ = "dLNk dLNk Team"
+__author__ = "Connext Team"
 
 __all__ = [
     "BaseAgent",

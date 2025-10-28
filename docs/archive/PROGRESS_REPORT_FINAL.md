@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Progress Report (Final Check)
+# Connext Security Platform - Progress Report (Final Check)
 ## รายงานความคืบหน้าล่าสุด
 
 **วันที่:** 25 ตุลาคม 2568  
@@ -32,22 +32,22 @@
    - แก้ไข: `/home/*/Documents/`
    - **เสร็จสมบูรณ์!**
 
-2. ✅ **`dlnk_FINAL/agents/advanced_data_exfiltration_agent.py`**
+2. ✅ **`connext_FINAL/agents/advanced_data_exfiltration_agent.py`**
    - แก้ไข: `/home/*/Documents/`
    - **เสร็จสมบูรณ์!**
 
-3. ✅ **`dlnk_FINAL/agents/deserialization_exploiter.py`**
+3. ✅ **`connext_FINAL/agents/deserialization_exploiter.py`**
    - แก้ไข: `/home/ubuntu/ysoserial.jar`
    - **เสร็จสมบูรณ์!**
 
-4. ✅ **`dlnk_FINAL/agents/lfi_agent.py`**
+4. ✅ **`connext_FINAL/agents/lfi_agent.py`**
    - แก้ไข 3 จุด:
      - `/home/*/.ssh/id_rsa`
      - `/home/*/.ssh/id_dsa`
      - `/home/*/.bash_history`
    - **เสร็จสมบูรณ์!**
 
-5. ✅ **`dlnk_FINAL/data_exfiltration/exfiltrator.py`**
+5. ✅ **`connext_FINAL/data_exfiltration/exfiltrator.py`**
    - แก้ไข: `/home/`
    - **เสร็จสมบูรณ์!**
 

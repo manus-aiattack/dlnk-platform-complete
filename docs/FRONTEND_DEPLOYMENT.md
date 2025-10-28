@@ -1,12 +1,12 @@
 # Frontend Deployment Guide
 
-คู่มือการ Deploy Frontend สำหรับ dLNk Attack Platform
+คู่มือการ Deploy Frontend สำหรับ Connext Security Platform
 
 ---
 
 ## ภาพรวม
 
-Frontend ของ dLNk Attack Platform พัฒนาด้วย **React 19** และ **Vite** เพื่อประสิทธิภาพสูงสุด คู่มือนี้จะช่วยคุณในการ:
+Frontend ของ Connext Security Platform พัฒนาด้วย **React 19** และ **Vite** เพื่อประสิทธิภาพสูงสุด คู่มือนี้จะช่วยคุณในการ:
 
 - ติดตั้งและรัน Development Server
 - Build สำหรับ Production
@@ -273,7 +273,7 @@ API_URL=http://localhost:8000
 server {
     listen 80;
     server_name yourdomain.com;
-    root /var/www/dlnk-frontend/dist;
+    root /var/www/connext-frontend/dist;
     index index.html;
 
     location / {
@@ -402,7 +402,7 @@ ls -lh dist/assets/
 
 หากพบปัญหาที่ไม่สามารถแก้ไขได้ กรุณาติดต่อ:
 
-- **GitHub Issues:** [Repository Issues](https://github.com/yourusername/dlnk-platform/issues)
+- **GitHub Issues:** [Repository Issues](https://github.com/yourusername/connext-platform/issues)
 - **Documentation:** [Full Docs](../README.md)
 
 ---

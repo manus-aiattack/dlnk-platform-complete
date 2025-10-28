@@ -1,5 +1,5 @@
 """
-Attack Service for dLNk Attack Platform
+Attack Service for Connext Security Platform
 Unified attack management across CLI, Web, and API
 """
 

@@ -4,7 +4,7 @@
 name: "Mobile Application Compromise"
 description: "Complete mobile app testing - static to dynamic analysis"
 version: "1.0.0"
-author: "dLNk HACK"
+author: "Connext HACK"
 target_type: "mobile"
 estimated_duration: 45
 success_rate: 0.75

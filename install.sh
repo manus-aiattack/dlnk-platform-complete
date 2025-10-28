@@ -1,6 +1,6 @@
 #!/bin/bash
-echo "🦅 dLNk dLNk Framework - Quick Install"
-echo "Powered by dLNk Framework"
+echo "🦅 Connext Connext Framework - Quick Install"
+echo "Powered by Connext Framework"
 echo ""
 
 # Check Python
@@ -19,5 +19,5 @@ echo "✅ Installation complete!"
 echo ""
 echo "🚀 Quick start:"
 echo "   python3 main.py --help"
-echo "   python3 dlnk_ai_system.py"
+echo "   python3 connext_ai_system.py"
 echo ""

@@ -1,8 +1,8 @@
-# dLNk Attack Platform - Implementation Summary
+# Connext Security Platform - Implementation Summary
 
 ## Overview
 
-dLNk Attack Platform is an AI-powered, fully automated penetration testing framework.
+Connext Security Platform is an AI-powered, fully automated penetration testing framework.
 
 ## Implementation Status
 

@@ -75,10 +75,10 @@ class SlackNotifier:
                 "attachments": [
                     {
                         "color": color,
-                        "title": title or "dLNk Attack Platform Notification",
+                        "title": title or "Connext Security Platform Notification",
                         "text": message,
                         "fields": fields or [],
-                        "footer": "dLNk Attack Platform",
+                        "footer": "Connext Security Platform",
                         "ts": int(datetime.now().timestamp())
                     }
                 ]
@@ -143,12 +143,12 @@ class DiscordNotifier:
             
             # Build embed
             embed = {
-                "title": title or "dLNk Attack Platform Notification",
+                "title": title or "Connext Security Platform Notification",
                 "description": message,
                 "color": color,
                 "timestamp": datetime.now().isoformat(),
                 "footer": {
-                    "text": "dLNk Attack Platform"
+                    "text": "Connext Security Platform"
                 }
             }
             
@@ -225,9 +225,9 @@ class TelegramNotifier:
             
             # Format message
             if parse_mode == "HTML":
-                formatted_message = f"{emoji} <b>{title or 'dLNk Attack Platform'}</b>\n\n{message}"
+                formatted_message = f"{emoji} <b>{title or 'Connext Security Platform'}</b>\n\n{message}"
             else:
-                formatted_message = f"{emoji} **{title or 'dLNk Attack Platform'}**\n\n{message}"
+                formatted_message = f"{emoji} **{title or 'Connext Security Platform'}**\n\n{message}"
             
             # Build payload
             payload = {

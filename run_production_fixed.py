@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Production Runner (Fixed)
+Connext Security Platform - Production Runner (Fixed)
 Runs the complete system with all 163 Agents and full API endpoints
 """
 
@@ -18,7 +18,7 @@ load_dotenv()
 # Set environment variables
 os.environ.setdefault("VC_API_KEY", "8-WmOAVImJdRrqBybLj55n-QDu1Y-WYnQNRb280wLhU")
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379")
-os.environ.setdefault("DATABASE_URL", "postgresql://dlnk:dlnk_password@localhost:5432/dlnk")
+os.environ.setdefault("DATABASE_URL", "postgresql://connext:connext_password@localhost:5432/connext")
 os.environ.setdefault("DB_PREFERENCE", "postgresql")
 os.environ.setdefault("PYTHONUNBUFFERED", "1")
 
@@ -26,7 +26,7 @@ import uvicorn
 from fastapi.responses import HTMLResponse
 
 print("=" * 80)
-print("dLNk Attack Platform - Production Mode")
+print("Connext Security Platform - Production Mode")
 print("=" * 80)
 print("Loading API with 163 Agents and Attack Orchestrator...")
 
@@ -37,7 +37,7 @@ try:
 except Exception as e:
     print(f"[✗] Failed to load API: {e}")
     from fastapi import FastAPI
-    app = FastAPI(title="dLNk Attack Platform - Fallback")
+    app = FastAPI(title="Connext Security Platform - Fallback")
 
 # Add frontend routes to the same app
 @app.get("/", response_class=HTMLResponse)
@@ -47,7 +47,7 @@ async def serve_frontend():
         with open("frontend_hacker.html", "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
     except Exception as e:
-        return HTMLResponse(content=f"<h1>dLNk Attack Platform</h1><p>Error: {e}</p>")
+        return HTMLResponse(content=f"<h1>Connext Security Platform</h1><p>Error: {e}</p>")
 
 @app.get("/admin", response_class=HTMLResponse)
 async def serve_admin():
@@ -63,7 +63,7 @@ async def serve_admin():
 async def health():
     return {
         "status": "operational",
-        "platform": "dLNk Attack Platform",
+        "platform": "Connext Security Platform",
         "agents": 163,
         "version": "3.0.0-production"
     }

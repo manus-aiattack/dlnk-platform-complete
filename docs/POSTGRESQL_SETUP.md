@@ -1,12 +1,12 @@
 # PostgreSQL Setup Guide
 
-คู่มือการติดตั้งและตั้งค่า PostgreSQL สำหรับ dLNk Attack Platform
+คู่มือการติดตั้งและตั้งค่า PostgreSQL สำหรับ Connext Security Platform
 
 ---
 
 ## ภาพรวม
 
-dLNk Attack Platform ใช้ **PostgreSQL** เป็น primary database สำหรับ production และ **SQLite** เป็น fallback สำหรับ development
+Connext Security Platform ใช้ **PostgreSQL** เป็น primary database สำหรับ production และ **SQLite** เป็น fallback สำหรับ development
 
 คู่มือนี้จะครอบคลุม:
 
@@ -84,16 +84,16 @@ sudo -u postgres psql
 
 ```sql
 -- สร้าง database
-CREATE DATABASE dlnk_attack_platform;
+CREATE DATABASE connext_attack_platform;
 
 -- สร้าง user
 CREATE USER dlnk WITH PASSWORD 'your_secure_password_here';
 
 -- Grant privileges
-GRANT ALL PRIVILEGES ON DATABASE dlnk_attack_platform TO dlnk;
+GRANT ALL PRIVILEGES ON DATABASE connext_attack_platform TO dlnk;
 
 -- เปลี่ยน owner
-ALTER DATABASE dlnk_attack_platform OWNER TO dlnk;
+ALTER DATABASE connext_attack_platform OWNER TO dlnk;
 
 -- ออกจาก psql
 \q
@@ -115,9 +115,9 @@ sudo nano /etc/postgresql/14/main/pg_hba.conf
 
 ```
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
-local   dlnk_attack_platform   dlnk                                    md5
-host    dlnk_attack_platform   dlnk            127.0.0.1/32            md5
-host    dlnk_attack_platform   dlnk            ::1/128                 md5
+local   connext_attack_platform   dlnk                                    md5
+host    connext_attack_platform   dlnk            127.0.0.1/32            md5
+host    connext_attack_platform   dlnk            ::1/128                 md5
 ```
 
 Restart PostgreSQL:
@@ -131,7 +131,7 @@ sudo service postgresql restart
 ### 4. ทดสอบการเชื่อมต่อ
 
 ```bash
-psql -U dlnk -d dlnk_attack_platform -h localhost -W
+psql -U dlnk -d connext_attack_platform -h localhost -W
 ```
 
 ---
@@ -142,7 +142,7 @@ psql -U dlnk -d dlnk_attack_platform -h localhost -W
 
 ```bash
 # ถ้ามีไฟล์ schema.sql
-psql -U dlnk -d dlnk_attack_platform -h localhost -f database/schema.sql
+psql -U dlnk -d connext_attack_platform -h localhost -f database/schema.sql
 ```
 
 ### Option 2: ใช้ Python Script
@@ -156,7 +156,7 @@ python3 init_database.py
 
 ```sql
 -- เข้า psql
-psql -U dlnk -d dlnk_attack_platform -h localhost
+psql -U dlnk -d connext_attack_platform -h localhost
 
 -- สร้าง tables
 CREATE TABLE users (
@@ -234,12 +234,12 @@ CREATE INDEX idx_loot_attack_id ON loot(attack_id);
 
 ```bash
 # Database
-DATABASE_URL=postgresql://dlnk:your_secure_password_here@localhost:5432/dlnk_attack_platform
+DATABASE_URL=postgresql://connext:your_secure_password_here@localhost:5432/connext_attack_platform
 
 # หรือแยกเป็นตัวแปรแต่ละตัว
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=dlnk_attack_platform
+DB_NAME=connext_attack_platform
 DB_USER=dlnk
 DB_PASSWORD=your_secure_password_here
 ```
@@ -271,7 +271,7 @@ sudo systemctl start postgresql
 
 **ปัญหา:**
 ```
-psql: error: FATAL: password authentication failed for user "dlnk"
+psql: error: FATAL: password authentication failed for user "connext"
 ```
 
 **วิธีแก้:**
@@ -295,14 +295,14 @@ sudo systemctl restart postgresql
 
 **ปัญหา:**
 ```
-psql: error: FATAL: database "dlnk_attack_platform" does not exist
+psql: error: FATAL: database "connext_attack_platform" does not exist
 ```
 
 **วิธีแก้:**
 
 ```bash
 # สร้าง database
-sudo -u postgres createdb -O dlnk dlnk_attack_platform
+sudo -u postgres createdb -O dlnk connext_attack_platform
 ```
 
 ---
@@ -318,7 +318,7 @@ ERROR: permission denied for schema public
 
 ```sql
 -- เข้า psql as postgres
-sudo -u postgres psql -d dlnk_attack_platform
+sudo -u postgres psql -d connext_attack_platform
 
 -- Grant permissions
 GRANT ALL ON SCHEMA public TO dlnk;
@@ -393,20 +393,20 @@ sudo systemctl restart postgresql
 
 ```bash
 # Backup ทั้ง database
-pg_dump -U dlnk -h localhost dlnk_attack_platform > backup_$(date +%Y%m%d).sql
+pg_dump -U dlnk -h localhost connext_attack_platform > backup_$(date +%Y%m%d).sql
 
 # Backup แบบ compressed
-pg_dump -U dlnk -h localhost dlnk_attack_platform | gzip > backup_$(date +%Y%m%d).sql.gz
+pg_dump -U dlnk -h localhost connext_attack_platform | gzip > backup_$(date +%Y%m%d).sql.gz
 ```
 
 ### Restore
 
 ```bash
 # Restore จาก SQL file
-psql -U dlnk -h localhost -d dlnk_attack_platform < backup_20250126.sql
+psql -U dlnk -h localhost -d connext_attack_platform < backup_20250126.sql
 
 # Restore จาก compressed file
-gunzip -c backup_20250126.sql.gz | psql -U dlnk -h localhost -d dlnk_attack_platform
+gunzip -c backup_20250126.sql.gz | psql -U dlnk -h localhost -d connext_attack_platform
 ```
 
 ---
@@ -416,13 +416,13 @@ gunzip -c backup_20250126.sql.gz | psql -U dlnk -h localhost -d dlnk_attack_plat
 ### ดูการเชื่อมต่อปัจจุบัน
 
 ```sql
-SELECT * FROM pg_stat_activity WHERE datname = 'dlnk_attack_platform';
+SELECT * FROM pg_stat_activity WHERE datname = 'connext_attack_platform';
 ```
 
 ### ดูขนาด Database
 
 ```sql
-SELECT pg_size_pretty(pg_database_size('dlnk_attack_platform'));
+SELECT pg_size_pretty(pg_database_size('connext_attack_platform'));
 ```
 
 ### ดูขนาด Tables
@@ -445,7 +445,7 @@ ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
 
 ```bash
 # Manual vacuum
-psql -U dlnk -d dlnk_attack_platform -c "VACUUM ANALYZE;"
+psql -U dlnk -d connext_attack_platform -c "VACUUM ANALYZE;"
 
 # Auto-vacuum (ตั้งค่าใน postgresql.conf)
 autovacuum = on
@@ -454,7 +454,7 @@ autovacuum = on
 ### Reindex
 
 ```bash
-psql -U dlnk -d dlnk_attack_platform -c "REINDEX DATABASE dlnk_attack_platform;"
+psql -U dlnk -d connext_attack_platform -c "REINDEX DATABASE connext_attack_platform;"
 ```
 
 ---
@@ -493,7 +493,7 @@ psql -U dlnk -d dlnk_attack_platform -c "REINDEX DATABASE dlnk_attack_platform;"
 หากพบปัญหา:
 
 - **Documentation:** [PostgreSQL Official Docs](https://www.postgresql.org/docs/)
-- **GitHub Issues:** [Repository Issues](https://github.com/yourusername/dlnk-platform/issues)
+- **GitHub Issues:** [Repository Issues](https://github.com/yourusername/connext-platform/issues)
 
 ---
 

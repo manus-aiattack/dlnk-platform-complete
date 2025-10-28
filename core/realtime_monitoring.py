@@ -58,7 +58,7 @@ class RealtimeMonitor:
         # Send welcome message
         await self.send_to_connection(websocket, {
             'type': 'welcome',
-            'message': 'Connected to dLNk Attack Platform',
+            'message': 'Connected to Connext Security Platform',
             'timestamp': datetime.utcnow().isoformat()
         })
     

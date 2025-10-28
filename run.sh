@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# dLNk dLNk Attack Platform - Run Script
+# Connext Connext Security Platform - Run Script
 
 set -e
 
@@ -19,7 +19,7 @@ if [ ! -f ".env" ]; then
 fi
 
 # Start API server
-echo "Starting dLNk dLNk API Server..."
+echo "Starting Connext API Server..."
 echo ""
 python3 api/main.py
 

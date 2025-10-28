@@ -1,5 +1,5 @@
 """
-LibFuzzer Wrapper for dLNk Attack Platform
+LibFuzzer Wrapper for Connext Security Platform
 Provides interface to LibFuzzer for coverage-guided fuzzing
 """
 

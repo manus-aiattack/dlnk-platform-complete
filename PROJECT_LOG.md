@@ -1,4 +1,4 @@
-# dLNk Project Log
+# Connext Project Log
 
 ## 2025-10-26: Complete System Setup & HK CLI
 

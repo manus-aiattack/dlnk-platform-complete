@@ -7,7 +7,7 @@ async def test():
     print("\nTrying to connect...")
     try:
         conn = await asyncpg.connect(
-            dsn="postgresql://dlnk@localhost:5432/dlnk_db"
+            dsn="postgresql://connext@localhost:5432/connext_db"
         )
         print("✅ Connected!")
         result = await conn.fetchval("SELECT 1")

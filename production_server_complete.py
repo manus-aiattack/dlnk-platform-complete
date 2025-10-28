@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Complete Production Server
+Connext Security Platform - Complete Production Server
 Integrates all components: Database, Agents, AI, Monitoring, Communication
 """
 
@@ -52,7 +52,7 @@ async def lifespan(app: FastAPI):
     global campaign_executor, communicator, monitor, auth_service, llm_service, rate_limiter
     
     log.info("=" * 80)
-    log.info("🚀 dLNk Attack Platform - Production Server Starting...")
+    log.info("🚀 Connext Security Platform - Production Server Starting...")
     log.info("=" * 80)
     
     # Check database connection
@@ -100,7 +100,7 @@ async def lifespan(app: FastAPI):
         log.info(f"  - {category}: {count} agents")
     
     log.info("=" * 80)
-    log.info("✅ dLNk Attack Platform is READY")
+    log.info("✅ Connext Security Platform is READY")
     log.info("=" * 80)
     log.info("🌐 Server running on: http://0.0.0.0:8000")
     log.info("📖 API Documentation: http://0.0.0.0:8000/docs")
@@ -110,13 +110,13 @@ async def lifespan(app: FastAPI):
     yield
     
     # Shutdown
-    log.info("🛑 Shutting down dLNk Attack Platform...")
+    log.info("🛑 Shutting down Connext Security Platform...")
     log.info("✅ Shutdown complete")
 
 
 # Create FastAPI app
 app = FastAPI(
-    title="dLNk Attack Platform",
+    title="Connext Security Platform",
     description="AI-Powered Automated Attack Platform - Production Ready",
     version="2.0.0",
     lifespan=lifespan
@@ -429,7 +429,7 @@ async def main_page():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>dLNk Attack Platform</title>
+        <title>Connext Security Platform</title>
         <style>
             body {
                 font-family: 'Courier New', monospace;
@@ -462,7 +462,7 @@ async def main_page():
         </style>
     </head>
     <body>
-        <h1>⚡ dLNk Attack Platform ⚡</h1>
+        <h1>⚡ Connext Security Platform ⚡</h1>
         
         <div class="section">
             <h2>🎯 System Status</h2>

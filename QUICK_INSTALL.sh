@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# dLNk Quick Install Script for Ubuntu 24.04
+# Connext Quick Install Script for Ubuntu 24.04
 # Handles virtual environment automatically
 
 set -e
 
-echo "🚀 dLNk Attack Platform - Quick Install"
+echo "🚀 Connext Security Platform - Quick Install"
 echo "========================================"
 echo ""
 

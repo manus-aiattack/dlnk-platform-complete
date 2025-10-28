@@ -1,5 +1,5 @@
 """
-Error Handling Decorators for dLNk Attack Platform
+Error Handling Decorators for Connext Security Platform
 Provides comprehensive error handling for critical operations
 """
 

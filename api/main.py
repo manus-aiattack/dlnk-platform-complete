@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Complete API Server
+Connext Security Platform - Complete API Server
 Integrates ALL routes and features from all main files
 """
 
@@ -46,7 +46,7 @@ attack_manager = AttackManager(db, ws_manager)
 async def lifespan(app: FastAPI):
     """Startup and shutdown events"""
     # Startup
-    log.info("[API] Starting dLNk Attack Platform API (Complete Edition)...")
+    log.info("[API] Starting Connext Security Platform API (Complete Edition)...")
     try:
         await db.connect()
         log.success("[API] Database connected")
@@ -67,7 +67,7 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI app
 app = FastAPI(
-    title="dLNk Attack Platform API - Complete Edition",
+    title="Connext Security Platform API - Complete Edition",
     description="Advanced Penetration Testing Platform with AI-powered Zero-Day Discovery - All Features Integrated",
     version="3.0.0-complete",
     lifespan=lifespan,
@@ -130,7 +130,7 @@ async def root():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>dLNk Attack Platform API</title>
+        <title>Connext Security Platform API</title>
         <style>
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -205,7 +205,7 @@ async def root():
     </head>
     <body>
         <div class="container">
-            <h1>🎯 dLNk Attack Platform API</h1>
+            <h1>🎯 Connext Security Platform API</h1>
             <p class="subtitle">Advanced AI-Driven Penetration Testing Framework - Complete Edition v3.0.0</p>
             
             <div style="text-align: center;">
@@ -233,8 +233,8 @@ async def root():
             </div>
             
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #b0b0b0; font-size: 14px;">
-                <p>dLNk Attack Platform v3.0.0 - Complete Edition</p>
-                <p>© 2024 dLNk Team. All rights reserved.</p>
+                <p>Connext Security Platform v3.0.0 - Complete Edition</p>
+                <p>© 2024 Connext Team. All rights reserved.</p>
                 <p style="margin-top: 10px; font-size: 12px;">
                     ⚠️ Authorized Use Only - Unauthorized access is illegal
                 </p>
@@ -361,7 +361,7 @@ async def websocket_general(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            await websocket.send_json({"type": "pong", "message": "Connected to dLNk Attack Platform"})
+            await websocket.send_json({"type": "pong", "message": "Connected to Connext Security Platform"})
     except WebSocketDisconnect:
         pass
 

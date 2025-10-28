@@ -8,8 +8,8 @@ async def test():
         conn = await asyncpg.connect(
             host='localhost',
             port=5432,
-            user='dlnk',
-            database='dlnk_db'
+            user='connext',
+            database='connext_db'
         )
         print("✅ TCP localhost: SUCCESS")
         await conn.close()
@@ -22,8 +22,8 @@ async def test():
         conn = await asyncpg.connect(
             host='127.0.0.1',
             port=5432,
-            user='dlnk',
-            database='dlnk_db'
+            user='connext',
+            database='connext_db'
         )
         print("✅ TCP 127.0.0.1: SUCCESS")
         await conn.close()
@@ -35,8 +35,8 @@ async def test():
     try:
         conn = await asyncpg.connect(
             host='/var/run/postgresql',
-            user='dlnk',
-            database='dlnk_db'
+            user='connext',
+            database='connext_db'
         )
         print("✅ Unix socket: SUCCESS")
         await conn.close()

@@ -48,7 +48,7 @@ class CLIConfig:
     """
     CLI Configuration Manager
     
-    Manages configuration file at ~/.dlnk/config.yaml
+    Manages configuration file at ~/.connext/config.yaml
     """
     
     def __init__(self):

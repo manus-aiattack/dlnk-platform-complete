@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Production Dependencies
+# Connext Security Platform - Production Dependencies
 # Python 3.11 Runtime Dependencies Only
 
 # ===== Web Framework =====

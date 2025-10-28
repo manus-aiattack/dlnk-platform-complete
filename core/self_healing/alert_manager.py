@@ -1,5 +1,5 @@
 """
-Alert Manager for dLNk Attack Platform
+Alert Manager for Connext Security Platform
 Manages alerts and notifications for system issues
 """
 

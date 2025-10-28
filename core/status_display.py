@@ -30,7 +30,7 @@ class StatusDisplay:
         """แสดงสถานะแบบตาราง"""
         try:
             print("\n" + "="*80)
-            print("dLNk DLNK v5 LLM - SYSTEM STATUS")
+            print("Connext CONNEXT v5 LLM - SYSTEM STATUS")
             print("="*80)
 
             # System Info
@@ -115,7 +115,7 @@ class StatusDisplay:
     async def _show_default_status(self, status_data: Dict[str, Any]):
         """แสดงสถานะแบบเริ่มต้น"""
         try:
-            print(f"\n🔍 dLNk dLNk v5 LLM Status")
+            print(f"\n🔍 Connext v5 LLM Status")
             print(f"Status: {status_data.get('status', 'Unknown')}")
             print(
                 f"Active Sessions: {status_data.get('sessions', {}).get('active', 0)}")

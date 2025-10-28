@@ -1,5 +1,5 @@
 """
-Grammar-Based Fuzzer for dLNk Attack Platform
+Grammar-Based Fuzzer for Connext Security Platform
 Generates inputs based on grammar specifications
 """
 
@@ -77,7 +77,7 @@ class GrammarFuzzer:
                     'Cookie: <cookie>'
                 ],
                 '<host>': ['localhost', 'example.com', '127.0.0.1'],
-                '<user_agent>': ['Mozilla/5.0', 'curl/7.0', 'dLNk-Fuzzer/1.0'],
+                '<user_agent>': ['Mozilla/5.0', 'curl/7.0', 'Connext-Fuzzer/1.0'],
                 '<content_type>': ['application/json', 'application/xml', 'text/html'],
                 '<auth>': ['Bearer <token>', 'Basic <base64>'],
                 '<token>': ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'],

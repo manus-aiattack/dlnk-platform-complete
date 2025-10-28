@@ -1,6 +1,6 @@
 """
-UI Components สำหรับ dLNk dLNk
-สไตล์ Hardcore พร้อม dLNk สีรุ้ง
+UI Components สำหรับ Connext
+สไตล์ Hardcore พร้อม Connext สีรุ้ง
 """
 
 from rich.console import Console
@@ -24,7 +24,7 @@ def get_rainbow_text(text: str) -> Text:
 
 
 def print_logo():
-    """แสดงโลโก้ dLNk dLNk สไตล์ Hardcore"""
+    """แสดงโลโก้ Connext สไตล์ Hardcore"""
     
     logo = r"""
     ╔═══════════════════════════════════════════════════════════════╗
@@ -44,11 +44,11 @@ def print_logo():
     # แสดงโลโก้สีแดงเข้ม (Hardcore style)
     console.print(logo, style="bold red")
     
-    # แสดง dLNk สีรุ้ง
-    dLNk_text = get_rainbow_text("dLNk")
+    # แสดง Connext สีรุ้ง
+    Connext_text = get_rainbow_text("Connext")
     subtitle = Text()
     subtitle.append("                    Powered by ", style="dim white")
-    subtitle.append(dLNk_text)
+    subtitle.append(Connext_text)
     subtitle.append(" Framework", style="dim white")
     
     console.print(subtitle)
@@ -67,12 +67,12 @@ def print_logo():
     console.print()
 
 
-def print_dLNk_header():
-    """แสดง dLNk header สีรุ้งแบบเล็ก"""
-    dLNk_text = get_rainbow_text("dLNk")
+def print_Connext_header():
+    """แสดง Connext header สีรุ้งแบบเล็ก"""
+    Connext_text = get_rainbow_text("Connext")
     header = Text()
     header.append("[", style="dim white")
-    header.append(dLNk_text)
+    header.append(Connext_text)
     header.append("]", style="dim white")
     console.print(header, end=" ")
 
@@ -92,32 +92,32 @@ def print_phase_banner(phase_name: str, phase_number: int = None):
     )
     
     console.print()
-    print_dLNk_header()
+    print_Connext_header()
     console.print(banner)
     console.print()
 
 
 def print_success(message: str):
     """แสดงข้อความสำเร็จ"""
-    print_dLNk_header()
+    print_Connext_header()
     console.print(f"[bold green]✅ {message}[/bold green]")
 
 
 def print_error(message: str):
     """แสดงข้อความผิดพลาด"""
-    print_dLNk_header()
+    print_Connext_header()
     console.print(f"[bold red]❌ {message}[/bold red]")
 
 
 def print_warning(message: str):
     """แสดงคำเตือน"""
-    print_dLNk_header()
+    print_Connext_header()
     console.print(f"[bold yellow]⚠️  {message}[/bold yellow]")
 
 
 def print_info(message: str):
     """แสดงข้อมูล"""
-    print_dLNk_header()
+    print_Connext_header()
     console.print(f"[cyan]{message}[/cyan]")
 
 
@@ -146,7 +146,7 @@ def print_attack_menu():
 [bold red]╚════════════════════════════════════════╝[/bold red]
     """
     
-    print_dLNk_header()
+    print_Connext_header()
     console.print(menu)
 
 
@@ -185,7 +185,7 @@ def print_vulnerability_summary(vulns: list):
         
         table.add_row(vuln_type, severity_text, str(count))
     
-    print_dLNk_header()
+    print_Connext_header()
     console.print(table)
 
 
@@ -193,12 +193,12 @@ def print_exploit_result(vuln_type: str, success: bool, details: str = ""):
     """แสดงผลลัพธ์การใช้ประโยชน์"""
     
     if success:
-        print_dLNk_header()
+        print_Connext_header()
         console.print(f"[bold green]💥 {vuln_type}: SUCCESS[/bold green]")
         if details:
             console.print(f"   [dim]{details}[/dim]")
     else:
-        print_dLNk_header()
+        print_Connext_header()
         console.print(f"[bold red]❌ {vuln_type}: FAILED[/bold red]")
         if details:
             console.print(f"   [dim]{details}[/dim]")
@@ -219,7 +219,7 @@ def print_shell_banner():
 [/bold green]
     """
     
-    print_dLNk_header()
+    print_Connext_header()
     console.print(shell_art)
 
 
@@ -231,6 +231,6 @@ def print_progress_bar(current: int, total: int, description: str = ""):
     filled = int(bar_length * current / total) if total > 0 else 0
     bar = "█" * filled + "░" * (bar_length - filled)
     
-    print_dLNk_header()
+    print_Connext_header()
     console.print(f"[cyan]{description}[/cyan] [{bar}] {percentage:.1f}%")
 

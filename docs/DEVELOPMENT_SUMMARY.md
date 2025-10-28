@@ -1,4 +1,4 @@
-# รายงานสรุปการพัฒนา dLNk Attack Platform
+# รายงานสรุปการพัฒนา Connext Security Platform
 
 **วันที่**: 24 ตุลาคม 2025  
 **สถานะ**: ✅ พัฒนาเสร็จสมบูรณ์ - พร้อม Production
@@ -7,7 +7,7 @@
 
 ## 📋 สรุปภาพรวม
 
-ได้ทำการพัฒนาและปรับปรุงระบบโจมตี API (dLNk Attack Platform) ให้พร้อมสำหรับ production ตามเอกสารวิเคราะห์ที่ได้รับ โดยพัฒนาครบทั้ง 5 ส่วนหลักตาม priority
+ได้ทำการพัฒนาและปรับปรุงระบบโจมตี API (Connext Security Platform) ให้พร้อมสำหรับ production ตามเอกสารวิเคราะห์ที่ได้รับ โดยพัฒนาครบทั้ง 5 ส่วนหลักตาม priority
 
 ---
 
@@ -305,20 +305,20 @@ exit                     - Exit console
 **Features**:
 - Prompt toolkit integration
 - Command auto-completion
-- Command history (saved to ~/.dlnk_history)
+- Command history (saved to ~/.connext_history)
 - Colored prompts
 - ASCII art banner
-- Context-aware prompts (dLNk > vs dLNk(agent) >)
+- Context-aware prompts (Connext > vs Connext(agent) >)
 
 **Example Usage**:
 ```
-dLNk > use sql_injection
-dLNk(sql_injection) > set target_url https://localhost:8000
-dLNk(sql_injection) > set threads 20
-dLNk(sql_injection) > show options
-dLNk(sql_injection) > run
-dLNk(sql_injection) > back
-dLNk > exit
+Connext > use sql_injection
+Connext(sql_injection) > set target_url https://localhost:8000
+Connext(sql_injection) > set threads 20
+Connext(sql_injection) > show options
+Connext(sql_injection) > run
+Connext(sql_injection) > back
+Connext > exit
 ```
 
 ---

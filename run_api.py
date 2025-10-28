@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Run the dLNk API Server
+Run the Connext API Server
 """
 
 import uvicorn

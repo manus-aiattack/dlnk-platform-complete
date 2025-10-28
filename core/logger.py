@@ -103,11 +103,11 @@ class JsonFormatter(logging.Formatter):
 # --- Logger Setup ---
 
 
-def get_logger(name="dLNk", redis_client: Optional[aioredis.Redis] = None):
+def get_logger(name="Connext", redis_client: Optional[aioredis.Redis] = None):
     """Configures and returns a logger with a modern, compact RichHandler."""
     # Fallback values if settings is None
-    log_file = os.path.abspath(settings.LOG_FILE) if settings else "logs/dlnk.log"
-    json_log_file = os.path.abspath(settings.JSON_LOG_FILE) if settings else "logs/dlnk.json"
+    log_file = os.path.abspath(settings.LOG_FILE) if settings else "logs/connext.log"
+    json_log_file = os.path.abspath(settings.JSON_LOG_FILE) if settings else "logs/connext.json"
     log_dir = os.path.dirname(log_file)
     os.makedirs(log_dir, exist_ok=True)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Authentication Test Script for dLNk Attack Platform
+Authentication Test Script for Connext Security Platform
 Tests all authentication endpoints and verifies functionality
 """
 
@@ -10,8 +10,8 @@ import json
 from datetime import datetime
 
 API_URL = "http://localhost:8000"
-# Production API key format: dlnk_live_<64_hex_chars>
-TEST_API_KEY = "dlnk_live_invalid_key_for_testing"  # This should fail
+# Production API key format: connext_live_<64_hex_chars>
+TEST_API_KEY = "connext_live_invalid_key_for_testing"  # This should fail
 ADMIN_API_KEY = None  # Will be set after generation from server
 
 

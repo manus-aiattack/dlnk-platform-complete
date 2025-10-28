@@ -53,7 +53,7 @@ export default function Login({ onLogin }: LoginProps) {
               <Shield className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">
-              dLNk Attack Platform
+              Connext Security Platform
             </h1>
             <p className="text-gray-400 text-sm text-center">
               AI-Powered Cybersecurity Testing Platform

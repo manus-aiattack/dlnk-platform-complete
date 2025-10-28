@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Production Setup Guide
+# Connext Security Platform - Production Setup Guide
 
 ## สถานะการแก้ไข Mock Data
 
@@ -7,11 +7,11 @@
 ### ไฟล์ที่ได้รับการแก้ไขแล้ว
 
 #### 1. **integrated_server.py** ✅
-แก้ไขจาก Mock API Keys เป็น Production API Keys ที่สร้างด้วย `secrets.token_hex(32)` ในรูปแบบ `dlnk_live_<64_hex_chars>` ซึ่งเป็น cryptographically secure random keys
+แก้ไขจาก Mock API Keys เป็น Production API Keys ที่สร้างด้วย `secrets.token_hex(32)` ในรูปแบบ `connext_live_<64_hex_chars>` ซึ่งเป็น cryptographically secure random keys
 
 **การเปลี่ยนแปลง:**
 - ❌ เดิม: `admin_test_key`, `user_test_key`
-- ✅ ใหม่: `dlnk_live_<random_64_chars>` (สุ่มใหม่ทุกครั้งที่รันเซิร์ฟเวอร์)
+- ✅ ใหม่: `connext_live_<random_64_chars>` (สุ่มใหม่ทุกครั้งที่รันเซิร์ฟเวอร์)
 - ✅ แทนที่ `execute_campaign_mock()` ด้วย `execute_campaign_real()`
 - ✅ เปลี่ยน mock results เป็น production format พร้อม metadata
 
@@ -35,8 +35,8 @@
 แก้ไข API Key generation ให้ใช้ production format
 
 **การเปลี่ยนแปลง:**
-- ❌ เดิม: `DLNK-<token_urlsafe>`
-- ✅ ใหม่: `dlnk_live_<64_hex_chars>`
+- ❌ เดิม: `CONNEXT-<token_urlsafe>`
+- ✅ ใหม่: `connext_live_<64_hex_chars>`
 - ✅ License key ใช้ random hex แทน hard-coded value
 - ✅ เพิ่มการแสดง credentials เมื่อสร้าง admin user
 
@@ -45,7 +45,7 @@
 
 **การเปลี่ยนแปลง:**
 - ❌ เดิม: `test_key_12345`
-- ✅ ใหม่: `dlnk_live_invalid_key_for_testing`
+- ✅ ใหม่: `connext_live_invalid_key_for_testing`
 
 ### ไฟล์ใหม่ที่สร้างขึ้น
 
@@ -103,9 +103,9 @@ sudo systemctl enable postgresql
 sudo -u postgres psql
 
 # สร้าง user และกำหนดสิทธิ์
-CREATE USER dlnk_user WITH PASSWORD 'dlnk_secure_password_2024';
-ALTER USER dlnk_user CREATEDB;
-GRANT ALL PRIVILEGES ON DATABASE dlnk_attack_db TO dlnk_user;
+CREATE USER connext_user WITH PASSWORD 'connext_secure_password_2024';
+ALTER USER connext_user CREATEDB;
+GRANT ALL PRIVILEGES ON DATABASE connext_attack_db TO connext_user;
 
 # ออกจาก psql
 \q
@@ -132,10 +132,10 @@ python3 setup_production_database.py
 
 **Output ที่คาดหวัง:**
 ```
-🚀 dLNk Attack Platform - Production Database Setup
+🚀 Connext Security Platform - Production Database Setup
 ============================================================
 
-📦 Creating database 'dlnk_attack_db'...
+📦 Creating database 'connext_attack_db'...
 ✅ Database created successfully
 
 🔍 Checking database connection...
@@ -151,9 +151,9 @@ python3 setup_production_database.py
 🔑 PRODUCTION CREDENTIALS - SAVE THESE!
 ============================================================
 Username: admin
-Email: admin@dlnk.local
+Email: admin@connext.local
 User ID: <uuid>
-API Key: dlnk_live_<64_random_hex_chars>
+API Key: connext_live_<64_random_hex_chars>
 ============================================================
 ⚠️  The API key will NOT be shown again!
 ============================================================
@@ -182,8 +182,8 @@ python3 integrated_server.py
 ```
 🚀 Integrated Server Starting...
 📋 Production API Keys:
-   - Admin: dlnk_live_<64_chars>
-   - User: dlnk_live_<64_chars>
+   - Admin: connext_live_<64_chars>
+   - User: connext_live_<64_chars>
 ⚠️  SAVE THESE KEYS - They are randomly generated on each startup!
 
 🌐 Access the application at:
@@ -203,7 +203,7 @@ curl http://localhost:8000/health
 
 # ทดสอบสร้าง target (ใช้ admin API key)
 curl -X POST http://localhost:8000/api/targets \
-  -H "X-API-Key: dlnk_live_<your_admin_key>" \
+  -H "X-API-Key: connext_live_<your_admin_key>" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test Target",
@@ -213,7 +213,7 @@ curl -X POST http://localhost:8000/api/targets \
 
 # ดูรายการ targets
 curl http://localhost:8000/api/targets \
-  -H "X-API-Key: dlnk_live_<your_admin_key>"
+  -H "X-API-Key: connext_live_<your_admin_key>"
 ```
 
 ### ทดสอบด้วย Python
@@ -222,7 +222,7 @@ curl http://localhost:8000/api/targets \
 import requests
 
 API_URL = "http://localhost:8000"
-API_KEY = "dlnk_live_<your_admin_key>"
+API_KEY = "connext_live_<your_admin_key>"
 
 headers = {"X-API-Key": API_KEY}
 
@@ -256,11 +256,11 @@ print(response.json())
 
 | ไฟล์ | Mock Data เดิม | Production Data ใหม่ |
 |------|---------------|---------------------|
-| `integrated_server.py` | `admin_test_key`, `user_test_key` | `dlnk_live_<64_hex>` (random) |
-| `standalone_test_server.py` | `admin_test_key`, `user_test_key` | `dlnk_live_<64_hex>` (random) |
-| `services/auth_service.py` | `DLNK-<urlsafe>` | `dlnk_live_<64_hex>` |
+| `integrated_server.py` | `admin_test_key`, `user_test_key` | `connext_live_<64_hex>` (random) |
+| `standalone_test_server.py` | `admin_test_key`, `user_test_key` | `connext_live_<64_hex>` (random) |
+| `services/auth_service.py` | `CONNEXT-<urlsafe>` | `connext_live_<64_hex>` |
 | `integrated_dlNk_server.py` | `total_operations: 1337` | `total_operations: 0` (from DB) |
-| `test_auth.py` | `test_key_12345` | `dlnk_live_invalid_key_for_testing` |
+| `test_auth.py` | `test_key_12345` | `connext_live_invalid_key_for_testing` |
 
 ### ระบบใหม่ที่เพิ่มเข้ามา
 
@@ -312,20 +312,20 @@ print(response.json())
 
 ```bash
 # Backup database
-pg_dump -U dlnk_user dlnk_attack_db > backup_$(date +%Y%m%d).sql
+pg_dump -U connext_user connext_attack_db > backup_$(date +%Y%m%d).sql
 
 # Backup with compression
-pg_dump -U dlnk_user dlnk_attack_db | gzip > backup_$(date +%Y%m%d).sql.gz
+pg_dump -U connext_user connext_attack_db | gzip > backup_$(date +%Y%m%d).sql.gz
 ```
 
 ### Restore Database
 
 ```bash
 # Restore from backup
-psql -U dlnk_user dlnk_attack_db < backup_20241027.sql
+psql -U connext_user connext_attack_db < backup_20241027.sql
 
 # Restore from compressed backup
-gunzip -c backup_20241027.sql.gz | psql -U dlnk_user dlnk_attack_db
+gunzip -c backup_20241027.sql.gz | psql -U connext_user connext_attack_db
 ```
 
 ---
@@ -334,5 +334,5 @@ gunzip -c backup_20241027.sql.gz | psql -U dlnk_user dlnk_attack_db
 
 สำหรับคำถามหรือปัญหาในการติดตั้ง กรุณาติดต่อ:
 - GitHub Issues: https://github.com/manus-aiattack/aiprojectattack/issues
-- Email: admin@dlnk.local
+- Email: admin@connext.local
 

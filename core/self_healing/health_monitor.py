@@ -1,5 +1,5 @@
 """
-Health Monitor for dLNk Attack Platform
+Health Monitor for Connext Security Platform
 Monitors system health and triggers recovery when needed
 """
 

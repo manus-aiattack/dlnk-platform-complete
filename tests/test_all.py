@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk dLNk Framework - Complete Test Suite
+Connext Connext Framework - Complete Test Suite
 รันไฟล์เดียวทดสอบทุกอย่าง
 """
 
@@ -153,7 +153,7 @@ def main():
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
 
-                    Powered by dLNk Framework
+                    Powered by Connext Framework
                     
                     🧪 COMPLETE TEST SUITE
     """)
@@ -184,7 +184,7 @@ def main():
         print("🎉 ทุกอย่างทำงานได้สมบูรณ์!")
         print()
         print("🚀 เริ่มใช้งาน:")
-        print("   python3 dlnk_ai_system_local.py")
+        print("   python3 connext_ai_system_local.py")
         print()
     else:
         print("⚠️  บางส่วนยังไม่ทำงาน กรุณาตรวจสอบ error ข้างบน")

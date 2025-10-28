@@ -250,7 +250,7 @@ class APIFuzzerAgent(BaseAgent):
         """Send HTTP request with payload asynchronously"""
         headers = {
             'Content-Type': 'application/json',
-            'User-Agent': 'dLNkdLNk-APIFuzzer/1.0'
+            'User-Agent': 'ConnextConnext-APIFuzzer/1.0'
         }
 
         loop = asyncio.get_running_loop()

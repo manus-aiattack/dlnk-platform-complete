@@ -23,9 +23,9 @@ services:
     image: postgres:15-alpine
     container_name: dlnk-postgres
     environment:
-      POSTGRES_DB: dlnk_dlnk
-      POSTGRES_USER: dlnk_user
-      POSTGRES_PASSWORD: dlnk_password_change_me
+      POSTGRES_DB: connext_dlnk
+      POSTGRES_USER: connext_user
+      POSTGRES_PASSWORD: connext_password_change_me
     ports:
       - "5432:5432"
     volumes:
@@ -33,7 +33,7 @@ services:
     networks:
       - dlnk-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dlnk_user"]
+      test: ["CMD-SHELL", "pg_isready -U connext_user"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -51,9 +51,9 @@ services:
       - REDIS_PORT=6379
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
-      - POSTGRES_DB=dlnk_dlnk
-      - POSTGRES_USER=dlnk_user
-      - POSTGRES_PASSWORD=dlnk_password_change_me
+      - POSTGRES_DB=connext_dlnk
+      - POSTGRES_USER=connext_user
+      - POSTGRES_PASSWORD=connext_password_change_me
       - ORCHESTRATOR_MODE=distributed
     volumes:
       - ./workspace:/workspace
@@ -114,9 +114,9 @@ services:
       - REDIS_PORT=6379
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
-      - POSTGRES_DB=dlnk_dlnk
-      - POSTGRES_USER=dlnk_user
-      - POSTGRES_PASSWORD=dlnk_password_change_me
+      - POSTGRES_DB=connext_dlnk
+      - POSTGRES_USER=connext_user
+      - POSTGRES_PASSWORD=connext_password_change_me
       - LLM_MODEL_PATH=/models/llm/mistral-7b-instruct
       - LLM_CONTEXT_LENGTH=8192
       - LLM_TEMPERATURE=0.7

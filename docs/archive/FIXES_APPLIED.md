@@ -129,11 +129,11 @@ def set_dependencies(database: Database, auth_svc: AuthService):
 # Database Configuration (PostgreSQL)
 DB_HOST=localhost
 DB_PORT=5432
-DB_USER=dlnk_user
+DB_USER=connext_user
 DB_PASSWORD=18122542
 DB_NAME=dlnk
 
-DATABASE_URL=postgresql://dlnk_user:18122542@localhost:5432/dlnk
+DATABASE_URL=postgresql://connext_user:18122542@localhost:5432/connext
 ```
 
 **อัพเดท `.env.example`:**
@@ -160,7 +160,7 @@ DATABASE_URL=postgresql://dlnk_user:18122542@localhost:5432/dlnk
 ### 1. ตรวจสอบ PostgreSQL
 ```bash
 # ตรวจสอบว่า PostgreSQL ทำงานอยู่
-psql -U dlnk_user -d dlnk -h localhost -p 5432
+psql -U connext_user -d dlnk -h localhost -p 5432
 
 # หรือใช้ Docker
 docker-compose up -d postgres
@@ -215,7 +215,7 @@ curl http://localhost:8000/
 **Expected Response:**
 ```json
 {
-  "name": "dLNk dLNk Attack Platform API",
+  "name": "Connext Connext Security Platform API",
   "version": "2.0.0",
   "status": "operational",
   "timestamp": "2025-10-26T..."

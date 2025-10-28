@@ -1,6 +1,6 @@
-# 🚀 dLNk dLNk Framework - เริ่มใช้งาน
+# 🚀 Connext Connext Framework - เริ่มใช้งาน
 
-**Powered by dLNk Framework** 🌈
+**Powered by Connext Framework** 🌈
 
 ---
 
@@ -31,7 +31,7 @@ python3 test_all.py
 
 ```bash
 # ใช้ AI System
-python3 dlnk_ai_system_local.py
+python3 connext_ai_system_local.py
 
 # ใช้ Framework
 python3 main.py --help
@@ -60,7 +60,7 @@ ollama pull mixtral:latest
 ## 📚 ไฟล์สำคัญ
 
 - `test_all.py` - **ทดสอบทุกอย่าง (รันไฟล์นี้)**
-- `dlnk_ai_system_local.py` - ใช้ AI System
+- `connext_ai_system_local.py` - ใช้ AI System
 - `llm_config.py` - Config LLM
 - `main.py` - Framework entry point
 

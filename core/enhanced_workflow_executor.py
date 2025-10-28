@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from datetime import datetime
 import logging
 
-logger = logging.getLogger("dLNk")
+logger = logging.getLogger("Connext")
 
 
 @dataclass

@@ -6,9 +6,9 @@ async def test( ):
         conn = await asyncpg.connect(
             host='localhost',
             port=5432,
-            user='dlnk',
-            password='dlnk_password',
-            database='dlnk_db'
+            user='connext',
+            password='connext_password',
+            database='connext_db'
         )
         print("✅ Connected with password!")
         result = await conn.fetchval("SELECT 1")

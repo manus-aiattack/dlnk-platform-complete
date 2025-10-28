@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Setup script for dLNk dLNk Framework
+Setup script for Connext Connext Framework
 """
 
 from setuptools import setup, find_packages
@@ -23,14 +23,14 @@ if requirements_file.exists():
     ]
 
 setup(
-    name="dlnk",
+    name="connext",
     version="1.0.0",
-    author="dLNk dLNk Team",
-    author_email="team@dlnk.local",
+    author="Connext Team",
+    author_email="team@connext.local",
     description="Autonomous Penetration Testing Framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/dlnk/framework",
+    url="https://github.com/connext/framework",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",

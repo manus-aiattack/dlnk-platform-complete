@@ -1,6 +1,6 @@
-# dLNk HACK Dashboard
+# Connext HACK Dashboard
 
-Modern web interface for the dLNk Predator Framework with dLNk HACK branding.
+Modern web interface for the Connext Predator Framework with Connext HACK branding.
 
 ## Features
 
@@ -32,11 +32,11 @@ cd web
 python3 server.py
 ```
 
-Then open: http://localhost:8080/dashboard_dlnk.html
+Then open: http://localhost:8080/dashboard_connext.html
 
 ### Method 2: Direct File Access
 
-Simply double-click `dashboard_dlnk.html` to open in your browser.
+Simply double-click `dashboard_connext.html` to open in your browser.
 
 ### Method 3: Integrate with Framework
 
@@ -55,15 +55,15 @@ app.mount("/dashboard", StaticFiles(directory="web"), name="dashboard")
 **API Key:** Any non-empty string (for demo)
 
 In production, integrate with the License Service:
-- `DLNK-TRIAL-xxxxx` - Trial license
-- `DLNK-BASIC-xxxxx` - Basic license
-- `DLNK-PRO-xxxxx` - Professional license
-- `DLNK-ENT-xxxxx` - Enterprise license
+- `CONNEXT-TRIAL-xxxxx` - Trial license
+- `CONNEXT-BASIC-xxxxx` - Basic license
+- `CONNEXT-PRO-xxxxx` - Professional license
+- `CONNEXT-ENT-xxxxx` - Enterprise license
 
 ## Screenshots
 
 ### Login Screen
-- ASCII art logo "dLNk HACK"
+- ASCII art logo "Connext HACK"
 - API key input
 - Clean authentication
 
@@ -85,7 +85,7 @@ In production, integrate with the License Service:
 
 ### Change Colors
 
-Edit the CSS variables in `dashboard_dlnk.html`:
+Edit the CSS variables in `dashboard_connext.html`:
 
 ```css
 /* Primary color (green) */
@@ -223,10 +223,10 @@ Integrate with your License Service for proper API key validation.
 
 ## License
 
-Part of the dLNk Predator Framework - Enterprise Edition
+Part of the Connext Predator Framework - Enterprise Edition
 
 ---
 
-**Created by:** dLNk HACK Team
+**Created by:** Connext HACK Team
 **Version:** 1.0.0
 **Last Updated:** 2024-10-22

@@ -1,5 +1,5 @@
 """
-Performance Testing for dLNk Attack Platform
+Performance Testing for Connext Security Platform
 Tests load, stress, and performance metrics
 """
 

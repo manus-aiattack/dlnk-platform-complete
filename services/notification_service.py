@@ -1,5 +1,5 @@
 """
-Notification Service for dLNk Attack Platform
+Notification Service for Connext Security Platform
 Unified notifications across multiple channels
 """
 
@@ -116,7 +116,7 @@ class NotificationService:
         try:
             # Create message
             msg = MIMEMultipart('alternative')
-            msg['Subject'] = f"[dLNk] {subject}"
+            msg['Subject'] = f"[Connext] {subject}"
             msg['From'] = self.email_from
             msg['To'] = ', '.join(recipients)
             
@@ -133,7 +133,7 @@ class NotificationService:
             </head>
             <body>
                 <div class="header">
-                    <h2>🎯 dLNk Attack Platform</h2>
+                    <h2>🎯 Connext Security Platform</h2>
                 </div>
                 <div class="content">
                     <h3>{subject}</h3>
@@ -227,7 +227,7 @@ class NotificationService:
                 "color": 6855914,  # Purple color
                 "timestamp": datetime.utcnow().isoformat(),
                 "footer": {
-                    "text": "dLNk Attack Platform"
+                    "text": "Connext Security Platform"
                 }
             }
             

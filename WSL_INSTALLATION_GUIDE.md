@@ -49,15 +49,15 @@ sudo apt install -y postgresql postgresql-contrib
 sudo service postgresql start
 
 # สร้าง database และ user
-sudo -u postgres psql -c "CREATE USER dlnk WITH PASSWORD 'dlnk_password';"
-sudo -u postgres psql -c "CREATE DATABASE dlnk_dlnk OWNER dlnk;"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE dlnk_dlnk TO dlnk;"
+sudo -u postgres psql -c "CREATE USER dlnk WITH PASSWORD 'connext_password';"
+sudo -u postgres psql -c "CREATE DATABASE connext_dlnk OWNER dlnk;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE connext_dlnk TO dlnk;"
 ```
 
 #### อัพเดท .env:
 
 ```bash
-DATABASE_URL=postgresql://dlnk:dlnk_password@localhost:5432/dlnk_dlnk
+DATABASE_URL=postgresql://connext:connext_password@localhost:5432/connext_dlnk
 ```
 
 ---
@@ -168,9 +168,9 @@ echo "sudo service postgresql start" >> ~/.bashrc
 
 ```bash
 sudo -u postgres psql << EOF
-CREATE USER dlnk WITH PASSWORD 'dlnk_password';
-CREATE DATABASE dlnk_dlnk OWNER dlnk;
-GRANT ALL PRIVILEGES ON DATABASE dlnk_dlnk TO dlnk;
+CREATE USER dlnk WITH PASSWORD 'connext_password';
+CREATE DATABASE connext_dlnk OWNER dlnk;
+GRANT ALL PRIVILEGES ON DATABASE connext_dlnk TO dlnk;
 \q
 EOF
 ```
@@ -215,7 +215,7 @@ nano .env
 แก้ไขค่าต่อไปนี้:
 ```bash
 SIMULATION_MODE=False
-DATABASE_URL=postgresql://dlnk:dlnk_password@localhost:5432/dlnk_dlnk
+DATABASE_URL=postgresql://connext:connext_password@localhost:5432/connext_dlnk
 OLLAMA_HOST=http://localhost:11434
 OLLAMA_MODEL=mixtral:latest
 ```
@@ -245,7 +245,7 @@ python3 api/main.py
 ### ทดสอบ PostgreSQL
 
 ```bash
-psql -U dlnk -d dlnk_dlnk -h localhost -c "SELECT version();"
+psql -U dlnk -d connext_dlnk -h localhost -c "SELECT version();"
 ```
 
 ### ทดสอบ Ollama

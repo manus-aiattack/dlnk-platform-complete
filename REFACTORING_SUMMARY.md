@@ -20,7 +20,7 @@
 ระบบมีปัญหาดังนี้:
 
 **โครงสร้างไฟล์:**
-- มีโฟลเดอร์ `dlnk_FINAL/` ที่ซ้ำกับ root (282 ไฟล์)
+- มีโฟลเดอร์ `connext_FINAL/` ที่ซ้ำกับ root (282 ไฟล์)
 - มีไฟล์ API หลายเวอร์ชัน (5 ไฟล์)
 - มีไฟล์ test กระจัดกระจายใน root
 - มีเอกสารเก่าๆ มากกว่า 60 ไฟล์ใน root
@@ -28,14 +28,14 @@
 
 **ปัญหา:**
 - สับสน ไม่รู้ว่าควรใช้ไฟล์ไหน
-- บางไฟล์ใน dlnk_FINAL ดีกว่า root
+- บางไฟล์ใน connext_FINAL ดีกว่า root
 - ยากต่อการ maintain
 - โครงสร้างไม่ชัดเจน
 
 ### หลังการปรับปรุง
 
 **โครงสร้างสะอาด:**
-- ✅ ลบ `dlnk_FINAL/` ทั้งหมด (หลังย้ายไฟล์ที่ดีกว่า)
+- ✅ ลบ `connext_FINAL/` ทั้งหมด (หลังย้ายไฟล์ที่ดีกว่า)
 - ✅ API เหลือ 1 ไฟล์เดียว (`api/main.py`)
 - ✅ ไฟล์ test อยู่ใน `tests/` เท่านั้น
 - ✅ เอกสารเก่าอยู่ใน `docs/archive/`
@@ -63,7 +63,7 @@
 
 **ไฟล์ที่ลบ:** 203 ไฟล์ (duplicates + temporary)  
 **ไฟล์ที่ปรับปรุง:** 4 ไฟล์หลัก (ใช้เวอร์ชันที่ดีกว่า)  
-**ไฟล์ใหม่:** 3 ไฟล์ (จาก dlnk_FINAL)
+**ไฟล์ใหม่:** 3 ไฟล์ (จาก connext_FINAL)
 
 ---
 
@@ -72,13 +72,13 @@
 ### Phase 1: วิเคราะห์ (✅ Complete)
 
 - วิเคราะห์ไฟล์ทั้งหมด 695+ ไฟล์
-- เปรียบเทียบ root vs dlnk_FINAL
+- เปรียบเทียบ root vs connext_FINAL
 - ระบุไฟล์ที่ดีกว่า
 - สร้างรายงานการเปรียบเทียบ
 
 ### Phase 2-3: ย้ายและรวมไฟล์ (✅ Complete)
 
-**ย้ายไฟล์ที่ดีกว่าจาก dlnk_FINAL:**
+**ย้ายไฟล์ที่ดีกว่าจาก connext_FINAL:**
 
 1. `core/orchestrator.py` (635 lines) - AI-Driven version
 2. `core/session_manager.py` (475 lines) - Enhanced version
@@ -91,17 +91,17 @@
 ### Phase 4: ลบไฟล์ซ้ำ (✅ Complete)
 
 **ลบแล้ว:**
-- ✅ `dlnk_FINAL/` ทั้งหมด (282 ไฟล์)
+- ✅ `connext_FINAL/` ทั้งหมด (282 ไฟล์)
 - ✅ Duplicate API files (4 ไฟล์)
 - ✅ Test files จาก root (10+ ไฟล์)
 - ✅ Temporary files (10+ ไฟล์)
 - ✅ Old scripts (10+ ไฟล์)
 - ✅ `apex_predator_FINAL/`
-- ✅ `dlnk/` symlink
+- ✅ `connext/` symlink
 
 ### Phase 5: อัพเดท Import Paths (✅ Complete)
 
-- ตรวจสอบแล้ว: ไม่มี import จาก dlnk_FINAL
+- ตรวจสอบแล้ว: ไม่มี import จาก connext_FINAL
 - ไม่ต้องแก้ไข import paths
 - ทุกไฟล์ compile สำเร็จ
 
@@ -210,7 +210,7 @@ Agents ทั้งหมดยังอยู่:
 **ก่อน:**
 ```
 Manus/
-├── dlnk_FINAL/        ← ซ้ำ 282 ไฟล์!
+├── connext_FINAL/        ← ซ้ำ 282 ไฟล์!
 ├── apex_predator_FINAL/  ← ซ้ำ!
 ├── api/
 │   ├── main.py
@@ -331,7 +331,7 @@ https://github.com/srhhsshdsrdgeseedh-max/manus/pull/new/refactor-codebase-work
 ### ✅ สำเร็จทุกอย่าง!
 
 - ✅ **203 ไฟล์ซ้ำถูกลบ**
-- ✅ **ไฟล์ที่ดีกว่าถูกย้ายมาจาก dlnk_FINAL**
+- ✅ **ไฟล์ที่ดีกว่าถูกย้ายมาจาก connext_FINAL**
 - ✅ **ฟีเจอร์ทั้งหมดรักษาไว้ 100%**
 - ✅ **โครงสร้างสะอาดกว่า**
 - ✅ **AI capabilities ดีขึ้น**

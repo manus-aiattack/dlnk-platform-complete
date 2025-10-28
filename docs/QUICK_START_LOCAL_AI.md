@@ -1,4 +1,4 @@
-# Quick Start: ใช้งาน Local AI (Ollama) กับ dLNk Attack Platform
+# Quick Start: ใช้งาน Local AI (Ollama) กับ Connext Security Platform
 ## เริ่มต้นใช้งานภายใน 5 นาที - ฟรี 100%
 
 ---
@@ -407,7 +407,7 @@ DISCORD_WEBHOOK_URL=your_webhook
 
 ## 🎉 สรุป
 
-คุณพร้อมใช้งาน dLNk Attack Platform แล้ว!
+คุณพร้อมใช้งาน Connext Security Platform แล้ว!
 
 ✅ ใช้ Local AI (Ollama) - ฟรี 100%  
 ✅ ไม่ต้องเสียเงิน API  

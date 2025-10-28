@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Database Initialization Script
-Initializes the database schema for dLNk Attack Platform
+Initializes the database schema for Connext Security Platform
 """
 import asyncio
 import sys
@@ -17,7 +17,7 @@ from core.logger import log
 async def init_database():
     """Initialize database schema"""
     print("=" * 80)
-    print("dLNk Attack Platform - Database Initialization")
+    print("Connext Security Platform - Database Initialization")
     print("=" * 80)
     print()
     
@@ -53,7 +53,7 @@ async def init_database():
         print("Troubleshooting:")
         print("1. Check that PostgreSQL is running: sudo systemctl status postgresql")
         print("2. Verify database credentials in .env file")
-        print("3. Ensure database exists: psql -U dlnk_user -d dlnk -h localhost")
+        print("3. Ensure database exists: psql -U connext_user -d dlnk -h localhost")
         print()
         return 1
 

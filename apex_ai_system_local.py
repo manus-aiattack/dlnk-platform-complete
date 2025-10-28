@@ -1,5 +1,5 @@
 """
-dLNk dLNk AI System with Local LLM Support
+Connext AI System with Local LLM Support
 Supports: OpenAI, Ollama (Mixtral), LM Studio, LocalAI
 """
 
@@ -7,8 +7,8 @@ import time
 from openai import OpenAI
 from llm_config import get_llm_config, print_config
 
-class dLNkAISystem:
-    """AI System for dLNk dLNk Framework with Local LLM Support"""
+class ConnextAISystem:
+    """AI System for Connext Connext Framework with Local LLM Support"""
     
     def __init__(self):
         """Initialize AI system with configured LLM"""
@@ -24,7 +24,7 @@ class dLNkAISystem:
         self.temperature = config['temperature']
         self.max_tokens = config['max_tokens']
         
-        print("✅ dLNk dLNk AI System initialized")
+        print("✅ Connext AI System initialized")
         print_config()
         print()
     
@@ -196,12 +196,12 @@ def demo():
     """Demo AI system with local LLM"""
     
     print("=" * 80)
-    print("🦅 dLNk dLNk AI System - Local LLM Demo")
+    print("🦅 Connext AI System - Local LLM Demo")
     print("=" * 80)
     print()
     
     # Initialize
-    ai = dLNkAISystem()
+    ai = ConnextAISystem()
     
     # Test 1: Attack Planning
     print("=" * 80)

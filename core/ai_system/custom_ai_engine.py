@@ -1,5 +1,5 @@
 """
-Custom AI Engine for dLNk Attack Platform
+Custom AI Engine for Connext Security Platform
 Rule-based + Pattern Matching + Heuristic Analysis
 No external API dependencies
 """
@@ -28,7 +28,7 @@ class CustomAIEngine:
     """
     
     def __init__(self, knowledge_base_path: str = None):
-        self.knowledge_base_path = knowledge_base_path or "/tmp/dlnk_knowledge_base.json"
+        self.knowledge_base_path = knowledge_base_path or "/tmp/connext_knowledge_base.json"
         self.knowledge_base = self._load_knowledge_base()
         
         # Vulnerability detection rules

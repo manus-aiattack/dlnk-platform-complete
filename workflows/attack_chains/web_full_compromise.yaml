@@ -5,7 +5,7 @@
 name: "Web Application Full Compromise"
 description: "Complete attack chain for web applications - from recon to backdoor and data exfil"
 version: "1.0.0"
-author: "dLNk HACK"
+author: "Connext HACK"
 target_type: "web_application"
 estimated_duration: 120  # minutes
 success_rate: 0.75

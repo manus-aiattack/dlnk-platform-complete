@@ -1,11 +1,11 @@
-## ✅ ระบบ dLNk Attack Platform v3.0.0-production พร้อมใช้งานถาวร
+## ✅ ระบบ Connext Security Platform v3.0.0-production พร้อมใช้งานถาวร
 
 ### สถานะระบบ
 
 **ระบบพร้อมใช้งาน** และรันถาวรด้วย `systemd` บน Sandbox นี้แล้วครับ
 
 - **Status:** Operational (รันถาวร)
-- **Platform:** dLNk Attack Platform v3.0.0-production
+- **Platform:** Connext Security Platform v3.0.0-production
 - **Agents:** 163+ AI-powered attack agents
 - **API Endpoints:** 121+ endpoints
 - **Database:** PostgreSQL
@@ -42,37 +42,37 @@ https://8000-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer/api/docs
     - แก้ไข `frontend_hacker.html` ให้ใช้ Header authentication (`X-API-Key`)
 
 4.  **สร้าง Systemd Service:**
-    - สร้าง `dlnk-platform.service` สำหรับรันระบบถาวร
+    - สร้าง `connext-platform.service` สำหรับรันระบบถาวร
     - ตั้งค่าให้ระบบ start อัตโนมัติหลังจาก boot
-    - Log จะถูกเก็บไว้ที่ `/var/log/dlnk/`
+    - Log จะถูกเก็บไว้ที่ `/var/log/connext/`
 
 ### การจัดการระบบ (สำหรับ Sandbox นี้)
 
 **Start ระบบ:**
 ```bash
-sudo systemctl start dlnk-platform
+sudo systemctl start connext-platform
 ```
 
 **Stop ระบบ:**
 ```bash
-sudo systemctl stop dlnk-platform
+sudo systemctl stop connext-platform
 ```
 
 **Restart ระบบ:**
 ```bash
-sudo systemctl restart dlnk-platform
+sudo systemctl restart connext-platform
 ```
 
 **ดูสถานะ:**
 ```bash
-sudo systemctl status dlnk-platform
+sudo systemctl status connext-platform
 ```
 
 **ดู Logs:**
 ```bash
-journalctl -u dlnk-platform -f
+journalctl -u connext-platform -f
 # หรือ
-tail -f /var/log/dlnk/platform.log
+tail -f /var/log/connext/platform.log
 ```
 
 ### ปัญหาที่ยังคงอยู่

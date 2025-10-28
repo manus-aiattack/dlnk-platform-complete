@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dLNk Attack Platform - Dashboard</title>
+    <title>Connext Security Platform - Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -223,7 +223,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎯 dLNk Attack Platform</h1>
+            <h1>🎯 Connext Security Platform</h1>
             <p class="subtitle">AI-Powered Autonomous Attack System - Complete Control Panel</p>
             <div style="margin-top: 15px;">
                 <span class="status online" id="systemStatus">🟢 ALL SYSTEMS OPERATIONAL</span>
@@ -343,7 +343,7 @@
 
     <script>
         const API_BASE = 'https://8000-i3ahfavoia7c7k1dxwwpn-567d442b.manus-asia.computer';
-        let currentAPIKey = localStorage.getItem('dlnk_api_key') || '';
+        let currentAPIKey = localStorage.getItem('connext_api_key') || '';
 
         // Load stats on page load
         window.onload = function() {
@@ -403,7 +403,7 @@
 
             try {
                 // Generate random API key
-                const newKey = 'dlnk_' + Array.from({length: 32}, () => 
+                const newKey = 'connext_' + Array.from({length: 32}, () => 
                     Math.floor(Math.random() * 16).toString(16)).join('');
 
                 // In production, this should call the backend API

@@ -1,8 +1,8 @@
-# dLNk dLNk Framework - Deployment Guide
+# Connext Connext Framework - Deployment Guide
 
 **Version:** 3.0 (Final)
 
-This guide provides comprehensive instructions for deploying the dLNk dLNk Framework in a production environment. The recommended deployment method is using Docker and Docker Compose, which encapsulates all required services and dependencies into isolated containers.
+This guide provides comprehensive instructions for deploying the Connext Connext Framework in a production environment. The recommended deployment method is using Docker and Docker Compose, which encapsulates all required services and dependencies into isolated containers.
 
 ---
 
@@ -22,18 +22,18 @@ The deployment process is designed to be straightforward using the provided Dock
 
 ### Step 1: Obtain the Framework Package
 
-First, acquire the final framework package, `dlnk_dlnk_framework_v3_final.zip`, and transfer it to your deployment server.
+First, acquire the final framework package, `connext_connext_framework_v3_final.zip`, and transfer it to your deployment server.
 
 ### Step 2: Unpack the Archive
 
 Unzip the package to create the project directory.
 
 ```bash
-unzip dlnk_dlnk_framework_v3_final.zip
-cd dlnk_dlnk
+unzip connext_connext_framework_v3_final.zip
+cd connext_dlnk
 ```
 
-This will create a directory named `dlnk_dlnk` containing the framework source code, Docker files, and configuration.
+This will create a directory named `connext_dlnk` containing the framework source code, Docker files, and configuration.
 
 ### Step 3: Configure Environment Variables
 
@@ -48,7 +48,7 @@ Now, edit the `.env` file and customize the settings as needed. The most critica
 **`.env` File Contents:**
 ```
 # Docker Settings
-COMPOSE_PROJECT_NAME=dlnk_dlnk
+COMPOSE_PROJECT_NAME=connext_dlnk
 
 # Redis Configuration
 REDIS_HOST=redis
@@ -75,7 +75,7 @@ docker-compose up --build -d
 ```
 
 This command will:
-1.  Build the Docker image for the dLNk dLNk application, installing all Python dependencies.
+1.  Build the Docker image for the Connext application, installing all Python dependencies.
 2.  Pull the official Redis image.
 3.  Create and start containers for the API server and the Redis database.
 
@@ -95,13 +95,13 @@ Check that all containers are running correctly:
 docker-compose ps
 ```
 
-You should see output similar to this, with both `dlnk_dlnk_app_1` and `dlnk_dlnk_redis_1` having a status of `Up`:
+You should see output similar to this, with both `connext_connext_app_1` and `connext_connext_redis_1` having a status of `Up`:
 
 ```
           Name                         Command               State           Ports
 -------------------------------------------------------------------------------------------
-dlnk_dlnk_app_1     uvicorn web.api:app --host ...   Up      0.0.0.0:8000->8000/tcp
-dlnk_dlnk_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
+connext_connext_app_1     uvicorn web.api:app --host ...   Up      0.0.0.0:8000->8000/tcp
+connext_connext_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
 ```
 
 You can also check the health of the API:

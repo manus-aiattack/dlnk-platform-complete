@@ -1,6 +1,6 @@
 # Authentication & Admin System Guide
 
-Complete guide for the authentication and admin panel system in dLNk dLNk Framework.
+Complete guide for the authentication and admin panel system in Connext Connext Framework.
 
 ## Overview
 
@@ -36,7 +36,7 @@ The authentication system provides:
    - Static file serving for web UI
 
 4. **Web Interfaces**
-   - **Dashboard** (`web/dashboard_dlnk.html`) - Main attack dashboard
+   - **Dashboard** (`web/dashboard_connext.html`) - Main attack dashboard
    - **Admin Panel** (`web/admin_panel.html`) - Administration interface
 
 ---
@@ -62,7 +62,7 @@ redis-server
 ### 3. Start API Server
 
 ```bash
-cd dlnk_dlnk_framework_v3/dlnk_dlnk
+cd connext_connext_framework_v3/connext_dlnk
 python api/main_api.py
 ```
 
@@ -71,7 +71,7 @@ The server will start on `localhost:8000`
 ### 4. Access Interfaces
 
 - **API Documentation**: localhost:8000/api/docs
-- **Main Dashboard**: localhost:8000/dashboard/dashboard_dlnk.html
+- **Main Dashboard**: localhost:8000/dashboard/dashboard_connext.html
 - **Admin Panel**: localhost:8000/admin/admin_panel.html
 
 ---
@@ -148,7 +148,7 @@ Content-Type: application/json
     "username": "admin",
     "email": "admin@dlnkhack.local",
     "role": "admin",
-    "api_key": "DLNK-..."
+    "api_key": "CONNEXT-..."
   }
 }
 ```
@@ -217,7 +217,7 @@ Content-Type: application/json
   "email": "newemail@localhost:8000",
   "role": "admin",
   "is_active": true,
-  "license_key": "DLNK-ENT-..."
+  "license_key": "CONNEXT-ENT-..."
 }
 ```
 
@@ -307,7 +307,7 @@ Authorization: Bearer <access_token>
 
 ```bash
 # Same as JWT token
-curl -H "Authorization: Bearer DLNK-your-api-key" \
+curl -H "Authorization: Bearer CONNEXT-your-api-key" \
      localhost:8000/api/auth/verify-api-key
 ```
 
@@ -669,7 +669,7 @@ For issues or questions:
 
 ---
 
-**Created by:** dLNk HACK Team  
+**Created by:** Connext HACK Team  
 **Version:** 3.0.0  
 **Last Updated:** 2024-10-22
 

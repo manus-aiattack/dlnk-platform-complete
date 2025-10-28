@@ -1,4 +1,4 @@
-# dLNk Attack Platform - แผนการแก้ไขและปรับปรุงระบบ
+# Connext Security Platform - แผนการแก้ไขและปรับปรุงระบบ
 
 ## ปัญหาที่พบ
 1. Frontend/Backend/API ไม่ลงตัว
@@ -11,7 +11,7 @@
 
 ## เป้าหมาย
 - ทำให้ระบบทำงานสมบูรณ์ 100%
-- ใช้ชื่อเว็บ "dLNk"
+- ใช้ชื่อเว็บ "Connext"
 - UI Dark Theme สีเขียว-ดำ-แดง
 - Authentication ด้วย API Key เท่านั้น
 - Real-time monitoring และกราฟ

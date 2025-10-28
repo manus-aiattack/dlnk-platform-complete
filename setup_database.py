@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Database Setup Script for dLNk Attack Platform
+Database Setup Script for Connext Security Platform
 Creates database schema and generates default admin key
 """
 
@@ -20,7 +20,7 @@ from api.services.auth import AuthService
 
 async def setup_database():
     """Setup database and create default admin key"""
-    print("🚀 Setting up dLNk Attack Platform Database...")
+    print("🚀 Setting up Connext Security Platform Database...")
 
     # Initialize database
     db = Database()
@@ -127,9 +127,9 @@ if __name__ == "__main__":
     # Set environment variables for database connection
     os.environ.setdefault('DB_HOST', 'localhost')
     os.environ.setdefault('DB_PORT', '5432')
-    os.environ.setdefault('DB_USER', 'dlnk')
-    os.environ.setdefault('DB_PASSWORD', 'dlnk')
-    os.environ.setdefault('DB_NAME', 'dlnk_attack_platform')
+    os.environ.setdefault('DB_USER', 'connext')
+    os.environ.setdefault('DB_PASSWORD', 'connext')
+    os.environ.setdefault('DB_NAME', 'connext_attack_platform')
 
     print("Database configuration:")
     print(f"  Host: {os.getenv('DB_HOST')}")

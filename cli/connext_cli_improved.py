@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform CLI - Improved Version
+Connext Security Platform CLI - Improved Version
 Command Line Interface for AI-Powered Cybersecurity Testing Platform
 
 Usage:
@@ -74,7 +74,7 @@ class CLIConfig:
 
 
 class APIClient:
-    """API Client for dLNk Platform"""
+    """API Client for Connext Platform"""
     
     def __init__(self, config: CLIConfig):
         self.config = config
@@ -134,10 +134,10 @@ api = APIClient(config)
 
 
 @click.group()
-@click.version_option(version='2.0.0', prog_name='dLNk Attack Platform')
+@click.version_option(version='2.0.0', prog_name='Connext Security Platform')
 def cli():
     """
-    dLNk Attack Platform CLI
+    Connext Security Platform CLI
     
     AI-Powered Cybersecurity Testing Platform
     
@@ -167,7 +167,7 @@ def attack(url: str, follow: bool, mode: str, agents: tuple, output: Optional[st
     """
     console.print(Panel.fit(
         f"[cyan]Launching attack against:[/cyan] [bold]{url}[/bold]",
-        title="dLNk Attack Platform",
+        title="Connext Security Platform",
         border_style="cyan"
     ))
     
@@ -348,7 +348,7 @@ def config_group():
 @config_group.command('show')
 def config_show():
     """Show current configuration"""
-    table = Table(title="dLNk CLI Configuration")
+    table = Table(title="Connext CLI Configuration")
     table.add_column("Key", style="cyan")
     table.add_column("Value", style="green")
     
@@ -372,7 +372,7 @@ def config_set(key: str, value: str):
 @config_group.command('init')
 def config_init():
     """Initialize configuration"""
-    console.print("[cyan]Initializing dLNk CLI configuration...[/cyan]")
+    console.print("[cyan]Initializing Connext CLI configuration...[/cyan]")
     
     api_url = click.prompt("API URL", default="http://localhost:8000")
     api_key = click.prompt("API Key", hide_input=True)

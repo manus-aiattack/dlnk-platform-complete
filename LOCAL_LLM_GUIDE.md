@@ -1,4 +1,4 @@
-# 🤖 Local LLM Guide - dLNk dLNk Framework
+# 🤖 Local LLM Guide - Connext Connext Framework
 
 ## คุณมี Mixtral แล้ว! ใช้งานได้เลย
 
@@ -12,7 +12,7 @@ ollama list
 ollama serve
 
 # 3. ทดสอบ AI System
-python3 dlnk_ai_system_local.py
+python3 connext_ai_system_local.py
 ```
 
 ### 📋 Configuration
@@ -33,9 +33,9 @@ OLLAMA_MODEL = "mixtral:latest"  # คุณมี model นี้แล้ว!
 #### 1. Attack Planning
 
 ```python
-from dlnk_ai_system_local import dLNkAISystem
+from connext_ai_system_local import ConnextAISystem
 
-ai = dLNkAISystem()
+ai = ConnextAISystem()
 
 result = ai.generate_attack_plan({
     "target": "https://target.com",
@@ -83,7 +83,7 @@ OPENAI_MODEL = "gpt-4.1-mini"
 
 ```bash
 export OPENAI_API_KEY="sk-..."
-python3 dlnk_ai_system_local.py
+python3 connext_ai_system_local.py
 ```
 
 #### ใช้ LM Studio
@@ -195,12 +195,12 @@ ollama pull llama3.2:latest
 
 ```python
 # agents/your_agent.py
-from dlnk_ai_system_local import dLNkAISystem
+from connext_ai_system_local import ConnextAISystem
 
 class YourAgent(BaseAgent):
     def __init__(self):
         super().__init__()
-        self.ai = dLNkAISystem()
+        self.ai = ConnextAISystem()
     
     async def execute(self, directive, context):
         # ใช้ AI วางแผน
@@ -239,7 +239,7 @@ phases:
 #### Example 1: Reconnaissance Planning
 
 ```python
-ai = dLNkAISystem()
+ai = ConnextAISystem()
 
 result = ai.generate_attack_plan({
     "target": "https://localhost:8000",
@@ -292,12 +292,12 @@ result = ai.generate_report({
 **เริ่มใช้งาน:**
 
 ```bash
-python3 dlnk_ai_system_local.py
+python3 connext_ai_system_local.py
 ```
 
 ---
 
-**Powered by dLNk Framework** 🌈
+**Powered by Connext Framework** 🌈
 
 **Made with ❤️ for Offensive Security**
 

@@ -1,8 +1,8 @@
-# dLNk dLNk Framework - CLI Reference
+# Connext Connext Framework - CLI Reference
 
 **Version:** 3.0 (Final)
 
-This document provides a reference for the Command-Line Interface (CLI) of the dLNk dLNk Framework. The CLI is the primary tool for direct interaction and control over the framework's operations.
+This document provides a reference for the Command-Line Interface (CLI) of the Connext Connext Framework. The CLI is the primary tool for direct interaction and control over the framework's operations.
 
 The base command for the CLI is `dlnk-dlnk`.
 
@@ -83,7 +83,7 @@ These are the main commands for controlling the framework.
 
 ### **`dlnk-dlnk version`**
 
-- **Description:** Displays the current version of the dLNk dLNk Framework.
+- **Description:** Displays the current version of the Connext Connext Framework.
 - **Usage:**
   ```bash
   dlnk-dlnk version

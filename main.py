@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk dLNk Framework - Main Entry Point
+Connext Connext Framework - Main Entry Point
 """
 
 import sys

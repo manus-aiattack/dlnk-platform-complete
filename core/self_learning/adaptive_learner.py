@@ -25,7 +25,7 @@ class AdaptiveLearner:
     - Improve over time
     """
     
-    def __init__(self, knowledge_base_path: str = "/tmp/dlnk_knowledge"):
+    def __init__(self, knowledge_base_path: str = "/tmp/connext_knowledge"):
         self.knowledge_base_path = Path(knowledge_base_path)
         self.knowledge_base_path.mkdir(parents=True, exist_ok=True)
         

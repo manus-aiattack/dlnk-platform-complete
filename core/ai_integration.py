@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AI Integration for dLNk dLNk Framework
+AI Integration for Connext Connext Framework
 Integrates LLM capabilities into the framework
 """
 from datetime import datetime
@@ -36,7 +36,7 @@ class AIResult:
 
 class AIOrchestrator:
     """
-    AI Orchestrator for dLNk dLNk Framework
+    AI Orchestrator for Connext Connext Framework
     Manages AI-powered decision making and planning
     """
     
@@ -79,7 +79,7 @@ class AIOrchestrator:
     def get_system_prompt(self, task_type: str) -> str:
         """Get optimized system prompt for task type"""
         
-        base = """คุณเป็น AI ผู้เชี่ยวชาญด้าน Offensive Security สำหรับ dLNk dLNk Framework
+        base = """คุณเป็น AI ผู้เชี่ยวชาญด้าน Offensive Security สำหรับ Connext Connext Framework
 คุณมีความรู้ลึกซึ้งเกี่ยวกับ MITRE ATT&CK®, OWASP, และเทคนิคการโจมตีทุกประเภท
 
 **หลักการตอบ:**

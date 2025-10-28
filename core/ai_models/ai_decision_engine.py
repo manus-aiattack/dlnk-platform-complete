@@ -1,5 +1,5 @@
 """
-AI Decision Engine for dLNk Attack Platform
+AI Decision Engine for Connext Security Platform
 Makes intelligent decisions about attack strategies
 """
 

@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Latest Audit Update
+# Connext Security Platform - Latest Audit Update
 ## รายงานการตรวจสอบล่าสุด
 
 **วันที่:** 25 ตุลาคม 2568  
@@ -28,15 +28,15 @@
 
 ### ไฟล์ที่แก้ไข (4 ไฟล์):
 
-1. **`dlnk_FINAL/agents/deserialization_exploiter.py`**
+1. **`connext_FINAL/agents/deserialization_exploiter.py`**
    - แก้ไข hardcoded path บางส่วน
    - ยังเหลือ 1 จุด (Line 40)
 
-2. **`dlnk_FINAL/agents/lfi_agent.py`** 
+2. **`connext_FINAL/agents/lfi_agent.py`** 
    - Refactored (1,009 บรรทัดเปลี่ยนแปลง)
    - ยังเหลือ hardcoded paths 3 จุด (Lines 69, 70, 71)
 
-3. **`dlnk_FINAL/ai_testing_system.py`**
+3. **`connext_FINAL/ai_testing_system.py`**
    - แก้ไข hardcoded paths บางส่วน
    - ยังเหลือ 0 จุด ✅
 
@@ -82,7 +82,7 @@ os.path.join(os.path.expanduser("~"), "Documents")
 
 ---
 
-#### 3. `dlnk_FINAL/agents/advanced_data_exfiltration_agent.py` (1 จุด)
+#### 3. `connext_FINAL/agents/advanced_data_exfiltration_agent.py` (1 จุด)
 
 **Line 119:**
 ```python
@@ -96,7 +96,7 @@ os.path.join(os.path.expanduser("~"), "Documents")
 
 ---
 
-#### 4. `dlnk_FINAL/agents/deserialization_exploiter.py` (1 จุด)
+#### 4. `connext_FINAL/agents/deserialization_exploiter.py` (1 จุด)
 
 **Line 40:**
 ```python
@@ -110,7 +110,7 @@ os.getenv('YSOSERIAL_PATH', '/usr/share/ysoserial/ysoserial.jar')
 
 ---
 
-#### 5. `dlnk_FINAL/agents/lfi_agent.py` (3 จุด)
+#### 5. `connext_FINAL/agents/lfi_agent.py` (3 จุด)
 
 **Line 69:**
 ```python
@@ -141,7 +141,7 @@ os.path.join(os.path.expanduser("~"), ".bash_history")
 
 ---
 
-#### 6. `dlnk_FINAL/data_exfiltration/exfiltrator.py` (1 จุด)
+#### 6. `connext_FINAL/data_exfiltration/exfiltrator.py` (1 จุด)
 
 **Line 408:**
 ```python
@@ -178,15 +178,15 @@ cwd=os.getenv('PROJECT_ROOT', os.getcwd())
 | **Total** | 13 | 10 | 3 | 10 |
 
 **ไฟล์ที่แก้ไขเสร็จแล้ว:**
-- ✅ `dlnk_FINAL/ai_testing_system.py` (3 จุด → 0 จุด)
+- ✅ `connext_FINAL/ai_testing_system.py` (3 จุด → 0 จุด)
 
 **ไฟล์ที่ยังต้องแก้:**
 - ❌ `fix_critical_issues.py` (2 จุด)
 - ❌ `agents/advanced_data_exfiltration_agent.py` (1 จุด)
-- ❌ `dlnk_FINAL/agents/advanced_data_exfiltration_agent.py` (1 จุด)
-- ❌ `dlnk_FINAL/agents/deserialization_exploiter.py` (1 จุด)
-- ❌ `dlnk_FINAL/agents/lfi_agent.py` (3 จุด)
-- ❌ `dlnk_FINAL/data_exfiltration/exfiltrator.py` (1 จุด)
+- ❌ `connext_FINAL/agents/advanced_data_exfiltration_agent.py` (1 จุด)
+- ❌ `connext_FINAL/agents/deserialization_exploiter.py` (1 จุด)
+- ❌ `connext_FINAL/agents/lfi_agent.py` (3 จุด)
+- ❌ `connext_FINAL/data_exfiltration/exfiltrator.py` (1 จุด)
 - ❌ `tests/test_system.py` (1 จุด)
 
 ---
@@ -217,11 +217,11 @@ cwd=os.getenv('PROJECT_ROOT', os.getcwd())
 # 1. Main directory (1 จุด)
 vim agents/advanced_data_exfiltration_agent.py
 
-# 2. dlnk_FINAL directory (6 จุด)
-vim dlnk_FINAL/agents/advanced_data_exfiltration_agent.py
-vim dlnk_FINAL/agents/deserialization_exploiter.py
-vim dlnk_FINAL/agents/lfi_agent.py
-vim dlnk_FINAL/data_exfiltration/exfiltrator.py
+# 2. connext_FINAL directory (6 จุด)
+vim connext_FINAL/agents/advanced_data_exfiltration_agent.py
+vim connext_FINAL/agents/deserialization_exploiter.py
+vim connext_FINAL/agents/lfi_agent.py
+vim connext_FINAL/data_exfiltration/exfiltrator.py
 
 # 3. Tests (1 จุด)
 vim tests/test_system.py
@@ -247,18 +247,18 @@ fixes = {
     'agents/advanced_data_exfiltration_agent.py': [
         (r'"/home/\*/Documents/"', 'os.path.join(os.path.expanduser("~"), "Documents")'),
     ],
-    'dlnk_FINAL/agents/advanced_data_exfiltration_agent.py': [
+    'connext_FINAL/agents/advanced_data_exfiltration_agent.py': [
         (r'"/home/\*/Documents/"', 'os.path.join(os.path.expanduser("~"), "Documents")'),
     ],
-    'dlnk_FINAL/agents/deserialization_exploiter.py': [
+    'connext_FINAL/agents/deserialization_exploiter.py': [
         (r'"/home/ubuntu/ysoserial\.jar"', 'os.getenv("YSOSERIAL_PATH", "/usr/share/ysoserial/ysoserial.jar")'),
     ],
-    'dlnk_FINAL/agents/lfi_agent.py': [
+    'connext_FINAL/agents/lfi_agent.py': [
         (r"'/home/\*/\.ssh/id_rsa'", 'os.path.join(os.path.expanduser("~"), ".ssh", "id_rsa")'),
         (r"'/home/\*/\.ssh/id_dsa'", 'os.path.join(os.path.expanduser("~"), ".ssh", "id_dsa")'),
         (r"'/home/\*/\.bash_history'", 'os.path.join(os.path.expanduser("~"), ".bash_history")'),
     ],
-    'dlnk_FINAL/data_exfiltration/exfiltrator.py': [
+    'connext_FINAL/data_exfiltration/exfiltrator.py': [
         (r'"/home/"', 'os.path.expanduser("~")'),
     ],
     'tests/test_system.py': [

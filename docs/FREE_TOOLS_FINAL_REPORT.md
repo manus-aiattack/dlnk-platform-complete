@@ -1,4 +1,4 @@
-# รายงานสุดท้าย: dLNk Attack Platform - 100% Free Tools
+# รายงานสุดท้าย: Connext Security Platform - 100% Free Tools
 ## ไม่ต้องเสียเงิน API เลย - ใช้ Local AI และ Open Source ทั้งหมด
 
 **วันที่:** 24 ตุลาคม 2025  

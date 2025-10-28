@@ -65,7 +65,7 @@ class DataHarvesterAgent(BaseAgent):
                 summary=f"Data harvesting failed: Unsupported OS {os_output}."
             )
 
-        staging_dir = "/tmp/.dlnk_loot"
+        staging_dir = "/tmp/.connext_loot"
         await self.shell_manager.send_command(shell_id, f"mkdir -p {staging_dir}")
         log.info(f"Created staging directory: {staging_dir}")
 

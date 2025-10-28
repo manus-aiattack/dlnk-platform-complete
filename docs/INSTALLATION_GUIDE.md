@@ -1,11 +1,11 @@
-# dLNk Attack Platform - Installation Guide
+# Connext Security Platform - Installation Guide
 
 **Version:** 2.0.0
 **Date:** 2025-10-26
 
 ---
 
-This guide provides instructions for setting up the dLNk Attack Platform for both development and production environments.
+This guide provides instructions for setting up the Connext Security Platform for both development and production environments.
 
 ## 1. Prerequisites
 
@@ -40,7 +40,7 @@ Now, edit the `.env` file and set the following required variables. **It is cruc
 
 ```env
 # PostgreSQL Settings
-POSTGRES_DB=dlnk_attack_platform
+POSTGRES_DB=connext_attack_platform
 POSTGRES_USER=dlnk
 POSTGRES_PASSWORD=your_super_secret_db_password
 

@@ -1,5 +1,5 @@
 """
-Unified Enumerations for dLNk Attack Platform
+Unified Enumerations for Connext Security Platform
 Centralized enum definitions to avoid duplication and inconsistency
 """
 

@@ -9,7 +9,7 @@ import time
 
 
 class BaseAgent(ABC):
-    """Base class for all agents in the dLNk dLNk system"""
+    """Base class for all agents in the Connext system"""
 
     def __init__(self, context_manager: ContextManager = None, orchestrator=None, **kwargs): # Changed shared_data to context_manager
         self.context_manager = context_manager # Changed shared_data to context_manager

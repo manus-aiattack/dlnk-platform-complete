@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 """
-dLNk Attack Platform - CLI Client
+Connext Security Platform - CLI Client
 Command-line interface for controlling the attack platform
 """
 
@@ -27,7 +27,7 @@ class Colors:
 
 
 class DLNkCLI:
-    """CLI Client for dLNk Attack Platform"""
+    """CLI Client for Connext Security Platform"""
     
     def __init__(self, base_url: str = "https://8000-i3ahfavoia7c7k1dxwwpn-567d442b.manus-asia.computer", api_key: Optional[str] = None):
         self.base_url = base_url.rstrip('/')
@@ -250,7 +250,7 @@ class DLNkCLI:
 
 def main():
     parser = argparse.ArgumentParser(
-        description='dLNk Attack Platform - CLI Client',
+        description='Connext Security Platform - CLI Client',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

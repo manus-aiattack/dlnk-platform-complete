@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk AI Monitoring Agent
+Connext AI Monitoring Agent
 Autonomous system monitoring and self-healing
 """
 
@@ -20,8 +20,8 @@ class AIMonitor:
     
     def __init__(self):
         self.services = [
-            'dlnk-platform',
-            'dlnk-terminal',
+            'connext-platform',
+            'connext-terminal',
             'dlnk-c2',
             'postgresql',
             'redis-server',

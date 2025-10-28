@@ -1,5 +1,5 @@
 """
-Configuration settings for dLNk Attack Platform
+Configuration settings for Connext Security Platform
 All settings are loaded from environment variables
 """
 
@@ -28,8 +28,8 @@ os.makedirs(REPORTS_DIR, exist_ok=True)
 
 # Logging configuration
 LOG_LEVEL = get_env("LOG_LEVEL", "INFO")
-LOG_FILE = os.path.join(LOGS_DIR, "dlnk.log")
-JSON_LOG_FILE = os.path.join(LOGS_DIR, "dlnk.json")
+LOG_FILE = os.path.join(LOGS_DIR, "connext.log")
+JSON_LOG_FILE = os.path.join(LOGS_DIR, "connext.json")
 
 # Database configuration
 DATABASE_URL = get_database_url()
@@ -132,7 +132,7 @@ NOTIFICATION_EMAIL = get_env("NOTIFICATION_EMAIL", "")
 def print_config_summary():
     """Print configuration summary"""
     print("=" * 60)
-    print("dLNk Attack Platform Configuration")
+    print("Connext Security Platform Configuration")
     print("=" * 60)
     print(f"Database URL: {DATABASE_URL[:30]}...")
     print(f"Redis URL: {REDIS_URL}")

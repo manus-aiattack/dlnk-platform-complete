@@ -1,9 +1,9 @@
 #!/bin/bash
-# dLNk CLI Installation Script
+# Connext CLI Installation Script
 
 set -e
 
-echo "🎯 dLNk Attack Platform - CLI Installation"
+echo "🎯 Connext Security Platform - CLI Installation"
 echo "=========================================="
 echo ""
 
@@ -20,12 +20,12 @@ echo "📦 Installing dependencies..."
 pip3 install click rich aiohttp --quiet
 
 # Make executable
-chmod +x cli/dlnk.py
+chmod +x cli/connext.py
 
 # Create symlink
 if [ -w /usr/local/bin ]; then
-    ln -sf "$(pwd)/cli/dlnk.py" /usr/local/bin/dlnk
-    echo "✅ Installed to /usr/local/bin/dlnk"
+    ln -sf "$(pwd)/cli/connext.py" /usr/local/bin/connext
+    echo "✅ Installed to /usr/local/bin/connext"
 else
     echo "⚠️  Cannot write to /usr/local/bin"
     echo "💡 Run with sudo or add to PATH manually:"
@@ -36,8 +36,8 @@ echo ""
 echo "✅ Installation complete!"
 echo ""
 echo "Setup:"
-echo "  export DLNK_API_KEY='your_api_key_here'"
-echo "  export DLNK_API_URL='http://localhost:8000'  # optional"
+echo "  export CONNEXT_API_KEY='your_api_key_here'"
+echo "  export CONNEXT_API_URL='http://localhost:8000'  # optional"
 echo ""
 echo "Usage:"
 echo "  dlnk attack https://localhost:8000"

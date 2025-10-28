@@ -1,9 +1,9 @@
 #!/bin/bash
-# Install dLNk CLI - Improved Version
+# Install Connext CLI - Improved Version
 
 set -e
 
-echo "Installing dLNk CLI..."
+echo "Installing Connext CLI..."
 
 # Check Python version
 if ! command -v python3 &> /dev/null; then
@@ -16,13 +16,13 @@ echo "Installing dependencies..."
 pip3 install click rich requests --quiet
 
 # Make CLI executable
-chmod +x cli/dlnk_cli_improved.py
+chmod +x cli/connext_cli_improved.py
 
 # Create symlink
 INSTALL_DIR="/usr/local/bin"
 if [ -w "$INSTALL_DIR" ]; then
-    ln -sf "$(pwd)/cli/dlnk_cli_improved.py" "$INSTALL_DIR/dlnk"
-    echo "✓ CLI installed to $INSTALL_DIR/dlnk"
+    ln -sf "$(pwd)/cli/connext_cli_improved.py" "$INSTALL_DIR/connext"
+    echo "✓ CLI installed to $INSTALL_DIR/connext"
 else
     echo "Note: Cannot write to $INSTALL_DIR"
     echo "Run with sudo or add to PATH manually:"
@@ -31,7 +31,7 @@ fi
 
 # Initialize config
 echo "Initializing configuration..."
-python3 cli/dlnk_cli_improved.py config init || true
+python3 cli/connext_cli_improved.py config init || true
 
 echo ""
 echo "✓ Installation complete!"

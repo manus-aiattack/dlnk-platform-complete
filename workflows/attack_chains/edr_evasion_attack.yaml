@@ -4,7 +4,7 @@
 name: "EDR Evasion Attack"
 description: "Attack chain optimized for EDR/XDR evasion"
 version: "1.0.0"
-author: "dLNk HACK"
+author: "Connext HACK"
 target_type: "hardened"
 estimated_duration: 90
 success_rate: 0.60

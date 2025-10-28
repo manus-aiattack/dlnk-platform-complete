@@ -1,5 +1,5 @@
 """
-Authentication Service for dLNk dLNk Framework
+Authentication Service for Connext Connext Framework
 Handles user authentication, JWT tokens, and session management
 """
 
@@ -91,7 +91,7 @@ class AuthService:
             password_hash=self._hash_password("admin123"),
             role=UserRole.ADMIN,
             api_key=self._generate_api_key(),
-            license_key=f"DLNK-ENT-{secrets.token_hex(8).upper()}",
+            license_key=f"CONNEXT-ENT-{secrets.token_hex(8).upper()}",
             created_at=datetime.utcnow().isoformat(),
             last_login=None,
             is_active=True,
@@ -110,8 +110,8 @@ class AuthService:
         
     def _generate_api_key(self) -> str:
         """Generate API key with production format"""
-        # Production format: dlnk_live_<64_hex_chars>
-        return f"dlnk_live_{secrets.token_hex(32)}"
+        # Production format: connext_live_<64_hex_chars>
+        return f"connext_live_{secrets.token_hex(32)}"
         
     def _hash_password(self, password: str) -> str:
         """Hash password with salt"""

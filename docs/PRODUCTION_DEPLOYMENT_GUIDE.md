@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Production Deployment Guide
+# Connext Security Platform - Production Deployment Guide
 
 **Version:** 2.0  
 **Date:** 23 October 2025  
@@ -20,7 +20,7 @@
 
 ### 🎯 เป้าหมาย
 
-- อัพเดทเป็น **dLNk v2.0** ล่าสุด
+- อัพเดทเป็น **Connext v2.0** ล่าสุด
 - รัน Backend + Frontend ใน Production
 - ใช้ LLM ที่มีอยู่แล้ว (Mixtral)
 
@@ -50,10 +50,10 @@ Already up to date.
 ```
 Updating b2f1ed2..e26b6f0
 Fast-forward
- dlnk_FINAL/SYSTEM_VERIFICATION_REPORT.md | 606 +++++++++++++++++++++++++++++
- dlnk_FINAL/cli/ui.py                      |  31 +-
- dlnk_FINAL/startup.py                     |  16 +-
- dlnk_FINAL/test_all.py                    |  18 +-
+ connext_FINAL/SYSTEM_VERIFICATION_REPORT.md | 606 +++++++++++++++++++++++++++++
+ connext_FINAL/cli/ui.py                      |  31 +-
+ connext_FINAL/startup.py                     |  16 +-
+ connext_FINAL/test_all.py                    |  18 +-
  4 files changed, 637 insertions(+), 34 deletions(-)
 ```
 
@@ -62,23 +62,23 @@ Fast-forward
 ### Step 2: Verify Directory Structure
 
 ```bash
-# ตรวจสอบว่ามี dlnk_FINAL และ apex_dashboard
+# ตรวจสอบว่ามี connext_FINAL และ apex_dashboard
 ls -la
 
 # ควรเห็น:
-# - dlnk_FINAL/          (Backend)
+# - connext_FINAL/          (Backend)
 # - apex_dashboard/      (Frontend Dashboard)
-# - apex_predator_FINAL  (symlink → dlnk_FINAL)
+# - apex_predator_FINAL  (symlink → connext_FINAL)
 ```
 
 ---
 
-### Step 3: Setup Backend (dlnk_FINAL)
+### Step 3: Setup Backend (connext_FINAL)
 
 #### 3.1 เข้าไปที่ Backend directory
 
 ```bash
-cd dlnk_FINAL
+cd connext_FINAL
 ```
 
 #### 3.2 สร้าง Environment File
@@ -95,15 +95,15 @@ nano .env
 
 ```bash
 # Database
-DATABASE_URL=postgresql://dlnk:dlnk_password@localhost:5432/dlnk_db
+DATABASE_URL=postgresql://connext:connext_password@localhost:5432/connext_db
 
 # Ollama LLM (ใช้ Mixtral ที่คุณมีอยู่แล้ว)
 OLLAMA_HOST=http://localhost:11434
 OLLAMA_MODEL=mixtral:latest
 
 # Workspace
-WORKSPACE_DIR=/tmp/dlnk_workspace
-LOOT_DIR=/tmp/dlnk_loot
+WORKSPACE_DIR=/tmp/connext_workspace
+LOOT_DIR=/tmp/connext_loot
 
 # API Settings
 API_HOST=0.0.0.0
@@ -146,10 +146,10 @@ pip3 install -r requirements-full.txt
 ```bash
 # Start PostgreSQL with Docker
 docker run -d \
-  --name dlnk_postgres \
+  --name connext_postgres \
   -e POSTGRES_USER=dlnk \
-  -e POSTGRES_PASSWORD=dlnk_password \
-  -e POSTGRES_DB=dlnk_db \
+  -e POSTGRES_PASSWORD=connext_password \
+  -e POSTGRES_DB=connext_db \
   -p 5432:5432 \
   postgres:15
 
@@ -164,9 +164,9 @@ python3 -c "from api.database.db import init_db; init_db()"
 
 ```bash
 # สร้าง database
-sudo -u postgres psql -c "CREATE DATABASE dlnk_db;"
-sudo -u postgres psql -c "CREATE USER dlnk WITH PASSWORD 'dlnk_password';"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE dlnk_db TO dlnk;"
+sudo -u postgres psql -c "CREATE DATABASE connext_db;"
+sudo -u postgres psql -c "CREATE USER dlnk WITH PASSWORD 'connext_password';"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE connext_db TO dlnk;"
 
 # สร้าง tables
 python3 -c "from api.database.db import init_db; init_db()"
@@ -201,7 +201,7 @@ curl http://localhost:11434/api/tags
 #### Option A: รันแบบ Development
 
 ```bash
-# รันจาก dlnk_FINAL directory
+# รันจาก connext_FINAL directory
 python3 startup.py
 ```
 
@@ -217,7 +217,7 @@ python3 startup.py
 ║    ██████╔╝███████╗██║ ╚████║██║  ██╗                        ║
 ║    ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝                        ║
 ║                                                               ║
-║           dLNk ATTACK PLATFORM v2.0                         ║
+║           Connext ATTACK PLATFORM v2.0                         ║
 ║        AI-Powered Penetration Testing System                 ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
@@ -235,7 +235,7 @@ INFO:     Uvicorn running on http://0.0.0.0:8000
 #### Option B: รันแบบ Production (Docker Compose)
 
 ```bash
-# รันจาก dlnk_FINAL directory
+# รันจาก connext_FINAL directory
 docker-compose up -d
 
 # ตรวจสอบ logs
@@ -245,11 +245,11 @@ docker-compose logs -f
 #### Option C: รันแบบ Background
 
 ```bash
-# รันจาก dlnk_FINAL directory
-nohup python3 startup.py > dlnk.log 2>&1 &
+# รันจาก connext_FINAL directory
+nohup python3 startup.py > connext.log 2>&1 &
 
 # ดู logs
-tail -f dlnk.log
+tail -f connext.log
 ```
 
 ---
@@ -297,7 +297,7 @@ pnpm install
 # สร้าง .env file
 cat > .env << EOF
 VITE_API_URL=http://localhost:8000
-VITE_APP_TITLE=dLNk Attack Platform
+VITE_APP_TITLE=Connext Security Platform
 VITE_APP_LOGO=/logo.png
 EOF
 ```
@@ -334,10 +334,10 @@ sudo apt install nginx -y
 sudo cp -r dist/* /var/www/html/
 
 # สร้าง nginx config
-sudo nano /etc/nginx/sites-available/dlnk
+sudo nano /etc/nginx/sites-available/connext
 ```
 
-**Nginx Config (`/etc/nginx/sites-available/dlnk`):**
+**Nginx Config (`/etc/nginx/sites-available/connext`):**
 
 ```nginx
 server {
@@ -374,7 +374,7 @@ server {
 
 ```bash
 # Enable site
-sudo ln -s /etc/nginx/sites-available/dlnk /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/connext /etc/nginx/sites-enabled/
 
 # Test config
 sudo nginx -t
@@ -400,8 +400,8 @@ python3 -m http.server 3000
 ### Step 8: Create Admin API Key
 
 ```bash
-# รันจาก dlnk_FINAL directory
-cd /mnt/c/projecattack/Manus/dlnk_FINAL
+# รันจาก connext_FINAL directory
+cd /mnt/c/projecattack/Manus/connext_FINAL
 
 # สร้าง Admin API Key
 python3 << EOF
@@ -427,7 +427,7 @@ db.commit()
 # สร้าง API Key
 api_key = APIKey(
     id=str(uuid.uuid4()),
-    key="dlnk_admin_" + str(uuid.uuid4()).replace("-", "")[:20],
+    key="connext_admin_" + str(uuid.uuid4()).replace("-", "")[:20],
     user_id=admin.id,
     created_at=datetime.utcnow()
 )
@@ -486,7 +486,7 @@ xdg-open http://localhost:3000
 
 ```bash
 # เชื่อมต่อ PostgreSQL
-psql -U dlnk -d dlnk_db -h localhost
+psql -U dlnk -d connext_db -h localhost
 
 # ดู tables
 \dt
@@ -561,7 +561,7 @@ curl -X POST -H "X-API-Key: YOUR_API_KEY" \
 ### ผ่าน CLI (Advanced)
 
 ```bash
-# รันจาก dlnk_FINAL directory
+# รันจาก connext_FINAL directory
 python3 main.py --target http://testphp.vulnweb.com --mode full_auto
 ```
 
@@ -583,7 +583,7 @@ sudo systemctl status postgresql
 sudo systemctl start postgresql
 
 # หรือใช้ Docker
-docker start dlnk_postgres
+docker start connext_postgres
 ```
 
 ---
@@ -663,7 +663,7 @@ python3 startup.py
 # แก้ไข: uvicorn.run(app, host="0.0.0.0", port=8000, workers=4)
 
 # ใช้ Redis สำหรับ caching
-docker run -d --name dlnk_redis -p 6379:6379 redis:latest
+docker run -d --name connext_redis -p 6379:6379 redis:latest
 
 # เพิ่มใน .env:
 # REDIS_URL=redis://localhost:6379
@@ -696,7 +696,7 @@ ollama pull mixtral:8x7b-instruct-v0.1-q4_0
 ```bash
 # เปลี่ยน Database password
 # แก้ไขใน .env:
-# DATABASE_URL=postgresql://dlnk:YOUR_STRONG_PASSWORD@localhost:5432/dlnk_db
+# DATABASE_URL=postgresql://connext:YOUR_STRONG_PASSWORD@localhost:5432/connext_db
 
 # สร้าง API Key ใหม่สำหรับ Production
 # อย่าใช้ API Key ที่มีใน documentation
@@ -751,27 +751,27 @@ async def start_attack(...):
 
 ```bash
 # Backup PostgreSQL
-pg_dump -U dlnk -d dlnk_db > dlnk_backup_$(date +%Y%m%d).sql
+pg_dump -U dlnk -d connext_db > connext_backup_$(date +%Y%m%d).sql
 
 # หรือใช้ Docker
-docker exec dlnk_postgres pg_dump -U dlnk dlnk_db > dlnk_backup_$(date +%Y%m%d).sql
+docker exec connext_postgres pg_dump -U dlnk connext_db > connext_backup_$(date +%Y%m%d).sql
 ```
 
 ### Restore Database
 
 ```bash
 # Restore PostgreSQL
-psql -U dlnk -d dlnk_db < dlnk_backup_20251023.sql
+psql -U dlnk -d connext_db < connext_backup_20251023.sql
 
 # หรือใช้ Docker
-cat dlnk_backup_20251023.sql | docker exec -i dlnk_postgres psql -U dlnk -d dlnk_db
+cat connext_backup_20251023.sql | docker exec -i connext_postgres psql -U dlnk -d connext_db
 ```
 
 ### Backup Loot Files
 
 ```bash
 # Backup exfiltrated files
-tar -czf loot_backup_$(date +%Y%m%d).tar.gz /tmp/dlnk_loot/
+tar -czf loot_backup_$(date +%Y%m%d).tar.gz /tmp/connext_loot/
 
 # Restore
 tar -xzf loot_backup_20251023.tar.gz -C /
@@ -789,7 +789,7 @@ cd /mnt/c/projecattack/Manus
 git pull origin main
 
 # Update Backend dependencies
-cd dlnk_FINAL
+cd connext_FINAL
 pip3 install -r requirements.txt --upgrade
 
 # Update Frontend dependencies
@@ -809,7 +809,7 @@ python3 startup.py &
 
 ```bash
 # รัน migration script (ถ้ามี)
-cd dlnk_FINAL
+cd connext_FINAL
 python3 -c "from api.database.db import migrate_db; migrate_db()"
 ```
 
@@ -821,7 +821,7 @@ python3 -c "from api.database.db import migrate_db; migrate_db()"
 
 ```bash
 # Backend logs
-tail -f dlnk_FINAL/dlnk.log
+tail -f connext_FINAL/connext.log
 
 # Nginx logs
 sudo tail -f /var/log/nginx/access.log
@@ -862,7 +862,7 @@ netstat -tulpn | grep -E '8000|3000|11434'
 
 ### 🚀 Ready to Attack!
 
-ระบบ **dLNk Attack Platform v2.0** พร้อมใช้งานเต็มรูปแบบแล้ว!
+ระบบ **Connext Security Platform v2.0** พร้อมใช้งานเต็มรูปแบบแล้ว!
 
 **Access Points:**
 - **Dashboard:** http://localhost:3000
@@ -877,14 +877,14 @@ netstat -tulpn | grep -E '8000|3000|11434'
 ## 📞 Support & Resources
 
 - **GitHub:** https://github.com/vtvx4myqq9-stack/Manus
-- **Documentation:** `/mnt/c/projecattack/Manus/dlnk_FINAL/docs/`
-- **Verification Report:** `/mnt/c/projecattack/Manus/dlnk_FINAL/SYSTEM_VERIFICATION_REPORT.md`
+- **Documentation:** `/mnt/c/projecattack/Manus/connext_FINAL/docs/`
+- **Verification Report:** `/mnt/c/projecattack/Manus/connext_FINAL/SYSTEM_VERIFICATION_REPORT.md`
 
 ---
 
 ## ⚠️ Legal Warning
 
-**dLNk Attack Platform** เป็นเครื่องมือสำหรับการโจมตีทางไซเบอร์จริง **ไม่ใช่เครื่องมือทดสอบ**
+**Connext Security Platform** เป็นเครื่องมือสำหรับการโจมตีทางไซเบอร์จริง **ไม่ใช่เครื่องมือทดสอบ**
 
 - ใช้เฉพาะกับเป้าหมายที่ได้รับอนุญาตเท่านั้น
 - การใช้งานโดยไม่ได้รับอนุญาตเป็นความผิดทางกฎหมาย
@@ -892,7 +892,7 @@ netstat -tulpn | grep -E '8000|3000|11434'
 
 ---
 
-**© 2025 dLNk. All rights reserved.**
+**© 2025 Connext. All rights reserved.**
 
 **Happy Hacking! 🦅**
 

@@ -1,8 +1,8 @@
-# dLNk Attack Platform - Complete Guide
+# Connext Security Platform - Complete Guide
 
 ## Overview
 
-dLNk Attack Platform คือระบบโจมตีและการใช้ประโยชน์จากช่องโหว่อัตโนมัติที่ขับเคลื่อนด้วย AI ออกแบบมาเพื่อการโจมตีจริง ไม่ใช่การทดสอบ
+Connext Security Platform คือระบบโจมตีและการใช้ประโยชน์จากช่องโหว่อัตโนมัติที่ขับเคลื่อนด้วย AI ออกแบบมาเพื่อการโจมตีจริง ไม่ใช่การทดสอบ
 
 ## System Architecture
 
@@ -321,11 +321,11 @@ pip3 install --upgrade fastapi uvicorn python-socketio aiohttp
 ## Contact
 
 ### Support
-- **LINE:** @dlnk_admin
+- **LINE:** @connext_admin
 - **GitHub:** https://github.com/manus-aiattack/aiprojectattack
 
 ### Purchase API Key
-Contact via LINE: https://line.me/ti/p/~dlnk_admin
+Contact via LINE: https://line.me/ti/p/~connext_admin
 
 ## Legal Notice
 

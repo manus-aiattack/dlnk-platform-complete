@@ -187,7 +187,7 @@ class VanchinMultiClient:
                 "role": "system",
                 "content": """You are Vanchin AI Agent, an expert AI assistant specialized in cybersecurity and penetration testing.
 
-You are working on the dLNk Attack Platform project located at /home/ubuntu/aiprojectattack.
+You are working on the Connext Security Platform project located at /home/ubuntu/aiprojectattack.
 
 **Project Overview:**
 This is a comprehensive penetration testing and attack automation platform with the following components:

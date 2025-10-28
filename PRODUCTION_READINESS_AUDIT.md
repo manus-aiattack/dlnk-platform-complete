@@ -1,4 +1,4 @@
-# 🔍 dLNk Attack Platform - Production Readiness Audit
+# 🔍 Connext Security Platform - Production Readiness Audit
 
 **วันที่:** October 25, 2025  
 **เวอร์ชัน:** 2.0.0 Ultimate Edition  
@@ -48,7 +48,7 @@ SIMULATION_MODE=False  # ✅ เปลี่ยนเป็น False เพื�
 **ไฟล์ที่ใช้:**
 - `config/settings.py` line 95
 - `config/settings_new.py` line 99
-- `dlnk_FINAL/config/settings.py` line 82
+- `connext_FINAL/config/settings.py` line 82
 
 ---
 
@@ -89,7 +89,7 @@ SIMULATION_MODE=False  # ✅ เปลี่ยนเป็น False เพื�
 
 **ไฟล์:**
 - `agents/rate_limit_agent_weaponized.py`
-- `dlnk_FINAL/agents/rate_limit_agent_weaponized.py`
+- `connext_FINAL/agents/rate_limit_agent_weaponized.py`
 
 **โค้ดปัจจุบัน:**
 ```python
@@ -1389,7 +1389,7 @@ web/
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dLNk Attack Platform</title>
+    <title>Connext Security Platform</title>
     <link rel="stylesheet" href="css/darkweb.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
@@ -1397,7 +1397,7 @@ web/
     <!-- Header -->
     <header class="header">
         <div class="logo">
-            <span class="glitch" data-text="dLNk">dLNk</span>
+            <span class="glitch" data-text="Connext">Connext</span>
             <span class="subtitle">ATTACK PLATFORM</span>
         </div>
         <nav class="nav">

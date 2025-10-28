@@ -59,9 +59,9 @@ def display_config():
         # Database
         ("Database", "DB_HOST", os.getenv('DB_HOST', 'localhost'), True),
         ("Database", "DB_PORT", os.getenv('DB_PORT', '5432'), True),
-        ("Database", "DB_USER", os.getenv('DB_USER', 'dlnk'), True),
+        ("Database", "DB_USER", os.getenv('DB_USER', 'connext'), True),
         ("Database", "DB_PASSWORD", "***" if os.getenv('DB_PASSWORD', "") else "NOT SET", bool(os.getenv('DB_PASSWORD', ""))),
-        ("Database", "DB_NAME", os.getenv('DB_NAME', 'dlnk_db'), True),
+        ("Database", "DB_NAME", os.getenv('DB_NAME', 'connext_db'), True),
         
         # Redis
         ("Redis", "REDIS_HOST", os.getenv('REDIS_HOST', 'localhost'), True),
@@ -126,7 +126,7 @@ def check_security_issues():
 
 def main():
     console.print(Panel.fit(
-        "[bold cyan]🔍 dLNk Configuration Validation[/bold cyan]",
+        "[bold cyan]🔍 Connext Configuration Validation[/bold cyan]",
         border_style="cyan"
     ))
     console.print()

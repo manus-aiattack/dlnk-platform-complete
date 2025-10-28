@@ -4,7 +4,7 @@
 name: "Zero-Day Hunting"
 description: "Comprehensive zero-day vulnerability discovery"
 version: "1.0.0"
-author: "dLNk HACK"
+author: "Connext HACK"
 target_type: "any"
 estimated_duration: 240  # 4 hours
 success_rate: 0.35

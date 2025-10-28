@@ -8,7 +8,7 @@ from config import settings
 class RedisLogHandler(logging.Handler):
     """A logging handler that publishes log records to a Redis channel."""
 
-    def __init__(self, channel="dlnk_logs"):
+    def __init__(self, channel="connext_logs"):
         super().__init__()
         self.channel = channel
         try:

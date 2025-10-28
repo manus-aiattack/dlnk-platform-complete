@@ -1,8 +1,8 @@
-# dLNk dLNk Framework - Enterprise Deployment Guide
+# Connext Connext Framework - Enterprise Deployment Guide
 
 ## Enterprise & Advanced Capabilities Deployment
 
-This guide covers the deployment of the enhanced dLNk dLNk Framework with distributed architecture, AI/ML capabilities, and commercial-grade features.
+This guide covers the deployment of the enhanced Connext Connext Framework with distributed architecture, AI/ML capabilities, and commercial-grade features.
 
 ---
 
@@ -197,8 +197,8 @@ REDIS_PORT=6379
 # PostgreSQL Configuration
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_DB=dlnk_dlnk
-POSTGRES_USER=dlnk_user
+POSTGRES_DB=connext_dlnk
+POSTGRES_USER=connext_user
 POSTGRES_PASSWORD=your_password
 
 # LLM Configuration
@@ -251,7 +251,7 @@ curl http://localhost:8007/health  # License Service
 docker-compose -f docker-compose.distributed.yml logs -f
 
 # Kubernetes
-kubectl logs -f deployment/dlnk-orchestrator -n dlnk-dlnk
+kubectl logs -f deployment/connext-orchestrator -n dlnk-dlnk
 ```
 
 ---

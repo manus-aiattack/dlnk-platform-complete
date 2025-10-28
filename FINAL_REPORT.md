@@ -1,4 +1,4 @@
-# สรุปผลการดำเนินงานโครงการ dLNk Attack Platform
+# สรุปผลการดำเนินงานโครงการ Connext Security Platform
 
 **วันที่:** 26 ตุลาคม 2025
 **ผู้จัดทำ:** Manus AI
@@ -7,7 +7,7 @@
 
 ## 1. บทสรุปสำหรับผู้บริหาร
 
-โครงการปรับปรุงและพัฒนา dLNk Attack Platform ได้เสร็จสิ้นลงอย่างสมบูรณ์ตามแผนงานที่กำหนดไว้ 10 ขั้นตอน โดยได้มีการปรับปรุงโครงสร้างสถาปัตยกรรม, พัฒนาฟีเจอร์ใหม่, และเสริมความแข็งแกร่งของระบบในทุกมิติ ตั้งแต่ Frontend, Backend, CLI, ไปจนถึงระบบ CI/CD และการจัดทำเอกสารประกอบ ผลลัพธ์ที่ได้คือแพลตฟอร์มที่มีความทันสมัย, ปลอดภัย, ง่ายต่อการใช้งานและบำรุงรักษา, พร้อมสำหรับการนำไปใช้งานจริง (Production) และการพัฒนาต่อยอดในอนาคต
+โครงการปรับปรุงและพัฒนา Connext Security Platform ได้เสร็จสิ้นลงอย่างสมบูรณ์ตามแผนงานที่กำหนดไว้ 10 ขั้นตอน โดยได้มีการปรับปรุงโครงสร้างสถาปัตยกรรม, พัฒนาฟีเจอร์ใหม่, และเสริมความแข็งแกร่งของระบบในทุกมิติ ตั้งแต่ Frontend, Backend, CLI, ไปจนถึงระบบ CI/CD และการจัดทำเอกสารประกอบ ผลลัพธ์ที่ได้คือแพลตฟอร์มที่มีความทันสมัย, ปลอดภัย, ง่ายต่อการใช้งานและบำรุงรักษา, พร้อมสำหรับการนำไปใช้งานจริง (Production) และการพัฒนาต่อยอดในอนาคต
 
 ## 2. สรุปผลการดำเนินงานตามแต่ละเฟส
 
@@ -27,7 +27,7 @@
 ### เฟส 3: การพัฒนาเครื่องมือ CLI
 - **วัตถุประสงค์:** สร้าง CLI เวอร์ชันใหม่ที่มีประสิทธิภาพและเป็นมิตรต่อผู้ใช้มากขึ้น
 - **ผลลัพธ์:**
-  - พัฒนา `dlnk_cli_improved.py` โดยใช้ไลบรารี `rich` และ `click` เพื่อสร้าง CLI ที่มีสีสัน, ตาราง, และ progress bar ที่สวยงาม
+  - พัฒนา `connext_cli_improved.py` โดยใช้ไลบรารี `rich` และ `click` เพื่อสร้าง CLI ที่มีสีสัน, ตาราง, และ progress bar ที่สวยงาม
   - สร้าง `install_cli_improved.sh` เพื่อให้การติดตั้ง CLI เป็นไปอย่างอัตโนมัติและง่ายดาย
 
 ### เฟส 4: การสร้างและพัฒนา RESTful API
@@ -84,7 +84,7 @@
 | **Backend**       | `api/services/base_service.py`, `core/monitoring_system.py` |
 | **API**           | `api/docs_generator.py`, `api/middleware/*`       |
 | **Frontend**      | `frontend/src/components/*`, `frontend/tailwind.config.js` |
-| **CLI**           | `cli/dlnk_cli_improved.py`, `install_cli_improved.sh` |
+| **CLI**           | `cli/connext_cli_improved.py`, `install_cli_improved.sh` |
 | **CI/CD & DevOps**| `.github/workflows/ci-cd.yml`, `docker-compose.production-improved.yml` |
 | **Testing**       | `tests/test_comprehensive.py`                     |
 | **โปรเจกต์ทั้งหมด** | `aiprojectattack.zip`                               |

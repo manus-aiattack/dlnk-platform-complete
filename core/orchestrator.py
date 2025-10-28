@@ -1,5 +1,5 @@
 """
-AI-Driven Intelligent Orchestrator for dLNk Attack Framework
+AI-Driven Intelligent Orchestrator for Connext Attack Framework
 ระบบประสานงานที่ขับเคลื่อนด้วย AI และเข้าใจบริบทจริงๆ
 ไม่ทำงานแบบแข็งๆ แต่ปรับตัวตามสถานการณ์
 """

@@ -25,7 +25,7 @@ class HK:
         self.load_history()
         
         console.print("[bold cyan]╔═══════════════════════════════════════════════════════════╗[/]")
-        console.print("[bold cyan]║   dLNk - Hacker Knowledge (Powered by Vanchin AI)       ║[/]")
+        console.print("[bold cyan]║   Connext - Hacker Knowledge (Powered by Vanchin AI)       ║[/]")
         console.print("[bold cyan]╚═══════════════════════════════════════════════════════════╝[/]")
         console.print()
     

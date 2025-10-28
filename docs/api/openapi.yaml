@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: dLNk Attack Platform API
+  title: Connext Security Platform API
   description: |
-    Comprehensive API documentation for dLNk Attack Platform.
+    Comprehensive API documentation for Connext Security Platform.
     
     ## Features
     - Authentication & Authorization
@@ -18,16 +18,16 @@ info:
     
   version: 1.0.0
   contact:
-    name: dLNk Security Team
-    email: security@dlnk.io
+    name: Connext Security Team
+    email: security@connext.io
   license:
     name: Proprietary
-    url: https://dlnk.io/license
+    url: https://connext.io/license
 
 servers:
-  - url: https://api.dlnk.io/v1
+  - url: https://api.connext.io/v1
     description: Production server
-  - url: https://staging-api.dlnk.io/v1
+  - url: https://staging-api.connext.io/v1
     description: Staging server
   - url: http://localhost:8000/v1
     description: Development server

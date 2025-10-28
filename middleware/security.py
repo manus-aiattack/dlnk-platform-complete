@@ -123,7 +123,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         )
         
         # Custom security headers
-        response.headers["X-Powered-By"] = "dLNk Attack Platform"
+        response.headers["X-Powered-By"] = "Connext Security Platform"
         response.headers["X-Security-Version"] = "2.0.0"
         
         return response

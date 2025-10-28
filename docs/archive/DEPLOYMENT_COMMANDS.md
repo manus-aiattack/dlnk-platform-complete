@@ -1,6 +1,6 @@
-# Deployment Commands - dLNk Attack Platform
+# Deployment Commands - Connext Security Platform
 
-คำสั่งสำหรับ Deploy โปรเจกต์ dLNk Attack Platform
+คำสั่งสำหรับ Deploy โปรเจกต์ Connext Security Platform
 
 ---
 
@@ -101,15 +101,15 @@ sudo systemctl enable postgresql
 
 # สร้าง database และ user
 sudo -u postgres psql << EOF
-CREATE DATABASE dlnk_attack_platform;
+CREATE DATABASE connext_attack_platform;
 CREATE USER dlnk WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE dlnk_attack_platform TO dlnk;
-ALTER DATABASE dlnk_attack_platform OWNER TO dlnk;
+GRANT ALL PRIVILEGES ON DATABASE connext_attack_platform TO dlnk;
+ALTER DATABASE connext_attack_platform OWNER TO dlnk;
 \q
 EOF
 
 # Import schema (ถ้ามี)
-# psql -U dlnk -d dlnk_attack_platform -h localhost -f database/schema.sql
+# psql -U dlnk -d connext_attack_platform -h localhost -f database/schema.sql
 ```
 
 ### 3. ติดตั้ง Python Dependencies
@@ -140,7 +140,7 @@ nano .env
 
 ใส่ค่าเหล่านี้:
 ```bash
-DATABASE_URL=postgresql://dlnk:your_password@localhost:5432/dlnk_attack_platform
+DATABASE_URL=postgresql://connext:your_password@localhost:5432/connext_attack_platform
 OLLAMA_HOST=http://localhost:11434
 OLLAMA_MODEL=mixtral:latest
 API_HOST=0.0.0.0
@@ -221,7 +221,7 @@ docker-compose -f docker-compose.complete.yml up -d
 
 # 7. ตั้งค่า Nginx reverse proxy (optional)
 sudo apt install nginx
-sudo nano /etc/nginx/sites-available/dlnk
+sudo nano /etc/nginx/sites-available/connext
 ```
 
 **Nginx Configuration:**
@@ -253,7 +253,7 @@ server {
 
 ```bash
 # Enable site
-sudo ln -s /etc/nginx/sites-available/dlnk /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/connext /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 ```
@@ -377,7 +377,7 @@ docker-compose -f docker-compose.complete.yml restart api
 
 ```bash
 docker-compose -f docker-compose.complete.yml exec api bash
-docker-compose -f docker-compose.complete.yml exec postgres psql -U dlnk -d dlnk_attack_platform
+docker-compose -f docker-compose.complete.yml exec postgres psql -U dlnk -d connext_attack_platform
 ```
 
 ### ตรวจสอบ resource usage
@@ -394,7 +394,7 @@ docker stats
 
 ```bash
 # PostgreSQL backup
-docker-compose -f docker-compose.complete.yml exec postgres pg_dump -U dlnk dlnk_attack_platform > backup_$(date +%Y%m%d).sql
+docker-compose -f docker-compose.complete.yml exec postgres pg_dump -U dlnk connext_attack_platform > backup_$(date +%Y%m%d).sql
 
 # Backup workspace
 tar -czf workspace_backup_$(date +%Y%m%d).tar.gz workspace/
@@ -404,7 +404,7 @@ tar -czf workspace_backup_$(date +%Y%m%d).tar.gz workspace/
 
 ```bash
 # Restore PostgreSQL
-cat backup_20250126.sql | docker-compose -f docker-compose.complete.yml exec -T postgres psql -U dlnk dlnk_attack_platform
+cat backup_20250126.sql | docker-compose -f docker-compose.complete.yml exec -T postgres psql -U dlnk connext_attack_platform
 ```
 
 ---

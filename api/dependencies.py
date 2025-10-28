@@ -92,7 +92,7 @@ async def verify_api_key(
     
     # TODO: Implement actual API key verification
     # For now, just check if key exists
-    if not x_api_key.startswith("DLNK-"):
+    if not x_api_key.startswith("CONNEXT-"):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid API key"

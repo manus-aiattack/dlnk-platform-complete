@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - AI Attack Planner
+Connext Security Platform - AI Attack Planner
 Uses Local LLM (Ollama) to plan sophisticated attacks
 """
 

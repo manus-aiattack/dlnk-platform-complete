@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_KEY="dlnk_live_c2858c0da938247e23b06713106f3aa757418452df1aa6a3329d253597131137"
+API_KEY="connext_live_c2858c0da938247e23b06713106f3aa757418452df1aa6a3329d253597131137"
 BASE_URL="http://localhost:8000"
 
 echo "🧪 Comprehensive System Test"

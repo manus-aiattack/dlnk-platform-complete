@@ -1,5 +1,5 @@
 """
-FastAPI application for dLNk dLNk Framework
+FastAPI application for Connext Connext Framework
 Provides REST API for framework operations
 """
 
@@ -25,7 +25,7 @@ from datetime import datetime
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="dLNk dLNk API",
+    title="Connext API",
     description="REST API for Autonomous Penetration Testing Framework",
     version="1.0.0"
 )
@@ -78,7 +78,7 @@ class StatusResponse(BaseModel):
 async def startup_event():
     """Initialize orchestrator on startup"""
     global orchestrator
-    log.info("Starting dLNk dLNk API...")
+    log.info("Starting Connext API...")
     
     try:
         orchestrator = Orchestrator(workspace_dir=WORKSPACE_DIR)
@@ -104,7 +104,7 @@ async def root():
     dashboard_path = Path(__file__).parent / "dashboard.html"
     if dashboard_path.exists():
         return FileResponse(dashboard_path)
-    return {"message": "dLNk dLNk API - Visit /docs for API documentation"}
+    return {"message": "Connext API - Visit /docs for API documentation"}
 
 
 # Health check endpoint
@@ -114,7 +114,7 @@ async def health_check():
     return {
         "status": "healthy",
         "version": "1.0.0",
-        "framework": "dLNk dLNk"
+        "framework": "Connext"
     }
 
 

@@ -1,5 +1,5 @@
 """
-Comprehensive Test Suite for dLNk Attack Platform
+Comprehensive Test Suite for Connext Security Platform
 Tests all major components and integrations
 """
 
@@ -63,7 +63,7 @@ class TestRunner:
         """Run all tests"""
         
         print("=" * 80)
-        print("dLNk ATTACK PLATFORM - COMPREHENSIVE TEST SUITE")
+        print("Connext ATTACK PLATFORM - COMPREHENSIVE TEST SUITE")
         print("=" * 80)
         print()
         

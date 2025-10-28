@@ -1,7 +1,7 @@
 #!/bin/bash
-# Database Setup Script for dLNk Attack Platform
+# Database Setup Script for Connext Security Platform
 
-echo "🚀 Setting up PostgreSQL for dLNk Attack Platform..."
+echo "🚀 Setting up PostgreSQL for Connext Security Platform..."
 
 # Check if PostgreSQL is installed
 if ! command -v psql &> /dev/null; then
@@ -17,16 +17,16 @@ sudo service postgresql start
 # Create database and user
 echo "🏗️ Creating database and user..."
 sudo -u postgres psql << EOF
-CREATE USER dlnk WITH PASSWORD 'dlnk';
-CREATE DATABASE dlnk_attack_platform OWNER dlnk;
+CREATE USER dlnk WITH PASSWORD 'connext';
+CREATE DATABASE connext_attack_platform OWNER dlnk;
 ALTER USER dlnk CREATEDB;
-GRANT ALL PRIVILEGES ON DATABASE dlnk_attack_platform TO dlnk;
+GRANT ALL PRIVILEGES ON DATABASE connext_attack_platform TO dlnk;
 \q
 EOF
 
 if [ $? -eq 0 ]; then
     echo "✅ Database setup completed successfully!"
-    echo "Database: dlnk_attack_platform"
+    echo "Database: connext_attack_platform"
     echo "User: dlnk"
     echo "Password: dlnk"
     echo ""

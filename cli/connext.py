@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-dLNk Attack Platform - Terminal CLI
-Command-line interface for dLNk Attack Platform
+Connext Security Platform - Terminal CLI
+Command-line interface for Connext Security Platform
 """
 
 import click
@@ -21,22 +21,22 @@ import time
 console = Console()
 
 # Configuration
-API_URL = os.getenv("DLNK_API_URL", "localhost:8000")
-API_KEY = os.getenv("DLNK_API_KEY", "")
+API_URL = os.getenv("CONNEXT_API_URL", "localhost:8000")
+API_KEY = os.getenv("CONNEXT_API_KEY", "")
 
 
 @click.group()
-@click.version_option(version="2.0.0", prog_name="dLNk")
+@click.version_option(version="2.0.0", prog_name="Connext")
 def cli():
     """
-    🎯 dLNk Attack Platform - Terminal CLI
+    🎯 Connext Security Platform - Terminal CLI
     
     Advanced penetration testing platform with AI-powered automation.
     
     \b
     Setup:
-        export DLNK_API_KEY="your_api_key_here"
-        export DLNK_API_URL="localhost:8000"  # optional
+        export CONNEXT_API_KEY="your_api_key_here"
+        export CONNEXT_API_URL="localhost:8000"  # optional
     
     \b
     Examples:
@@ -46,8 +46,8 @@ def cli():
         dlnk admin keys
     """
     if not API_KEY:
-        console.print("[red]❌ Error: DLNK_API_KEY not set[/red]")
-        console.print("[yellow]💡 Run: export DLNK_API_KEY='your_key_here'[/yellow]")
+        console.print("[red]❌ Error: CONNEXT_API_KEY not set[/red]")
+        console.print("[yellow]💡 Run: export CONNEXT_API_KEY='your_key_here'[/yellow]")
         raise click.Abort()
 
 
@@ -73,7 +73,7 @@ async def _attack(target_url: str, mode: str, follow: bool):
     """Launch attack"""
     
     console.print(Panel.fit(
-        f"[bold cyan]🎯 dLNk Attack Platform[/bold cyan]\n"
+        f"[bold cyan]🎯 Connext Security Platform[/bold cyan]\n"
         f"[white]Target:[/white] {target_url}\n"
         f"[white]Mode:[/white] {mode}",
         title="Launch Attack"

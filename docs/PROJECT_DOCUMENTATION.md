@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Project Documentation
+# Connext Security Platform - Project Documentation
 
 **Version:** 2.0.0
 **Date:** 2025-10-26
@@ -8,7 +8,7 @@
 
 ## 1. Introduction
 
-The dLNk Attack Platform is an advanced, AI-powered cybersecurity testing and offensive security framework. It is designed to automate and enhance penetration testing, vulnerability assessment, and red teaming operations. The platform integrates a powerful Large Language Model (LLM) to drive intelligent decision-making, automate complex attack chains, and discover novel vulnerabilities, including potential zero-days.
+The Connext Security Platform is an advanced, AI-powered cybersecurity testing and offensive security framework. It is designed to automate and enhance penetration testing, vulnerability assessment, and red teaming operations. The platform integrates a powerful Large Language Model (LLM) to drive intelligent decision-making, automate complex attack chains, and discover novel vulnerabilities, including potential zero-days.
 
 This document provides a comprehensive overview of the project's architecture, features, components, and setup instructions.
 

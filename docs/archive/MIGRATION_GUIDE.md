@@ -2,7 +2,7 @@
 
 ## ภาพรวม
 
-เอกสารนี้อธิบายขั้นตอนการอัพเกรดระบบ dLNk Attack Platform จากการใช้ Hardcoded Values มาเป็นการใช้ Environment Variables แบบ Centralized
+เอกสารนี้อธิบายขั้นตอนการอัพเกรดระบบ Connext Security Platform จากการใช้ Hardcoded Values มาเป็นการใช้ Environment Variables แบบ Centralized
 
 ## ไฟล์ที่ถูกปรับปรุง
 
@@ -128,7 +128,7 @@ return {
     "type": "web_shell",
     "path": shell_path,
     "access_url": access_url,
-    "password": WEBSHELL_DEFAULT_PASSWORD,  # แทนที่ "dlnk"
+    "password": WEBSHELL_DEFAULT_PASSWORD,  # แทนที่ "connext"
     "deployed_at": datetime.now().isoformat()
 }
 ```
@@ -192,7 +192,7 @@ SECRET_KEY=<generated-key-here>
 
 3. สร้าง database หากยังไม่มี:
    ```bash
-   createdb dlnk_db
+   createdb connext_db
    ```
 
 ### ปัญหา: Ollama connection failed

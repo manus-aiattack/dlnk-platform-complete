@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "=========================================="
-echo "dLNk Attack Platform - C2_DOMAIN Setup"
+echo "Connext Security Platform - C2_DOMAIN Setup"
 echo "=========================================="
 echo ""
 

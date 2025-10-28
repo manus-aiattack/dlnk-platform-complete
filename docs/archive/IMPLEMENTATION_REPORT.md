@@ -1,4 +1,4 @@
-# รายงานการดำเนินการแก้ไขและปรับปรุงระบบ dLNk Attack Platform
+# รายงานการดำเนินการแก้ไขและปรับปรุงระบบ Connext Security Platform
 
 **วันที่:** 25 ตุลาคม 2568  
 **Repository:** donlasahachat1-sys/manus  
@@ -8,7 +8,7 @@
 
 ## สรุปภาพรวม
 
-ดำเนินการแก้ไขและปรับปรุงระบบ dLNk Attack Platform ทั้ง 4 Phase ตามที่กำหนด โดยครอบคลุมการแก้ไขปัญหาสำคัญที่ส่งผลต่อความเสถียรและประสิทธิภาพของระบบ การดำเนินการทั้งหมดเสร็จสมบูรณ์และได้ทำการ commit และ push ไปยัง GitHub repository แล้ว
+ดำเนินการแก้ไขและปรับปรุงระบบ Connext Security Platform ทั้ง 4 Phase ตามที่กำหนด โดยครอบคลุมการแก้ไขปัญหาสำคัญที่ส่งผลต่อความเสถียรและประสิทธิภาพของระบบ การดำเนินการทั้งหมดเสร็จสมบูรณ์และได้ทำการ commit และ push ไปยัง GitHub repository แล้ว
 
 ---
 
@@ -131,9 +131,9 @@ def __init__(self):
     if not db_url:
         db_host = os.getenv("DB_HOST", "localhost")
         db_port = os.getenv("DB_PORT", "5432")
-        db_user = os.getenv("DB_USER", "dlnk_user")
+        db_user = os.getenv("DB_USER", "connext_user")
         db_password = os.getenv("DB_PASSWORD", "")
-        db_name = os.getenv("DB_NAME", "dlnk")
+        db_name = os.getenv("DB_NAME", "connext")
         db_url = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
     self.db_url = db_url
 ```
@@ -355,7 +355,7 @@ PHASE 3: Testing LLM Timeout and Error Handling
 PHASE 4: Testing Full System Integration
 ================================================================================
 [Phase 4 - Test 1] Testing attack workflow...
-  ✓ API key created: dlnk_...
+  ✓ API key created: connext_...
   ✓ Attack created: uuid...
   ✓ Vulnerability created: uuid...
   ✓ Attack updated: status=completed
@@ -547,8 +547,8 @@ python3 api/main_api.py
 
 ```bash
 # Check logs directory
-tail -f logs/dlnk.log
-tail -f logs/dlnk.json
+tail -f logs/connext.log
+tail -f logs/connext.json
 ```
 
 ---

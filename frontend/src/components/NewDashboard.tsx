@@ -215,7 +215,7 @@ export const NewDashboard: React.FC = () => {
               margin: 0,
               marginBottom: theme.spacing.xs
             }}>
-              🎯 dLNk Attack Platform
+              🎯 Connext Security Platform
             </h1>
             <p style={{
               color: theme.colors.textSecondary,

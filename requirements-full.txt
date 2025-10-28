@@ -1,4 +1,4 @@
-# dLNk Predator Attack Platform - Complete Python Dependencies
+# Connext Predator Attack Platform - Complete Python Dependencies
 
 # ===== Web Framework =====
 fastapi==0.109.0

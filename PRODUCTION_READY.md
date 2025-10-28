@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Production Ready
+# Connext Security Platform - Production Ready
 
 ## สถานะระบบ
 
@@ -6,7 +6,7 @@
 
 ### ข้อมูลระบบ
 
-- **Platform:** dLNk Attack Platform v3.0.0-production
+- **Platform:** Connext Security Platform v3.0.0-production
 - **Agents:** 163+ AI-powered attack agents
 - **API Endpoints:** 121+ endpoints
 - **Status:** Operational (รันถาวร)
@@ -166,20 +166,20 @@ API เดิมที่มีอยู่แล้ว ประกอบด้
 ### Process Information
 - **PID:** 9072
 - **Command:** `python3.11 run_production.py`
-- **Log File:** `/tmp/dlnk.log`
+- **Log File:** `/tmp/connext.log`
 - **Auto-restart:** No (manual restart required)
 
 ### Manual Restart
 ```bash
 cd /home/ubuntu/aiprojectattack
-nohup python3.11 run_production.py > /tmp/dlnk.log 2>&1 &
+nohup python3.11 run_production.py > /tmp/connext.log 2>&1 &
 ```
 
 ### Check Status
 ```bash
 ps aux | grep run_production
 curl http://localhost:8000/health
-tail -f /tmp/dlnk.log
+tail -f /tmp/connext.log
 ```
 
 ### Stop Server
@@ -193,7 +193,7 @@ pkill -f run_production
 
 ```bash
 # Copy service file
-sudo cp dlnk.service /etc/systemd/system/
+sudo cp connext.service /etc/systemd/system/
 
 # Enable and start
 sudo systemctl enable dlnk
@@ -212,7 +212,7 @@ sudo journalctl -u dlnk -f
 
 ```bash
 # Build image
-docker build -t dlnk-platform .
+docker build -t connext-platform .
 
 # Run with docker-compose
 docker-compose up -d
@@ -260,12 +260,12 @@ docker-compose down
 ps aux | grep run_production
 
 # Check logs
-tail -100 /tmp/dlnk.log
+tail -100 /tmp/connext.log
 
 # Restart
 pkill -f run_production
 cd /home/ubuntu/aiprojectattack
-nohup python3.11 run_production.py > /tmp/dlnk.log 2>&1 &
+nohup python3.11 run_production.py > /tmp/connext.log 2>&1 &
 ```
 
 ### API ไม่ทำงาน
@@ -277,7 +277,7 @@ curl http://localhost:8000/health
 curl http://localhost:8000/api/docs
 
 # Check API logs
-grep ERROR /tmp/dlnk.log
+grep ERROR /tmp/connext.log
 ```
 
 ### Frontend ไม่แสดงผล

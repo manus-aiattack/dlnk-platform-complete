@@ -1,6 +1,6 @@
 """
 Comprehensive Test Suite
-Complete testing for dLNk Attack Platform
+Complete testing for Connext Security Platform
 """
 
 import pytest

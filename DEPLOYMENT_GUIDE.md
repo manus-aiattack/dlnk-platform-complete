@@ -1,4 +1,4 @@
-# dLNk dLNk Attack Platform - คู่มือการติดตั้งและใช้งาน
+# Connext Connext Security Platform - คู่มือการติดตั้งและใช้งาน
 
 **Version:** 2.0.0  
 **Last Updated:** 2025-01-23  
@@ -21,7 +21,7 @@
 
 ## ภาพรวมระบบ
 
-**dLNk Attack Platform** เป็นแพลตฟอร์มโจมตีอัตโนมัติที่ขับเคลื่อนด้วย AI ครบวงจรตั้งแต่การสแกน การค้นหาช่องโหว่ การวางแผนและดำเนินการโจมตี การ exploit ระบบ ไปจนถึงการ exfiltrate ข้อมูล พร้อมด้วย API, ระบบจัดการผู้ใช้, Admin Panel และ Web Interface ที่สมบูรณ์
+**Connext Security Platform** เป็นแพลตฟอร์มโจมตีอัตโนมัติที่ขับเคลื่อนด้วย AI ครบวงจรตั้งแต่การสแกน การค้นหาช่องโหว่ การวางแผนและดำเนินการโจมตี การ exploit ระบบ ไปจนถึงการ exfiltrate ข้อมูล พร้อมด้วย API, ระบบจัดการผู้ใช้, Admin Panel และ Web Interface ที่สมบูรณ์
 
 ### คุณสมบัติหลัก
 
@@ -117,9 +117,9 @@ sudo systemctl enable postgresql
 
 # สร้าง database และ user
 sudo -u postgres psql << EOF
-CREATE DATABASE dlnk_dlnk;
-CREATE USER dlnk WITH PASSWORD 'dlnk_password';
-GRANT ALL PRIVILEGES ON DATABASE dlnk_dlnk TO dlnk;
+CREATE DATABASE connext_dlnk;
+CREATE USER dlnk WITH PASSWORD 'connext_password';
+GRANT ALL PRIVILEGES ON DATABASE connext_dlnk TO dlnk;
 \q
 EOF
 ```
@@ -181,7 +181,7 @@ EOF
 ### ขั้นตอนที่ 6: ติดตั้ง Web Dashboard Dependencies
 
 ```bash
-cd /path/to/dlnk_dashboard
+cd /path/to/connext_dashboard
 pnpm install
 ```
 
@@ -192,11 +192,11 @@ pnpm install
 ### สร้างไฟล์ .env
 
 ```bash
-cd /mnt/c/Users/atSine/Downloads/dlnk_dlnk_FINAL
+cd /mnt/c/Users/atSine/Downloads/connext_connext_FINAL
 
 cat > .env << 'EOF'
 # Database Configuration
-DATABASE_URL=postgresql://dlnk:dlnk_password@localhost:5432/dlnk_dlnk
+DATABASE_URL=postgresql://connext:connext_password@localhost:5432/connext_dlnk
 
 # API Configuration
 API_HOST=0.0.0.0
@@ -214,21 +214,21 @@ MAX_CONCURRENT_ATTACKS=5
 ATTACK_TIMEOUT=3600
 
 # Workspace
-WORKSPACE_DIR=/home/ubuntu/dlnk_dlnk/workspace
-LOOT_DIR=/home/ubuntu/dlnk_dlnk/workspace/loot
+WORKSPACE_DIR=/home/ubuntu/connext_connext/workspace
+LOOT_DIR=/home/ubuntu/connext_connext/workspace/loot
 
 # Logging
 LOG_LEVEL=INFO
-LOG_FILE=/home/ubuntu/dlnk_dlnk/logs/dlnk.log
+LOG_FILE=/home/ubuntu/connext_connext/logs/connext.log
 EOF
 ```
 
 ### สร้างโครงสร้างโฟลเดอร์
 
 ```bash
-mkdir -p /home/ubuntu/dlnk_dlnk/workspace/loot/exfiltrated
-mkdir -p /home/ubuntu/dlnk_dlnk/logs
-chmod -R 755 /home/ubuntu/dlnk_dlnk
+mkdir -p /home/ubuntu/connext_connext/workspace/loot/exfiltrated
+mkdir -p /home/ubuntu/connext_connext/logs
+chmod -R 755 /home/ubuntu/connext_dlnk
 ```
 
 ---
@@ -240,7 +240,7 @@ chmod -R 755 /home/ubuntu/dlnk_dlnk
 #### Terminal 1: รัน Backend API
 
 ```bash
-cd /mnt/c/Users/atSine/Downloads/dlnk_dlnk_FINAL
+cd /mnt/c/Users/atSine/Downloads/connext_connext_FINAL
 source venv/bin/activate
 python api/main.py
 ```
@@ -250,7 +250,7 @@ Backend API จะรันที่ `localhost:8000`
 #### Terminal 2: รัน Web Dashboard
 
 ```bash
-cd /path/to/dlnk_dashboard
+cd /path/to/connext_dashboard
 pnpm dev
 ```
 
@@ -270,7 +270,7 @@ ollama serve
 
 ```bash
 # สร้างไฟล์ docker-compose.yml
-cd /mnt/c/Users/atSine/Downloads/dlnk_dlnk_FINAL
+cd /mnt/c/Users/atSine/Downloads/connext_connext_FINAL
 
 cat > docker-compose.yml << 'EOF'
 version: '3.8'
@@ -279,9 +279,9 @@ services:
   postgres:
     image: postgres:14
     environment:
-      POSTGRES_DB: dlnk_dlnk
+      POSTGRES_DB: connext_dlnk
       POSTGRES_USER: dlnk
-      POSTGRES_PASSWORD: dlnk_password
+      POSTGRES_PASSWORD: connext_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -292,20 +292,20 @@ services:
     command: python api/main.py
     volumes:
       - .:/app
-      - /home/ubuntu/dlnk_dlnk:/home/ubuntu/dlnk_dlnk
+      - /home/ubuntu/connext_dlnk:/home/ubuntu/connext_dlnk
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://dlnk:dlnk_password@postgres:5432/dlnk_dlnk
+      - DATABASE_URL=postgresql://connext:connext_password@postgres:5432/connext_dlnk
       - OLLAMA_HOST=http://host.docker.internal:11434
     depends_on:
       - postgres
 
   dashboard:
-    build: ./dlnk_dashboard
+    build: ./connext_dashboard
     command: pnpm dev --host
     volumes:
-      - ./dlnk_dashboard:/app
+      - ./connext_dashboard:/app
     ports:
       - "3000:3000"
     depends_on:
@@ -327,10 +327,10 @@ docker-compose up -d
 
 เปิดเว็บเบราว์เซอร์และไปที่ `http://localhost:3000` จะพบหน้า Login ที่ต้องกรอก **API Key**
 
-สำหรับ **Admin** ให้ดู API Key ที่ไฟล์ `/home/ubuntu/dlnk_dlnk/ADMIN_KEY.txt` ซึ่งจะถูกสร้างอัตโนมัติเมื่อรันระบบครั้งแรก
+สำหรับ **Admin** ให้ดู API Key ที่ไฟล์ `/home/ubuntu/connext_connext/ADMIN_KEY.txt` ซึ่งจะถูกสร้างอัตโนมัติเมื่อรันระบบครั้งแรก
 
 ```bash
-cat /home/ubuntu/dlnk_dlnk/ADMIN_KEY.txt
+cat /home/ubuntu/connext_connext/ADMIN_KEY.txt
 ```
 
 สำหรับ **User** ให้ Admin สร้าง API Key ให้ผ่านหน้า "จัดการ API Keys" ใน Dashboard
@@ -581,7 +581,7 @@ sudo systemctl status postgresql
 sudo systemctl start postgresql
 
 # ทดสอบ connection
-psql -U dlnk -d dlnk_dlnk -h localhost
+psql -U dlnk -d connext_dlnk -h localhost
 ```
 
 ### ปัญหา: Ollama ไม่ตอบสนอง
@@ -613,7 +613,7 @@ curl -I TARGET_URL
 
 # ตรวจสอบ Quota
 # ดูที่ Dashboard หรือ query database
-psql -U dlnk -d dlnk_dlnk -c "SELECT username, quota_used, quota_limit FROM users;"
+psql -U dlnk -d connext_dlnk -c "SELECT username, quota_used, quota_limit FROM users;"
 ```
 
 ### ปัญหา: Web Dashboard ไม่แสดงข้อมูล Real-time
@@ -634,11 +634,11 @@ psql -U dlnk -d dlnk_dlnk -c "SELECT username, quota_used, quota_limit FROM user
 
 ```bash
 # สร้างโฟลเดอร์และให้สิทธิ์
-mkdir -p /home/ubuntu/dlnk_dlnk/workspace/loot/exfiltrated
-chmod -R 755 /home/ubuntu/dlnk_dlnk
+mkdir -p /home/ubuntu/connext_connext/workspace/loot/exfiltrated
+chmod -R 755 /home/ubuntu/connext_dlnk
 
 # ตรวจสอบว่ามีพื้นที่เพียงพอ
-df -h /home/ubuntu/dlnk_dlnk
+df -h /home/ubuntu/connext_dlnk
 ```
 
 ### ปัญหา: SQLMap Agent ไม่ทำงาน
@@ -662,7 +662,7 @@ ln -s /opt/sqlmap/sqlmap.py /usr/local/bin/sqlmap
 
 ⚠️ **คำเตือนสำคัญ**
 
-ระบบ **dLNk dLNk Attack Platform** เป็นเครื่องมือที่มีพลังทำลายล้างสูง การใช้งานโดยไม่ได้รับอนุญาตจากเจ้าของระบบเป้าหมายถือเป็น **การกระทำผิดกฎหมาย** และอาจมีโทษทางอาญา
+ระบบ **Connext Connext Security Platform** เป็นเครื่องมือที่มีพลังทำลายล้างสูง การใช้งานโดยไม่ได้รับอนุญาตจากเจ้าของระบบเป้าหมายถือเป็น **การกระทำผิดกฎหมาย** และอาจมีโทษทางอาญา
 
 **การใช้งานที่ถูกต้อง:**
 - Penetration Testing ที่ได้รับการยินยอมอย่างเป็นลายลักษณ์อักษร

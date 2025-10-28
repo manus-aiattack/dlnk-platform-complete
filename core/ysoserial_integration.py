@@ -147,7 +147,7 @@ class YsoserialIntegration:
             for content_type in content_types:
                 headers = {
                     "Content-Type": content_type,
-                    "User-Agent": "dLNkdLNk-Deserialization/1.0"
+                    "User-Agent": "ConnextConnext-Deserialization/1.0"
                 }
 
                 try:

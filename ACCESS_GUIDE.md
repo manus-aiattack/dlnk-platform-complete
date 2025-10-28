@@ -1,4 +1,4 @@
-# คู่มือการเข้าถึงระบบ dLNk Attack Platform
+# คู่มือการเข้าถึงระบบ Connext Security Platform
 
 ## การเข้าถึงจากทุกที่ (ต่างจังหวัด, มือถือ, คอมพิวเตอร์)
 
@@ -55,13 +55,13 @@
 **คำสั่งที่ใช้บ่อย:**
 ```bash
 # ดูสถานะระบบ
-sudo systemctl status dlnk-platform
+sudo systemctl status connext-platform
 
 # Restart ระบบ
-sudo systemctl restart dlnk-platform
+sudo systemctl restart connext-platform
 
 # ดู logs
-tail -f /var/log/dlnk/platform.log
+tail -f /var/log/connext/platform.log
 
 # ดู database
 sudo -u postgres psql -d dlnk
@@ -75,7 +75,7 @@ cat /home/ubuntu/aiprojectattack/data/keys.json
 # อัพเดทโค้ดจาก GitHub
 cd /home/ubuntu/aiprojectattack
 git pull origin main
-sudo systemctl restart dlnk-platform
+sudo systemctl restart connext-platform
 
 # ดูการใช้งานระบบ
 htop
@@ -111,8 +111,8 @@ netstat -tulpn
 
 ระบบถูกตั้งค่าให้เริ่มทำงานอัตโนมัติเมื่อ reboot:
 
-- ✅ `dlnk-platform.service` - Main Platform
-- ✅ `dlnk-terminal.service` - Web Terminal
+- ✅ `connext-platform.service` - Main Platform
+- ✅ `connext-terminal.service` - Web Terminal
 - ✅ `postgresql@14-main.service` - Database
 - ✅ `redis-server.service` - Cache
 
@@ -127,16 +127,16 @@ sudo systemctl list-unit-files --type=service --state=enabled | grep -E "(dlnk|p
 
 ```bash
 # Platform Service
-sudo systemctl start dlnk-platform
-sudo systemctl stop dlnk-platform
-sudo systemctl restart dlnk-platform
-sudo systemctl status dlnk-platform
+sudo systemctl start connext-platform
+sudo systemctl stop connext-platform
+sudo systemctl restart connext-platform
+sudo systemctl status connext-platform
 
 # Web Terminal Service
-sudo systemctl start dlnk-terminal
-sudo systemctl stop dlnk-terminal
-sudo systemctl restart dlnk-terminal
-sudo systemctl status dlnk-terminal
+sudo systemctl start connext-terminal
+sudo systemctl stop connext-terminal
+sudo systemctl restart connext-terminal
+sudo systemctl status connext-terminal
 
 # ดูสถานะทั้งหมด
 sudo systemctl list-units --type=service --state=running | grep -E "(dlnk|postgresql|redis)"
@@ -146,14 +146,14 @@ sudo systemctl list-units --type=service --state=running | grep -E "(dlnk|postgr
 
 ```bash
 # Platform logs
-tail -f /var/log/dlnk/platform.log
-tail -f /var/log/dlnk/platform-error.log
+tail -f /var/log/connext/platform.log
+tail -f /var/log/connext/platform-error.log
 
 # Systemd logs
-journalctl -u dlnk-platform -f
+journalctl -u connext-platform -f
 
 # Temporary logs
-tail -f /tmp/dlnk.log
+tail -f /tmp/connext.log
 ```
 
 ### Database Management
@@ -211,7 +211,7 @@ git clone https://github.com/manus-aiattack/aiprojectattack.git
 ## ติดต่อ
 
 หากมีปัญหาหรือต้องการความช่วยเหลือ:
-- ดู logs ที่ `/var/log/dlnk/`
+- ดู logs ที่ `/var/log/connext/`
 - ตรวจสอบ GitHub Issues
 - ใช้ Web Terminal เพื่อ debug
 

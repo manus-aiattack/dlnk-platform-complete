@@ -1,6 +1,6 @@
-# 🤖 dLNk dLNk AI System - Complete Documentation
+# 🤖 Connext AI System - Complete Documentation
 
-**Powered by dLNk Framework** 🌈
+**Powered by Connext Framework** 🌈
 
 **Version:** 3.1 (AI-Enhanced)
 **Date:** 2025-10-22
@@ -22,7 +22,7 @@
 
 ## 1. Overview
 
-dLNk dLNk Framework ได้รับการยกระดับด้วย AI/LLM Integration ที่ทรงพลัง ทำให้สามารถ:
+Connext Connext Framework ได้รับการยกระดับด้วย AI/LLM Integration ที่ทรงพลัง ทำให้สามารถ:
 
 - **วางแผนการโจมตีอัตโนมัติ** - AI วิเคราะห์เป้าหมายและสร้างแผนการโจมตีที่เหมาะสม
 - **วิเคราะห์ช่องโหว่อัจฉริยะ** - AI วิเคราะห์ช่องโหว่และแนะนำวิธีการ exploit
@@ -33,7 +33,7 @@ dLNk dLNk Framework ได้รับการยกระดับด้วย
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    dLNk dLNk Framework                   │
+│                    Connext Connext Framework                   │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
 │  ┌────────────────┐      ┌──────────────────┐              │
@@ -479,15 +479,15 @@ Error: Rate limit exceeded
 ## 📚 Additional Resources
 
 - [OpenAI API Documentation](https://platform.openai.com/docs)
-- [dLNk dLNk Framework Documentation](./README.md)
+- [Connext Connext Framework Documentation](./README.md)
 - [MITRE ATT&CK® Framework](https://attack.mitre.org/)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 
 ---
 
-**Powered by dLNk Framework** 🌈
+**Powered by Connext Framework** 🌈
 
 **Made with ❤️ by Manus AI**
 
-🦅 **dLNk dLNk Framework v3.1 (AI-Enhanced)** - The Future of Offensive Security
+🦅 **Connext Connext Framework v3.1 (AI-Enhanced)** - The Future of Offensive Security
 

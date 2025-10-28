@@ -358,7 +358,7 @@ async def _analyze_afl_crashes(self, afl_result: Dict):
 ```python
 ✅ Metasploit-like Console
    - Command completion (prompt_toolkit)
-   - Command history (~/.dlnk_history)
+   - Command history (~/.connext_history)
    - Colored output
    - ASCII art banner
    - Context-aware prompts

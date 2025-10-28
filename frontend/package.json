@@ -1,7 +1,7 @@
 {
   "name": "dlnk-frontend",
   "version": "1.0.0",
-  "description": "dLNk Attack Platform - AI-Powered Security Testing Frontend",
+  "description": "Connext Security Platform - AI-Powered Security Testing Frontend",
   "type": "module",
   "scripts": {
     "dev": "vite",

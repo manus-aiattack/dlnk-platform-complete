@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Reverse Shell Payload Generator
+Connext Security Platform - Reverse Shell Payload Generator
 Generates various reverse shell payloads for different platforms
 """
 
@@ -127,7 +127,7 @@ p.waitFor()"""
         
         with open(filepath, 'w') as f:
             f.write("=" * 80 + "\n")
-            f.write("dLNk Attack Platform - Reverse Shell Payloads\n")
+            f.write("Connext Security Platform - Reverse Shell Payloads\n")
             f.write(f"LHOST: {self.lhost}\n")
             f.write(f"LPORT: {self.lport}\n")
             f.write("=" * 80 + "\n\n")

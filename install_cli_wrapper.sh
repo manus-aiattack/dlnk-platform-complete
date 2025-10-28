@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Install dLNk CLI Wrapper to system PATH
+# Install Connext CLI Wrapper to system PATH
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CLI_SCRIPT="${SCRIPT_DIR}/dlnk"
+CLI_SCRIPT="${SCRIPT_DIR}/connext"
 
 echo "================================================"
-echo "dLNk CLI Wrapper Installation"
+echo "Connext CLI Wrapper Installation"
 echo "================================================"
 echo ""
 
@@ -34,7 +34,7 @@ else
 fi
 
 # Create symlink
-INSTALL_PATH="${INSTALL_DIR}/dlnk"
+INSTALL_PATH="${INSTALL_DIR}/connext"
 
 if [ -L "${INSTALL_PATH}" ] || [ -f "${INSTALL_PATH}" ]; then
     echo "⚠️  Removing existing installation at ${INSTALL_PATH}"
@@ -43,7 +43,7 @@ fi
 
 ln -s "${CLI_SCRIPT}" "${INSTALL_PATH}"
 
-echo "✅ dLNk CLI installed to: ${INSTALL_PATH}"
+echo "✅ Connext CLI installed to: ${INSTALL_PATH}"
 echo ""
 
 # Check if it's in PATH

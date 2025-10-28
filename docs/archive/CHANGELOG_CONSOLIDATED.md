@@ -1,13 +1,13 @@
-# Changelog - dLNk Attack Platform
+# Changelog - Connext Security Platform
 
-All notable changes to the dLNk Attack Platform project are documented in this file.
+All notable changes to the Connext Security Platform project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [3.0-dLNk] - 2025-10-25
+## [3.0-Connext] - 2025-10-25
 
 ### 🎯 Major System Integration & Production Readiness
 
@@ -248,13 +248,13 @@ This release consolidates all previous fixes, improvements, and new features int
 - **production-readiness-audit.plan.md** - Deployment checklist (984 lines)
 - **AI_PROGRESS.md** - AI development tracking (229 lines)
 - **BUG_FIX_SUMMARY.md** - Detailed bug fix documentation
-- **DLNK_COMPLETE_FIX.md** - Step-by-step fix guide
+- **CONNEXT_COMPLETE_FIX.md** - Step-by-step fix guide
 - **FINAL_RELEASE_NOTES.md** - v2.0 release documentation
 - **WSL_INSTALLATION_GUIDE.md** - Windows setup guide
 - **PRODUCTION_DEPLOYMENT_GUIDE.md** - Production deployment
 - **TESTING_AND_DEPLOYMENT_GUIDE.md** - Testing procedures
 - **ENV_SETUP_GUIDE.md** - Environment configuration
-- **dLNkV1.MD** - AI handoff document
+- **ConnextV1.MD** - AI handoff document
 - **THAI_USER_GUIDE.md** - Thai language guide
 
 #### Updated Documentation
@@ -266,7 +266,7 @@ This release consolidates all previous fixes, improvements, and new features int
 #### Documentation Consolidation Plan
 Per Phase 1.2 of the Master Integration Plan:
 - **Keep & Update**: README.md, PRODUCTION_DEPLOYMENT_GUIDE.md
-- **Merge to CHANGELOG**: BUG_FIX_SUMMARY.md, DLNK_COMPLETE_FIX.md, FINAL_RELEASE_NOTES.md
+- **Merge to CHANGELOG**: BUG_FIX_SUMMARY.md, CONNEXT_COMPLETE_FIX.md, FINAL_RELEASE_NOTES.md
 - **Merge to README**: PRODUCTION_QUICK_START.md
 - **Move to docs/**: TESTING_AND_DEPLOYMENT_GUIDE.md
 - **Delete**: NEWPLAN.MD (outdated)
@@ -339,19 +339,19 @@ CREATE TABLE line_urls (
 ```bash
 # Admin User
 USERNAME: admin
-PASSWORD: dLNk@Admin2024!Secure
-API_KEY: DLNK-ADMIN-PROD-2024-XXXXXXXXXX
+PASSWORD: Connext@Admin2024!Secure
+API_KEY: CONNEXT-ADMIN-PROD-2024-XXXXXXXXXX
 
 # Database
-DB_USER: dlnk_user
-DB_PASSWORD: dLNk_DB_P@ssw0rd_2024_Secure!
-DB_NAME: dlnk_production
+DB_USER: connext_user
+DB_PASSWORD: Connext_DB_P@ssw0rd_2024_Secure!
+DB_NAME: connext_production
 
 # Redis
-REDIS_PASSWORD: dLNk_Redis_2024_Secure!
+REDIS_PASSWORD: Connext_Redis_2024_Secure!
 
 # JWT Secret
-SECRET_KEY: dLNk_JWT_Secret_Key_2024_Production_XXXXXXXXXX_Change_This
+SECRET_KEY: Connext_JWT_Secret_Key_2024_Production_XXXXXXXXXX_Change_This
 ```
 
 #### Environment Variables
@@ -362,7 +362,7 @@ DB_PASSWORD=<change-this>
 REDIS_PASSWORD=<change-this>
 
 # Database
-DATABASE_URL=postgresql://dlnk_user:${DB_PASSWORD}@localhost:5432/dlnk_production
+DATABASE_URL=postgresql://connext_user:${DB_PASSWORD}@localhost:5432/connext_production
 
 # API
 API_HOST=0.0.0.0
@@ -434,7 +434,7 @@ RATE_LIMIT_WINDOW=60
 **1. Backup Everything**
 ```bash
 # Backup database
-docker exec dlnk_postgres pg_dump -U dlnk dlnk_db > backup_v2.sql
+docker exec connext_postgres pg_dump -U dlnk connext_db > backup_v2.sql
 
 # Backup configuration
 cp .env .env.v2.backup
@@ -446,7 +446,7 @@ tar -czf custom_agents_v2.tar.gz agents/custom/
 **2. Update Code**
 ```bash
 git pull origin main
-git checkout v3.0-dLNk
+git checkout v3.0-Connext
 ```
 
 **3. Update Dependencies**
@@ -505,7 +505,7 @@ docker-compose up -d
 
 ## Security Advisories
 
-### v3.0-dLNk
+### v3.0-Connext
 - **CRITICAL**: Change all default passwords before production deployment
 - **CRITICAL**: Regenerate SECRET_KEY and JWT tokens
 - **HIGH**: Configure firewall rules for API endpoints
@@ -542,7 +542,7 @@ docker-compose up -d
 
 ## Known Issues
 
-### v3.0-dLNk
+### v3.0-Connext
 - **Minor**: Some agents may timeout on slow targets (workaround: increase timeout)
 - **Minor**: Large file exfiltration may consume significant bandwidth
 - **Minor**: Dashboard may lag with 10+ concurrent attacks
@@ -686,13 +686,13 @@ See LICENSE file for complete terms.
 - **Documentation**: See `docs/` directory
 - **GitHub Issues**: https://github.com/donlasahachat1-sys/manus/issues
 - **GitHub Discussions**: https://github.com/donlasahachat1-sys/manus/discussions
-- **Email**: support@dlnk.local
+- **Email**: support@connext.local
 
 ### Resources
-- **Official Website**: https://dlnk.local
-- **Documentation Portal**: https://docs.dlnk.local
-- **Community Forum**: https://forum.dlnk.local
-- **Video Tutorials**: https://youtube.com/dlnk
+- **Official Website**: https://connext.local
+- **Documentation Portal**: https://docs.connext.local
+- **Community Forum**: https://forum.connext.local
+- **Video Tutorials**: https://youtube.com/connext
 
 ---
 
@@ -712,7 +712,7 @@ We are grateful to the entire security research community for their contribution
 
 ---
 
-**Powered by dLNk Attack Platform**  
-**Version 3.0-dLNk**  
+**Powered by Connext Security Platform**  
+**Version 3.0-Connext**  
 **Build Date**: 2025-10-25
 

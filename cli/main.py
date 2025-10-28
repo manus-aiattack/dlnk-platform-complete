@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk dLNk CLI - Command Line Interface for Offensive Security Framework
+Connext CLI - Command Line Interface for Offensive Security Framework
 """
 
 import asyncio
@@ -23,8 +23,8 @@ from config.settings import DEFAULT_WORKFLOW, WORKSPACE_DIR
 from cli import ui, attack_cli, license_cli, loot_cli
 
 
-class dLNkdLNkCLI:
-    """CLI interface for dLNk dLNk Framework"""
+class ConnextConnextCLI:
+    """CLI interface for Connext Connext Framework"""
 
     def __init__(self):
         self.orchestrator = None
@@ -37,7 +37,7 @@ class dLNkdLNkCLI:
         
         # Display hardcore logo
         ui.print_logo()
-        log.info("Initializing dLNk dLNk Framework...")
+        log.info("Initializing Connext Connext Framework...")
         
         self.orchestrator = Orchestrator(workspace_dir=WORKSPACE_DIR)
         await self.orchestrator.initialize()
@@ -126,12 +126,12 @@ class dLNkdLNkCLI:
 
 
 # Create CLI instance
-cli_instance = dLNkdLNkCLI()
+cli_instance = ConnextConnextCLI()
 
 
 @click.group()
 def cli():
-    """dLNk dLNk - Offensive Security Framework"""
+    """Connext - Offensive Security Framework"""
     pass
 
 
@@ -229,7 +229,7 @@ def validate(workflow: str):
 
 @cli.command()
 def init():
-    """Initialize a new dLNk dLNk workspace"""
+    """Initialize a new Connext workspace"""
     try:
         workspace = Path(WORKSPACE_DIR)
         workspace.mkdir(parents=True, exist_ok=True)
@@ -271,9 +271,9 @@ def server(host: str, port: int):
 @cli.command()
 def version():
     """Show version information"""
-    click.echo("dLNk dLNk v2.0-dLNk")
+    click.echo("Connext v2.0-Connext")
     click.echo("Offensive Security Framework")
-    click.echo("Powered by dLNk")
+    click.echo("Powered by Connext")
 
 
 # Add attack, license, and loot commands

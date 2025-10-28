@@ -1,4 +1,4 @@
-# คู่มือการรัน Production - dLNk Attack Platform
+# คู่มือการรัน Production - Connext Security Platform
 
 ## วิธีการรัน Production บนเครื่อง Local (WSL2)
 
@@ -260,13 +260,13 @@ HTTPS_PROXY=http://proxy:port
 ### ดู Logs
 ```bash
 # Real-time logs
-tail -f logs/dlnk.log
+tail -f logs/connext.log
 
 # Error logs only
-grep ERROR logs/dlnk.log
+grep ERROR logs/connext.log
 
 # Last 100 lines
-tail -n 100 logs/dlnk.log
+tail -n 100 logs/connext.log
 ```
 
 ### System Status
@@ -351,7 +351,7 @@ psql dlnk < backup_20250126.sql
 
 หากพบปัญหาหรือต้องการความช่วยเหลือ:
 
-1. ตรวจสอบ logs: `tail -f logs/dlnk.log`
+1. ตรวจสอบ logs: `tail -f logs/connext.log`
 2. ดู error messages
 3. ตรวจสอบ system requirements
 4. ทดสอบ Ollama connection

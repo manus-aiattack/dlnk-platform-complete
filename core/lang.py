@@ -14,12 +14,12 @@ def _get_logger():
 
 STRINGS = {
     'en': {
-        'api_running': "dLNkdLNk API is running.",
+        'api_running': "ConnextConnext API is running.",
         'mission_queued': "Mission queued successfully.",
         'mission_started': "Mission started.",
         'mission_status_error': "Mission not found",
         'redis_connection_error': "Could not connect to Redis: {e}",
-        'worker_starting': "Starting dLNkdLNk Worker...",
+        'worker_starting': "Starting ConnextConnext Worker...",
         'redis_connection_success': "Successfully connected to Redis.",
         'redis_connection_critical_error': "Could not connect to Redis. Is it running on localhost:6379? Error: {e}",
         'waiting_for_mission': "Waiting for new mission on 'missions' queue...",
@@ -31,7 +31,7 @@ STRINGS = {
         'worker_loop_error': "An unexpected error occurred in the worker loop: {e}",
         'dashboard_starting': "Starting monitoring dashboard. Press Ctrl+C to exit.",
         'dashboard_stopped': "Monitoring dashboard stopped.",
-        'dashboard_refreshing': "--- dLNkdLNk System Dashboard (refreshing every 5s) ---",
+        'dashboard_refreshing': "--- ConnextConnext System Dashboard (refreshing every 5s) ---",
         'monitor_agent_starting': "Monitor Agent: Gathering system status...",
         'monitor_redis_error': "Cannot generate report: No connection to Redis.",
         'mission_status_title': "[bold green]Mission Status[/bold green]",
@@ -120,12 +120,12 @@ STRINGS = {
         'exploit_agent_llm_error': "Exploit Agent: An error occurred during LLM call: {e}"
     },
     'th': {
-        'api_running': "dLNkdLNk API กำลังทำงาน",
+        'api_running': "ConnextConnext API กำลังทำงาน",
         'mission_queued': "จัดคิวภารกิจสำเร็จแล้ว",
         'mission_started': "เริ่มภารกิจแล้ว",
         'mission_status_error': "ไม่พบภารกิจ",
         'redis_connection_error': "ไม่สามารถเชื่อมต่อกับ Redis ได้: {e}",
-        'worker_starting': "กำลังเริ่มต้น dLNkdLNk Worker...",
+        'worker_starting': "กำลังเริ่มต้น ConnextConnext Worker...",
         'redis_connection_success': "เชื่อมต่อกับ Redis สำเร็จแล้ว",
         'redis_connection_critical_error': "ไม่สามารถเชื่อมต่อกับ Redis ได้ Redis กำลังทำงานบน localhost:6379 หรือไม่? ข้อผิดพลาด: {e}",
         'waiting_for_mission': "กำลังรอภารกิจใหม่ในคิว 'missions'...",
@@ -137,7 +137,7 @@ STRINGS = {
         'worker_loop_error': "เกิดข้อผิดพลาดที่ไม่คาดคิดในลูปของ worker: {e}",
         'dashboard_starting': "กำลังเริ่มแดชบอร์ดติดตามสถานะ กด Ctrl+C เพื่อออก",
         'dashboard_stopped': "หยุดการทำงานแดชบอร์ดติดตามสถานะแล้ว",
-        'dashboard_refreshing': "--- แดชบอร์ดระบบ dLNkdLNk (รีเฟรชทุก 5 วินาที) ---",
+        'dashboard_refreshing': "--- แดชบอร์ดระบบ ConnextConnext (รีเฟรชทุก 5 วินาที) ---",
         'monitor_agent_starting': "Monitor Agent: กำลังรวบรวมสถานะของระบบ...",
         'monitor_redis_error': "ไม่สามารถสร้างรายงานได้: ไม่มีการเชื่อมต่อกับ Redis",
         'mission_status_title': "[bold green]สถานะภารกิจ[/bold green]",

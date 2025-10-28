@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Authentication Middleware
+Connext Security Platform - Authentication Middleware
 Key-based authentication for API requests
 """
 
@@ -17,7 +17,7 @@ api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 
 class AuthMiddleware:
-    """Authentication middleware for dLNk Attack Platform"""
+    """Authentication middleware for Connext Security Platform"""
     
     @staticmethod
     async def validate_api_key(request: Request) -> Dict[str, Any]:

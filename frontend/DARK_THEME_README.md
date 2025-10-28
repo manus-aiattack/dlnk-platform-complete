@@ -1,8 +1,8 @@
-# Dark Theme Implementation for dLNk Attack Platform
+# Dark Theme Implementation for Connext Security Platform
 
 ## Overview
 
-This implementation provides a comprehensive Dark theme UI/UX for the dLNk Attack Platform with a green-black-red color scheme, following modern penetration testing dashboard aesthetics.
+This implementation provides a comprehensive Dark theme UI/UX for the Connext Security Platform with a green-black-red color scheme, following modern penetration testing dashboard aesthetics.
 
 ## Color Scheme
 
@@ -150,7 +150,7 @@ The Dark theme integrates seamlessly with:
 
 ## Notes
 
-This Dark theme implementation follows the dLNk Attack Platform's aesthetic requirements with:
+This Dark theme implementation follows the Connext Security Platform's aesthetic requirements with:
 - High contrast for readability
 - Green accents for penetration testing theme
 - Black background for professional appearance

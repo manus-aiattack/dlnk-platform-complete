@@ -42,10 +42,10 @@
 - `agents/post_exploitation/webshell_manager.py`
 - `api/services/database.py` (ADMIN_KEY.txt path)
 - `data_exfiltration/exfiltrator.py`
-- `dlnk_FINAL/advanced_agents/zero_day_hunter.py`
-- `dlnk_FINAL/agents/exploit_database_agent.py`
-- `dlnk_FINAL/agents/privilege_escalation_agent_weaponized.py`
-- `dlnk_FINAL/data_exfiltration/exfiltrator.py`
+- `connext_FINAL/advanced_agents/zero_day_hunter.py`
+- `connext_FINAL/agents/exploit_database_agent.py`
+- `connext_FINAL/agents/privilege_escalation_agent_weaponized.py`
+- `connext_FINAL/data_exfiltration/exfiltrator.py`
 
 **จำนวนไฟล์ทั้งหมดที่แก้ไข: 27 files**
 
@@ -219,7 +219,7 @@ curl http://localhost:8000/docs
 
 - `fix_hardcoded_paths.py` - แก้ไขไฟล์หลักในรอบแรก
 - `fix_all_paths.sh` - แก้ไข results_dir ทั้งหมด
-- `fix_dlnk_final.sh` - แก้ไขไฟล์ใน dlnk_FINAL directory
+- `fix_connext_final.sh` - แก้ไขไฟล์ใน connext_FINAL directory
 
 สคริปต์เหล่านี้สามารถใช้ซ้ำได้ในกรณีที่มีการเพิ่มไฟล์ใหม่ที่มี hardcoded paths
 
@@ -313,7 +313,7 @@ Fix: Remove remaining hardcoded paths in additional files
 - Fix agents/post_exploitation/webshell_manager.py
 - Fix api/services/database.py
 - Fix data_exfiltration/exfiltrator.py
-- Fix all files in dlnk_FINAL directory
+- Fix all files in connext_FINAL directory
 ```
 
 ## สรุป

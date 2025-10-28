@@ -1,5 +1,5 @@
 """
-System Service for dLNk Attack Platform
+System Service for Connext Security Platform
 System monitoring and management
 """
 

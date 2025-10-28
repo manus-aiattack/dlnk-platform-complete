@@ -1,7 +1,7 @@
-# dLNk Attack Platform - Complete Edition
+# Connext Security Platform - Complete Edition
 
-[![Production Ready](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/dlnk/platform)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/dlnk/platform/releases)
+[![Production Ready](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/connext/platform)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/connext/platform/releases)
 [![License](https://img.shields.io/badge/license-Proprietary-red)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](tests/)
 
@@ -11,7 +11,7 @@
 
 ## 🚀 Overview
 
-dLNk Attack Platform is a comprehensive, production-ready security testing framework that combines traditional penetration testing with cutting-edge AI and automated vulnerability discovery capabilities.
+Connext Security Platform is a comprehensive, production-ready security testing framework that combines traditional penetration testing with cutting-edge AI and automated vulnerability discovery capabilities.
 
 ### Key Features
 
@@ -159,7 +159,7 @@ dLNk Attack Platform is a comprehensive, production-ready security testing frame
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/dlnk-attack-platform.git
+git clone https://github.com/your-org/connext-attack-platform.git
 cd dlnk-attack-platform
 
 # Configure environment
@@ -212,7 +212,7 @@ See [DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) for detailed instructions.
 # Database
 DATABASE_HOST=postgres
 DATABASE_PORT=5432
-DATABASE_NAME=dlnk_db
+DATABASE_NAME=connext_db
 DATABASE_USER=dlnk
 DATABASE_PASSWORD=<strong_password>
 
@@ -403,18 +403,18 @@ Proprietary - All rights reserved. See [LICENSE](LICENSE) for details.
 
 ## 🆘 Support
 
-- **Documentation**: https://docs.dlnk.io
-- **Issues**: https://github.com/dlnk/platform/issues
-- **Email**: support@dlnk.io
-- **Community**: https://forum.dlnk.io
+- **Documentation**: https://docs.connext.io
+- **Issues**: https://github.com/connext/platform/issues
+- **Email**: support@connext.io
+- **Community**: https://forum.connext.io
 
 ---
 
 ## 🎓 Training
 
-- **Video Tutorials**: https://dlnk.io/tutorials
+- **Video Tutorials**: https://connext.io/tutorials
 - **Webinars**: Monthly training sessions
-- **Certification**: dLNk Certified Security Professional (DCSP)
+- **Certification**: Connext Certified Security Professional (DCSP)
 
 ---
 
@@ -474,5 +474,5 @@ Proprietary - All rights reserved. See [LICENSE](LICENSE) for details.
 
 ---
 
-**Made with ❤️ by the dLNk Security Team**
+**Made with ❤️ by the Connext Security Team**
 

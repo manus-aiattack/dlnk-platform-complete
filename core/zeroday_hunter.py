@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Zero-Day Hunter
+Connext Security Platform - Zero-Day Hunter
 Advanced vulnerability discovery and exploitation
 """
 

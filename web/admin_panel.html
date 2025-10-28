@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dLNk HACK - Admin Panel</title>
+    <title>Connext HACK - Admin Panel</title>
     <style>
         * {
             margin: 0;
@@ -379,7 +379,7 @@
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <div class="logo">dLNk HACK<br>Admin Panel</div>
+        <div class="logo">Connext HACK<br>Admin Panel</div>
         
         <div class="user-info">
             <div class="user-avatar" id="userAvatar">A</div>
@@ -666,7 +666,7 @@
 
         // Check authentication
         if (!currentToken) {
-            window.location.href = 'dashboard_dlnk.html';
+            window.location.href = 'dashboard_connext.html';
         }
 
         // Initialize
@@ -733,7 +733,7 @@
             document.getElementById('recentActivity').innerHTML = `
                 <p style="color: #b0b0b0;">• User 'testuser' logged in</p>
                 <p style="color: #b0b0b0;">• Workflow 'advanced_attack' started</p>
-                <p style="color: #b0b0b0;">• License 'DLNK-ENT-001' activated</p>
+                <p style="color: #b0b0b0;">• License 'CONNEXT-ENT-001' activated</p>
             `;
         }
 
@@ -897,7 +897,7 @@
         function logout() {
             if (confirm('Logout?')) {
                 localStorage.removeItem('access_token');
-                window.location.href = 'dashboard_dlnk.html';
+                window.location.href = 'dashboard_connext.html';
             }
         }
 

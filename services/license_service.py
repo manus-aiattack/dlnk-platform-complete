@@ -55,7 +55,7 @@ class LicenseService:
     
     def __init__(self):
         self.context_manager = None
-        self.secret_key = os.getenv("LICENSE_SECRET_KEY", "dlnk_secret_key_change_me")
+        self.secret_key = os.getenv("LICENSE_SECRET_KEY", "connext_secret_key_change_me")
         self.encryption_key = self._derive_encryption_key()
         self.fernet = Fernet(self.encryption_key)
         
@@ -120,7 +120,7 @@ class LicenseService:
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
-            salt=b'dlnk_salt',
+            salt=b'connext_salt',
             iterations=100000,
         )
         key = kdf.derive(self.secret_key.encode())

@@ -58,21 +58,21 @@ class SQLiteMigrator:
             # Replace sqlite:/// connections
             content = re.sub(
                 r'sqlite:///[^\s"\']+',
-                'postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db',
+                'postgresql://connext_user:connext_password@localhost/connext_attack_db',
                 content
             )
             
             # Replace sqlite3.connect
             content = re.sub(
                 r'sqlite3\.connect\([^)]+\)',
-                'await asyncpg.connect("postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db")',
+                'await asyncpg.connect("postgresql://connext_user:connext_password@localhost/connext_attack_db")',
                 content
             )
             
             # Replace :memory:
             content = re.sub(
                 r':memory:',
-                'postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db',
+                'postgresql://connext_user:connext_password@localhost/connext_attack_db',
                 content
             )
             

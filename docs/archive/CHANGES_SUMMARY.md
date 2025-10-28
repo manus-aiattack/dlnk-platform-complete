@@ -1,4 +1,4 @@
-# สรุปการแก้ไขโปรเจ็ค dLNk Attack Platform
+# สรุปการแก้ไขโปรเจ็ค Connext Security Platform
 
 ## 1. Dependency Inconsistency - แก้ไขแล้ว ✅
 

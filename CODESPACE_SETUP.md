@@ -26,7 +26,7 @@ Script นี้จะ:
 ./start_server.sh
 
 # วิธีที่ 2: ใช้ CLI wrapper
-./dlnk server
+./connext server
 
 # วิธีที่ 3: ใช้ Python โดยตรง
 python3 main.py server
@@ -66,11 +66,11 @@ Frontend จะรันที่:
 python3 test_api_fixed.py
 
 # ทดสอบ CLI
-./dlnk --help
-./dlnk agents
+./connext --help
+./connext agents
 
 # ทดสอบ agent เดี่ยว
-./dlnk agent sqlmap_agent scan --url https://testphp.vulnweb.com
+./connext agent sqlmap_agent scan --url https://testphp.vulnweb.com
 ```
 
 ### 5. ตั้งค่า Environment Variables
@@ -89,7 +89,7 @@ code .env
 
 ```bash
 # Database (ใช้ SQLite สำหรับ Codespace)
-DATABASE_URL=sqlite:///workspace/dlnk.db
+DATABASE_URL=sqlite:///workspace/connext.db
 
 # API
 API_HOST=0.0.0.0
@@ -179,7 +179,7 @@ tail -f logs/api.log
 tail -f logs/error.log
 
 # ตรวจสอบ database
-sqlite3 workspace/dlnk.db
+sqlite3 workspace/connext.db
 # ใน sqlite shell:
 # .tables
 # SELECT * FROM users;
@@ -221,7 +221,7 @@ pip3 install -r requirements.txt
 
 ```bash
 # ลบ database เก่าและสร้างใหม่
-rm workspace/dlnk.db
+rm workspace/connext.db
 python3 startup.py
 ```
 
@@ -279,9 +279,9 @@ source ~/.bashrc
 |:-------|:---------|
 | `./deploy_production.sh` | Deploy ระบบทั้งหมด |
 | `./start_server.sh` | เริ่ม API server |
-| `./dlnk --help` | ดูคำสั่ง CLI ทั้งหมด |
-| `./dlnk server` | เริ่ม API server |
-| `./dlnk agents` | ดู agents ทั้งหมด |
+| `./connext --help` | ดูคำสั่ง CLI ทั้งหมด |
+| `./connext server` | เริ่ม API server |
+| `./connext agents` | ดู agents ทั้งหมด |
 | `python3 main.py server` | เริ่ม API server (แบบ direct) |
 | `cd frontend && npm run build` | Build frontend |
 | `python3 test_api_fixed.py` | ทดสอบ API |
@@ -308,7 +308,7 @@ cd frontend && npm install && npm run build && npm run preview
 ./start_server.sh
 
 # หรือ
-./dlnk server
+./connext server
 ```
 
 ---

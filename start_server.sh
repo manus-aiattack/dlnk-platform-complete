@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Quick Start Script for dLNk API Server
+# Quick Start Script for Connext API Server
 
 set -e
 
 echo "========================================================"
-echo "Starting dLNk Attack Platform API Server"
+echo "Starting Connext Security Platform API Server"
 echo "========================================================"
 echo ""
 

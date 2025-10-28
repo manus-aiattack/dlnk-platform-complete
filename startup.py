@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk dLNk Attack Platform - Startup Script
+Connext Connext Security Platform - Startup Script
 ตรวจสอบและเตรียมระบบก่อนรัน
 """
 
@@ -45,7 +45,7 @@ def print_banner():
     ║    ██████╔╝███████╗██║ ╚████║██║  ██╗                        ║
     ║    ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝                        ║
     ║                                                               ║
-    ║           dLNk ATTACK PLATFORM v2.0                         ║
+    ║           Connext ATTACK PLATFORM v2.0                         ║
     ║        AI-Powered Penetration Testing System                 ║
     ║                                                               ║
     ╚═══════════════════════════════════════════════════════════════╝
@@ -251,7 +251,7 @@ def main():
     """Main startup function"""
     print_banner()
     
-    console.print("[bold]Starting dLNk dLNk Attack Platform...[/bold]\n")
+    console.print("[bold]Starting Connext Connext Security Platform...[/bold]\n")
     
     # Check environment
     if not check_environment():

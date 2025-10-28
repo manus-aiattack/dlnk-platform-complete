@@ -20,7 +20,7 @@ class DatabaseSQLite:
         # Use workspace directory for database
         workspace_dir = os.getenv("WORKSPACE_DIR", "workspace")
         os.makedirs(workspace_dir, exist_ok=True)
-        self.db_path = os.path.join(workspace_dir, "dlnk.db")
+        self.db_path = os.path.join(workspace_dir, "connext.db")
         log.info(f"[DatabaseSQLite] Using database: {self.db_path}")
     
     async def connect(self):

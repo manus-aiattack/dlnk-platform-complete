@@ -1,4 +1,4 @@
-# dLNk Attack Platform - User Manual
+# Connext Security Platform - User Manual
 
 ## Table of Contents
 1. [Getting Started](#getting-started)
@@ -17,7 +17,7 @@
 
 ### First Login
 
-1. Open your browser and navigate to the dLNk platform URL
+1. Open your browser and navigate to the Connext platform URL
 2. Enter your credentials:
    - Username: `admin` (default)
    - Password: (provided by administrator)
@@ -497,16 +497,16 @@ A: Yes, passwords are hashed using bcrypt with salt.
 
 ### Getting Help
 
-- **Documentation**: https://docs.dlnk.io
-- **Community Forum**: https://forum.dlnk.io
-- **Email Support**: support@dlnk.io
-- **GitHub Issues**: https://github.com/dlnk/platform/issues
+- **Documentation**: https://docs.connext.io
+- **Community Forum**: https://forum.connext.io
+- **Email Support**: support@connext.io
+- **GitHub Issues**: https://github.com/connext/platform/issues
 
 ### Training
 
-- **Video Tutorials**: https://dlnk.io/tutorials
+- **Video Tutorials**: https://connext.io/tutorials
 - **Webinars**: Monthly training sessions
-- **Certification**: dLNk Certified Security Professional (DCSP)
+- **Certification**: Connext Certified Security Professional (DCSP)
 
 ---
 

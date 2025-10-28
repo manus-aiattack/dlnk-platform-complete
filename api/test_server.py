@@ -29,7 +29,7 @@ auth_service = AuthService()
 async def lifespan(app: FastAPI):
     """Startup and shutdown events"""
     # Startup
-    print("[API] Starting dLNk Attack Platform Production Server...")
+    print("[API] Starting Connext Security Platform Production Server...")
     print("[API] PostgreSQL database connected")
     print("[API] Production API Keys loaded from database")
     print("[API] Use admin credentials from ADMIN_CREDENTIALS.txt")
@@ -43,7 +43,7 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI app
 app = FastAPI(
-    title="dLNk Attack Platform API - Test Server",
+    title="Connext Security Platform API - Test Server",
     description="Test server with working endpoints using mock services",
     version="4.0.0-test",
     lifespan=lifespan,
@@ -68,7 +68,7 @@ async def root():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>dLNk Test Server</title>
+        <title>Connext Test Server</title>
         <style>
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -167,7 +167,7 @@ async def root():
     </head>
     <body>
         <div class="container">
-            <h1>🧪 dLNk Test Server</h1>
+            <h1>🧪 Connext Test Server</h1>
             <p class="subtitle">Development & Testing Environment with Mock Services</p>
             
             <div style="text-align: center;">
@@ -224,7 +224,7 @@ async def root():
             </div>
             
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #b0b0b0; font-size: 14px;">
-                <p>dLNk Attack Platform v4.0.0 - Test Server</p>
+                <p>Connext Security Platform v4.0.0 - Test Server</p>
                 <p>⚠️ This is a test environment with mock services - No actual attacks are performed</p>
             </div>
         </div>

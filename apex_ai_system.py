@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-dLNk dLNk AI System - Production-Ready
+Connext AI System - Production-Ready
 Improved prompts, validation, and response handling
 """
 
@@ -32,8 +32,8 @@ class AIResponse:
     warnings: List[str]
 
 
-class dLNkAISystem:
-    """Production-ready AI system for dLNk dLNk Framework"""
+class ConnextAISystem:
+    """Production-ready AI system for Connext Connext Framework"""
     
     def __init__(self, model: str = "gpt-4.1-mini"):
         self.model = model
@@ -331,10 +331,10 @@ def demo():
     """Demo the improved AI system"""
     
     print("="*80)
-    print("dLNk DLNK AI SYSTEM - DEMO")
+    print("Connext CONNEXT AI SYSTEM - DEMO")
     print("="*80)
     
-    ai = dLNkAISystem()
+    ai = ConnextAISystem()
     
     # Test 1: Reconnaissance Planning
     print("\n" + "="*80)

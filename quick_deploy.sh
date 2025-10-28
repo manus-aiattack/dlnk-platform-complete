@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Quick Deploy Script for dLNk Attack Platform
+# Quick Deploy Script for Connext Security Platform
 # This script automates the deployment process
 #
 
@@ -37,7 +37,7 @@ print_info() {
 }
 
 # Main script
-print_header "dLNk Attack Platform - Quick Deploy"
+print_header "Connext Security Platform - Quick Deploy"
 
 # Check if Docker is installed
 if ! command -v docker &> /dev/null; then

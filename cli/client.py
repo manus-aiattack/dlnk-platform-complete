@@ -1,5 +1,5 @@
 """
-API Client for dLNk CLI
+API Client for Connext CLI
 """
 
 import httpx
@@ -10,7 +10,7 @@ from cli.config import get_config
 
 class APIClient:
     """
-    API Client for dLNk Attack Platform
+    API Client for Connext Security Platform
     
     Handles all API communication from CLI
     """

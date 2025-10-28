@@ -1,4 +1,4 @@
-# คู่มือการเข้าถึงระบบ dLNk Attack Platform ผ่าน SSH
+# คู่มือการเข้าถึงระบบ Connext Security Platform ผ่าน SSH
 
 ## ข้อมูลการเชื่อมต่อ
 
@@ -14,7 +14,7 @@
 
 **Username:** `ubuntu`
 
-**Private Key:** ดูไฟล์ `dlnk_ssh_private_key` ในโฟลเดอร์นี้
+**Private Key:** ดูไฟล์ `connext_ssh_private_key` ในโฟลเดอร์นี้
 
 ## วิธีการเชื่อมต่อ SSH
 
@@ -23,9 +23,9 @@
 **1. ใช้ Windows Terminal / PowerShell / CMD:**
 
 ```powershell
-# บันทึก private key ไปที่ C:\Users\YourName\.ssh\dlnk_key
+# บันทึก private key ไปที่ C:\Users\YourName\.ssh\connext_key
 # จากนั้นรันคำสั่ง:
-ssh -i C:\Users\YourName\.ssh\dlnk_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer
+ssh -i C:\Users\YourName\.ssh\connext_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer
 ```
 
 **2. ใช้ PuTTY:**
@@ -41,7 +41,7 @@ ssh -i C:\Users\YourName\.ssh\dlnk_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.
 
 ```bash
 # 1. บันทึก private key
-cat > ~/.ssh/dlnk_key << 'EOF'
+cat > ~/.ssh/connext_key << 'EOF'
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
 QyNTUxOQAAACBPPuEsS3C58qay3V41SpGZ9YhoZ/V4dvcwNzheCbJx4AAAAJDWjRcm1o0X
@@ -52,10 +52,10 @@ iGhn9Xh29zA3OF4JsnHgAAAACmRsbmstYWRtaW4BAgM=
 EOF
 
 # 2. ตั้งค่า permission
-chmod 600 ~/.ssh/dlnk_key
+chmod 600 ~/.ssh/connext_key
 
 # 3. เชื่อมต่อ
-ssh -i ~/.ssh/dlnk_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer
+ssh -i ~/.ssh/connext_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer
 ```
 
 ### บน Android / iOS (ใช้ Termux หรือ iSH)
@@ -66,11 +66,11 @@ ssh -i ~/.ssh/dlnk_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.compu
 # เปิด Termux และรัน:
 pkg install openssh
 mkdir -p ~/.ssh
-cat > ~/.ssh/dlnk_key << 'EOF'
+cat > ~/.ssh/connext_key << 'EOF'
 [วาง private key ตรงนี้]
 EOF
-chmod 600 ~/.ssh/dlnk_key
-ssh -i ~/.ssh/dlnk_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer
+chmod 600 ~/.ssh/connext_key
+ssh -i ~/.ssh/connext_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.computer
 ```
 
 **iOS (iSH):**
@@ -81,13 +81,13 @@ ssh -i ~/.ssh/dlnk_key ubuntu@22-ioez7uufj9x8f2mxaeiwn-b6134a46.manus-asia.compu
 
 ```bash
 # ดูสถานะระบบ
-sudo systemctl status dlnk-platform
+sudo systemctl status connext-platform
 
 # Restart ระบบ
-sudo systemctl restart dlnk-platform
+sudo systemctl restart connext-platform
 
 # ดู logs
-tail -f /var/log/dlnk/platform.log
+tail -f /var/log/connext/platform.log
 
 # ดู database
 sudo -u postgres psql -d dlnk
@@ -101,7 +101,7 @@ cat /home/ubuntu/aiprojectattack/data/keys.json
 # อัพเดทโค้ดจาก GitHub
 cd /home/ubuntu/aiprojectattack
 git pull origin main
-sudo systemctl restart dlnk-platform
+sudo systemctl restart connext-platform
 ```
 
 ## หมายเหตุ

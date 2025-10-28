@@ -1,5 +1,5 @@
 """
-Complete Integration Tests for dLNk Attack Platform
+Complete Integration Tests for Connext Security Platform
 Tests end-to-end workflows and component integration
 """
 

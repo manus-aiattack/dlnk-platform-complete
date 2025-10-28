@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Frontend Function Test Script for dLNk Attack Platform
+Frontend Function Test Script for Connext Security Platform
 Tests all frontend API calls and verifies functionality
 """
 

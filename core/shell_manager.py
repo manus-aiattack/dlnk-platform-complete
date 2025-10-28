@@ -25,7 +25,7 @@ class ShellManager:
         self.active_shells = {}
         self.cert_path = os.path.join(
             settings.WORKSPACE_DIR, 'database', 'c2.pem')
-        self.redis_key_prefix = "dlnk_shell"
+        self.redis_key_prefix = "connext_shell"
         self.r = redis.Redis(host='localhost', port=6379,
                              db=0, decode_responses=True)
 

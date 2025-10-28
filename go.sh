@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# dLNk - Quick Setup Script
+# Connext - Quick Setup Script
 
 set -e
 
 echo "================================"
-echo "dLNk Quick Setup"
+echo "Connext Quick Setup"
 echo "================================"
 echo ""
 
@@ -18,7 +18,7 @@ else
 fi
 
 # Change to SQLite
-sed -i 's|DATABASE_URL=postgresql.*|DATABASE_URL=sqlite:///workspace/dlnk.db|' .env
+sed -i 's|DATABASE_URL=postgresql.*|DATABASE_URL=sqlite:///workspace/connext.db|' .env
 echo "✅ Using SQLite database"
 echo ""
 
@@ -50,7 +50,7 @@ echo ""
 echo "[5/5] Starting API server..."
 echo ""
 echo "================================"
-echo "Starting dLNk API Server..."
+echo "Starting Connext API Server..."
 echo "================================"
 echo ""
 echo "API will be available at:"

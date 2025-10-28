@@ -1,5 +1,5 @@
 """
-Security Testing for dLNk Attack Platform
+Security Testing for Connext Security Platform
 Tests security controls, input validation, and protection mechanisms
 """
 

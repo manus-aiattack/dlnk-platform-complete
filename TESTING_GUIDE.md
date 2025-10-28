@@ -2,7 +2,7 @@
 
 ## ภาพรวม
 
-คู่มือนี้อธิบายวิธีการทดสอบ Agents ทั้งหมด และการทำ Load Testing สำหรับระบบ dLNk Attack Platform
+คู่มือนี้อธิบายวิธีการทดสอบ Agents ทั้งหมด และการทำ Load Testing สำหรับระบบ Connext Security Platform
 
 ## 1. การทดสอบ Agents แต่ละตัว
 
@@ -10,29 +10,29 @@
 
 ```bash
 cd manus
-./dlnk agents
+./connext agents
 ```
 
 ### ทดสอบ Agent เดี่ยว
 
 ```bash
 # ทดสอบ SQLMap Agent
-./dlnk agent sqlmap_agent scan --url https://testphp.vulnweb.com
+./connext agent sqlmap_agent scan --url https://testphp.vulnweb.com
 
 # ทดสอบ XSS Hunter
-./dlnk agent xss_hunter scan --url https://xss-game.appspot.com
+./connext agent xss_hunter scan --url https://xss-game.appspot.com
 
 # ทดสอบ Command Injection
-./dlnk agent command_injection_exploiter scan --url http://vulnerable-site.com
+./connext agent command_injection_exploiter scan --url http://vulnerable-site.com
 
 # ทดสอบ SSRF Agent
-./dlnk agent ssrf_agent scan --url http://vulnerable-site.com
+./connext agent ssrf_agent scan --url http://vulnerable-site.com
 
 # ทดสอบ Auth Bypass Agent
-./dlnk agent authentication_bypass_agent scan --url http://vulnerable-site.com
+./connext agent authentication_bypass_agent scan --url http://vulnerable-site.com
 
 # ทดสอบ Zero-Day Hunter
-./dlnk agent zero_day_hunter full_zero_day_hunt --url http://target-site.com
+./connext agent zero_day_hunter full_zero_day_hunt --url http://target-site.com
 ```
 
 ### สร้าง Test Script สำหรับทดสอบทุก Agent
@@ -92,7 +92,7 @@ async def test_agent(agent_name, agent_class, action, target_url):
 async def test_all_agents():
     """Test all agents"""
     print("\n" + "="*60)
-    print("dLNk Attack Platform - Agent Testing")
+    print("Connext Security Platform - Agent Testing")
     print("="*60)
     
     results = {}
@@ -179,10 +179,10 @@ python3 test_all_agents.py
 
 ```bash
 # ใช้ CLI
-./dlnk attack https://testphp.vulnweb.com --type full_auto --follow
+./connext attack https://testphp.vulnweb.com --type full_auto --follow
 
 # หรือใช้ Python
-./dlnk run --target https://testphp.vulnweb.com --workflow config/attack_full_auto_workflow.yaml
+./connext run --target https://testphp.vulnweb.com --workflow config/attack_full_auto_workflow.yaml
 ```
 
 ### ทดสอบผ่าน API
@@ -354,7 +354,7 @@ locust -f locustfile.py --host=http://localhost:8000 \
 ```python
 #!/usr/bin/env python3
 """
-Performance benchmark for dLNk API
+Performance benchmark for Connext API
 """
 
 import asyncio
@@ -396,7 +396,7 @@ async def benchmark_endpoint(session, endpoint, method="GET", json_data=None):
 async def run_benchmarks():
     """Run all benchmarks"""
     print("="*60)
-    print("dLNk API Performance Benchmark")
+    print("Connext API Performance Benchmark")
     print("="*60)
     
     async with aiohttp.ClientSession() as session:

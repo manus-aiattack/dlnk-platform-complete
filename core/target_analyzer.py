@@ -1,5 +1,5 @@
 """
-dLNk Attack Platform - Target Analyzer
+Connext Security Platform - Target Analyzer
 Analyzes target for reconnaissance
 """
 

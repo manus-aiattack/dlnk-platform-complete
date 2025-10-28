@@ -2,7 +2,7 @@
 
 ## ภาพรวม
 
-ระบบ dLNk Attack Platform รองรับทั้ง **SQLite** (สำหรับ development) และ **PostgreSQL** (สำหรับ production)
+ระบบ Connext Security Platform รองรับทั้ง **SQLite** (สำหรับ development) และ **PostgreSQL** (สำหรับ production)
 
 ปัจจุบันระบบใช้ **SQLite fallback** อัตโนมัติ ซึ่งทำงานได้ดี แต่ PostgreSQL จะให้ประสิทธิภาพและความเสถียรที่ดีกว่าสำหรับการใช้งานจริง
 
@@ -41,9 +41,9 @@ brew services start postgresql@14
 # รัน PostgreSQL container
 docker run -d \
   --name dlnk-postgres \
-  -e POSTGRES_USER=dlnk_user \
-  -e POSTGRES_PASSWORD=dlnk_password \
-  -e POSTGRES_DB=dlnk_attack_platform \
+  -e POSTGRES_USER=connext_user \
+  -e POSTGRES_PASSWORD=connext_password \
+  -e POSTGRES_DB=connext_attack_platform \
   -p 5432:5432 \
   postgres:14-alpine
 
@@ -60,13 +60,13 @@ docker logs dlnk-postgres
 sudo -u postgres psql
 
 # สร้าง user
-CREATE USER dlnk_user WITH PASSWORD 'your_secure_password_here';
+CREATE USER connext_user WITH PASSWORD 'your_secure_password_here';
 
 # สร้าง database
-CREATE DATABASE dlnk_attack_platform;
+CREATE DATABASE connext_attack_platform;
 
 # ให้สิทธิ์
-GRANT ALL PRIVILEGES ON DATABASE dlnk_attack_platform TO dlnk_user;
+GRANT ALL PRIVILEGES ON DATABASE connext_attack_platform TO connext_user;
 
 # ออกจาก shell
 \q
@@ -76,7 +76,7 @@ GRANT ALL PRIVILEGES ON DATABASE dlnk_attack_platform TO dlnk_user;
 
 ```bash
 # ถ้ามีไฟล์ schema.sql
-psql -U dlnk_user -d dlnk_attack_platform -h localhost < api/database/schema.sql
+psql -U connext_user -d connext_attack_platform -h localhost < api/database/schema.sql
 
 # หรือถ้าไม่มี schema.sql ระบบจะสร้างอัตโนมัติเมื่อเริ่มครั้งแรก
 ```
@@ -97,14 +97,14 @@ nano .env
 
 ```bash
 # Database Configuration
-DATABASE_URL=postgresql://dlnk_user:your_secure_password_here@localhost:5432/dlnk_attack_platform
+DATABASE_URL=postgresql://connext_user:your_secure_password_here@localhost:5432/connext_attack_platform
 
 # หรือแยกเป็น components
 DB_HOST=localhost
 DB_PORT=5432
-DB_USER=dlnk_user
+DB_USER=connext_user
 DB_PASSWORD=your_secure_password_here
-DB_NAME=dlnk_attack_platform
+DB_NAME=connext_attack_platform
 
 # API Configuration
 API_HOST=0.0.0.0
@@ -123,7 +123,7 @@ SIMULATION_MODE=False  # False = LIVE ATTACK MODE
 ### ทดสอบด้วย psql
 
 ```bash
-psql -U dlnk_user -d dlnk_attack_platform -h localhost -c "SELECT version();"
+psql -U connext_user -d connext_attack_platform -h localhost -c "SELECT version();"
 ```
 
 ### ทดสอบด้วย Python
@@ -208,11 +208,11 @@ import asyncpg
 
 async def migrate():
     # เชื่อมต่อ SQLite
-    sqlite_conn = await aiosqlite.connect("workspace/dlnk.db")
+    sqlite_conn = await aiosqlite.connect("workspace/connext.db")
     sqlite_conn.row_factory = aiosqlite.Row
     
     # เชื่อมต่อ PostgreSQL
-    pg_conn = await asyncpg.connect("postgresql://dlnk_user:password@localhost/dlnk_attack_platform")
+    pg_conn = await asyncpg.connect("postgresql://connext_user:password@localhost/connext_attack_platform")
     
     # Migrate users
     async with sqlite_conn.execute("SELECT * FROM users") as cursor:
@@ -267,14 +267,14 @@ sudo systemctl restart postgresql
 
 ```bash
 # สร้าง database ใหม่
-sudo -u postgres createdb dlnk_attack_platform
+sudo -u postgres createdb connext_attack_platform
 ```
 
 ### ปัญหา: Permission denied
 
 ```bash
 # ให้สิทธิ์ใหม่
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE dlnk_attack_platform TO dlnk_user;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE connext_attack_platform TO connext_user;"
 ```
 
 ## สรุป

@@ -1,4 +1,4 @@
-# dLNk Attack Platform - Upgrade Summary
+# Connext Security Platform - Upgrade Summary
 
 ## 🎯 Upgrade to 100% Production Ready
 
@@ -10,7 +10,7 @@
 
 ## 📋 Executive Summary
 
-The dLNk Attack Platform has been successfully upgraded from **95% to 100% production readiness** through comprehensive improvements across all critical areas:
+The Connext Security Platform has been successfully upgraded from **95% to 100% production readiness** through comprehensive improvements across all critical areas:
 
 - ✅ **API Compatibility**: Fixed and tested
 - ✅ **Testing Coverage**: 100% integration tests passing
@@ -159,7 +159,7 @@ async def generate_rop_chain(
 **Files Created:**
 - `monitoring/prometheus.yml`
 - `monitoring/rules/alerts.yml`
-- `monitoring/grafana/dashboards/dlnk-overview.json`
+- `monitoring/grafana/dashboards/connext-overview.json`
 
 **Components:**
 - **Prometheus**: Metrics collection from all services
@@ -407,7 +407,7 @@ async def generate_rop_chain(
 ### Monitoring (3 files)
 - `monitoring/prometheus.yml` - Prometheus configuration
 - `monitoring/rules/alerts.yml` - Alert rules
-- `monitoring/grafana/dashboards/dlnk-overview.json` - Grafana dashboard
+- `monitoring/grafana/dashboards/connext-overview.json` - Grafana dashboard
 
 ### Database (2 files)
 - `database/migrations/alembic.ini` - Alembic configuration
@@ -526,9 +526,9 @@ async def generate_rop_chain(
 ## 📞 Contact
 
 For questions or support regarding this upgrade:
-- **GitHub**: https://github.com/your-org/dlnk-attack-platform
-- **Email**: support@dlnk.io
-- **Documentation**: https://docs.dlnk.io
+- **GitHub**: https://github.com/your-org/connext-attack-platform
+- **Email**: support@connext.io
+- **Documentation**: https://docs.connext.io
 
 ---
 
@@ -541,7 +541,7 @@ For questions or support regarding this upgrade:
 
 ## 🎉 Conclusion
 
-The dLNk Attack Platform has been successfully upgraded to **100% production readiness**. All critical components have been implemented, tested, and documented. The platform is now ready for production deployment with:
+The Connext Security Platform has been successfully upgraded to **100% production readiness**. All critical components have been implemented, tested, and documented. The platform is now ready for production deployment with:
 
 - ✅ Complete feature set
 - ✅ Comprehensive testing

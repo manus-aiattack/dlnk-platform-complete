@@ -34,7 +34,7 @@ class AdvancedVanchinAgent:
         
     def _build_system_prompt(self) -> str:
         """Build comprehensive system prompt for AOA"""
-        return f"""You are an Advanced Offensive Agent (AOA) with full access to the dLNk Attack Platform.
+        return f"""You are an Advanced Offensive Agent (AOA) with full access to the Connext Security Platform.
 
 **Your Capabilities:**
 1. **File Operations:**
@@ -183,7 +183,7 @@ When answering normally:
         health = {}
         
         # Check services
-        services = ["dlnk-platform", "postgresql", "redis-server"]
+        services = ["connext-platform", "postgresql", "redis-server"]
         for service in services:
             result = self.execute_command(f"systemctl is-active {service}")
             health[service] = result["stdout"].strip() == "active"

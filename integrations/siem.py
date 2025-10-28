@@ -38,7 +38,7 @@ class SplunkIntegration:
     async def send_event(
         self,
         event_data: Dict[str, Any],
-        source: str = "dlnk_attack_platform",
+        source: str = "connext_attack_platform",
         sourcetype: str = "security:attack"
     ) -> bool:
         """
@@ -56,7 +56,7 @@ class SplunkIntegration:
             # Build HEC payload
             payload = {
                 "time": int(datetime.now().timestamp()),
-                "host": "dlnk-platform",
+                "host": "connext-platform",
                 "source": source,
                 "sourcetype": sourcetype,
                 "index": self.index,
@@ -135,7 +135,7 @@ class SplunkIntegration:
 class ELKIntegration:
     """Elasticsearch integration"""
     
-    def __init__(self, elasticsearch_url: str, index_prefix: str = "dlnk"):
+    def __init__(self, elasticsearch_url: str, index_prefix: str = "connext"):
         """
         Initialize ELK integration
         
@@ -267,7 +267,7 @@ class SIEMManager:
         if config.get("elasticsearch_url"):
             self.integrations[SIEMType.ELK] = ELKIntegration(
                 elasticsearch_url=config["elasticsearch_url"],
-                index_prefix=config.get("elk_index_prefix", "dlnk")
+                index_prefix=config.get("elk_index_prefix", "connext")
             )
     
     async def send_vulnerability(
@@ -369,7 +369,7 @@ if __name__ == "__main__":
             "splunk_hec_token": "YOUR-HEC-TOKEN",
             "splunk_index": "security",
             "elasticsearch_url": "http://localhost:9200",
-            "elk_index_prefix": "dlnk"
+            "elk_index_prefix": "connext"
         }
         
         # Initialize manager

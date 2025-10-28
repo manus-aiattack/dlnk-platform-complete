@@ -1,8 +1,8 @@
-# dLNk Attack Platform - Final Guide
+# Connext Security Platform - Final Guide
 
 ## Overview
 
-dLNk Attack Platform คือระบบโจมตีและการใช้ประโยชน์จากช่องโหว่อัตโนมัติที่ขับเคลื่อนด้วย AI 100% ออกแบบมาเพื่อการโจมตีจริง ไม่ใช่การทดสอบ
+Connext Security Platform คือระบบโจมตีและการใช้ประโยชน์จากช่องโหว่อัตโนมัติที่ขับเคลื่อนด้วย AI 100% ออกแบบมาเพื่อการโจมตีจริง ไม่ใช่การทดสอบ
 
 ## System Architecture
 

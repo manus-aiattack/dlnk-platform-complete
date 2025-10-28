@@ -30,7 +30,7 @@ class SQLitePool:
 
     async def initialize(self):
         """Initialize SQLite connection"""
-        self.connection = await asyncpg.connect("postgresql://dlnk_user:dlnk_password@localhost/dlnk_attack_db")
+        self.connection = await asyncpg.connect("postgresql://connext_user:connext_password@localhost/connext_attack_db")
         self.connection.row_factory = sqlite3.Row
 
     async def acquire(self):
@@ -94,7 +94,7 @@ class Database:
             # Use SQLite database file
             workspace_dir = os.getenv('WORKSPACE_DIR', 'workspace')
             os.makedirs(workspace_dir, exist_ok=True)
-            self.db_path = os.path.join(workspace_dir, 'dlnk.db')
+            self.db_path = os.path.join(workspace_dir, 'connext.db')
             log.info(f"[Database] Using SQLite database at {self.db_path}")
         else:
             # Build DATABASE_URL from individual components if not set
@@ -102,9 +102,9 @@ class Database:
             if not dsn:
                 db_host = os.getenv("DB_HOST", "localhost")
                 db_port = os.getenv("DB_PORT", "5432")
-                db_user = os.getenv("DB_USER", "dlnk_user")
+                db_user = os.getenv("DB_USER", "connext_user")
                 db_password = os.getenv("DB_PASSWORD", "")
-                db_name = os.getenv("DB_NAME", "dlnk")
+                db_name = os.getenv("DB_NAME", "connext")
                 dsn = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
             self.dsn = dsn
             log.info(f"[Database] Using PostgreSQL database")

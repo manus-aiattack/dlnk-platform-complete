@@ -141,7 +141,7 @@ class ReportingAgent(BaseAgent):
         report_parts = []
 
         # Header
-        report_parts.append("# dLNk dLNk - Final Attack Report")
+        report_parts.append("# Connext - Final Attack Report")
         report_parts.append(
             f"**Generated on:** {datetime.now(timezone.utc).isoformat()}Z")
         report_parts.append("---")

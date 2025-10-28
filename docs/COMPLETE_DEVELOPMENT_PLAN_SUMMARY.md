@@ -1,4 +1,4 @@
-# สรุปแผนการพัฒนาทั้งหมด - dLNk Attack Platform
+# สรุปแผนการพัฒนาทั้งหมด - Connext Security Platform
 ## หลังการเปลี่ยนแปลงเป็น 100% Free Tools
 
 **วันที่:** 24 ตุลาคม 2025  

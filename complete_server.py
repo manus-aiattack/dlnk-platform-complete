@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 """
-dLNk Attack Platform - Complete Server
+Connext Security Platform - Complete Server
 Full-featured attack platform with all API endpoints
 """
 
@@ -179,7 +179,7 @@ async def verify_admin(key_data: dict = Depends(verify_api_key)) -> dict:
 # ==================== FastAPI App ====================
 
 app = FastAPI(
-    title="dLNk Attack Platform API - Complete Edition",
+    title="Connext Security Platform API - Complete Edition",
     version="3.0.0-complete",
     description="Advanced Penetration Testing Platform with AI-powered Zero-Day Discovery - All Features Integrated"
 )
@@ -259,7 +259,7 @@ async def verify(key_data: dict = Depends(verify_api_key)):
 @app.post("/api/auth/generate-admin-key")
 async def generate_admin_key(admin: dict = Depends(verify_admin)):
     key_id = f"admin_key_{uuid.uuid4().hex[:8]}"
-    key_value = f"dlnk_admin_{uuid.uuid4().hex}"
+    key_value = f"connext_admin_{uuid.uuid4().hex}"
     
     db.api_keys[key_value] = {
         "key_id": key_id,
@@ -287,7 +287,7 @@ async def logout():
 @app.post("/api/admin/keys/create")
 async def create_api_key(request: CreateKeyRequest, admin: dict = Depends(verify_admin)):
     key_id = f"{request.key_type}_key_{uuid.uuid4().hex[:8]}"
-    key_value = f"dlnk_{request.key_type}_{uuid.uuid4().hex}"
+    key_value = f"connext_{request.key_type}_{uuid.uuid4().hex}"
     
     db.api_keys[key_value] = {
         "key_id": key_id,
@@ -411,7 +411,7 @@ async def get_key_statistics(admin: dict = Depends(verify_admin)):
 # ==================== Admin - Settings ====================
 
 settings = {
-    "line_contact_url": "https://line.me/ti/p/~dlnk_admin",
+    "line_contact_url": "https://line.me/ti/p/~connext_admin",
     "default_usage_limit": 100,
     "rate_limit_per_minute": 60,
     "attack_timeout_seconds": 3600,
@@ -1004,7 +1004,7 @@ async def list_available_agents(key_data: dict = Depends(verify_api_key)):
 @app.on_event("startup")
 async def startup_event():
     print("\n" + "="*60)
-    print("dLNk Attack Platform - Complete Server")
+    print("Connext Security Platform - Complete Server")
     print("="*60)
     print(f"Version: 3.0.0-complete")
     print(f"API Keys:")

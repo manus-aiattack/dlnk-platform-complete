@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# dLNk Attack Platform - Production Deployment Script
+# Connext Security Platform - Production Deployment Script
 # สำหรับ Codespace และ Production Environment
 
 set -e  # Exit on error
 
 echo "========================================================"
-echo "dLNk Attack Platform - Production Deployment"
+echo "Connext Security Platform - Production Deployment"
 echo "========================================================"
 echo ""
 
@@ -88,12 +88,12 @@ if [ ! -f ".env" ]; then
         print_warning "No .env template found - creating basic .env"
         cat > .env << 'EOF'
 # Database Configuration
-DATABASE_URL=sqlite:///workspace/dlnk.db
+DATABASE_URL=sqlite:///workspace/connext.db
 DB_HOST=localhost
 DB_PORT=5432
-DB_USER=dlnk_user
+DB_USER=connext_user
 DB_PASSWORD=change_this_password
-DB_NAME=dlnk_attack_platform
+DB_NAME=connext_attack_platform
 
 # Redis Configuration
 REDIS_HOST=localhost
@@ -145,20 +145,20 @@ echo ""
 # Step 6: Install CLI Wrapper
 print_step "Installing CLI wrapper..."
 
-if [ -f "dlnk" ]; then
+if [ -f "connext" ]; then
     chmod +x dlnk
     
     # Try to install to /usr/local/bin
     if [ -w "/usr/local/bin" ]; then
-        ln -sf "$(pwd)/dlnk" /usr/local/bin/dlnk
-        print_success "CLI installed to /usr/local/bin/dlnk"
+        ln -sf "$(pwd)/connext" /usr/local/bin/connext
+        print_success "CLI installed to /usr/local/bin/connext"
     elif [ -w "$HOME/.local/bin" ]; then
         mkdir -p "$HOME/.local/bin"
-        ln -sf "$(pwd)/dlnk" "$HOME/.local/bin/dlnk"
-        print_success "CLI installed to ~/.local/bin/dlnk"
+        ln -sf "$(pwd)/connext" "$HOME/.local/bin/connext"
+        print_success "CLI installed to ~/.local/bin/connext"
         print_warning "Make sure ~/.local/bin is in your PATH"
     else
-        print_warning "Cannot install CLI - use ./dlnk instead"
+        print_warning "Cannot install CLI - use ./connext instead"
     fi
 else
     print_warning "dlnk wrapper not found"
@@ -224,17 +224,17 @@ echo ""
 echo "  # Start API Server:"
 echo "  python3 main.py server"
 echo "  # or"
-echo "  ./dlnk server"
+echo "  ./connext server"
 echo ""
 echo "  # Start Frontend (if built):"
 echo "  cd frontend && npm run preview"
 echo "  # or serve the dist folder"
 echo ""
 echo "  # Run an attack:"
-echo "  ./dlnk attack https://example.com"
+echo "  ./connext attack https://example.com"
 echo ""
 echo "  # Get help:"
-echo "  ./dlnk --help"
+echo "  ./connext --help"
 echo ""
 echo "📚 Documentation:"
 echo "  - README.md - Project overview"

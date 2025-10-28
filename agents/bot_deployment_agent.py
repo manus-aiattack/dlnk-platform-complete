@@ -32,7 +32,7 @@ class BotDeploymentAgent(BaseAgent):
         """Tries to find a writable directory on the target system."""
         candidates = ["/tmp", "/var/tmp", "$HOME"]
         for directory in candidates:
-            test_file = f"{directory}/.dlnk_test_write"
+            test_file = f"{directory}/.connext_test_write"
             # The command tries to write a file and then immediately remove it.
             # The `&&` ensures the echo only happens if the write is successful.
             command = f"touch {test_file} && echo {directory} && rm {test_file}"

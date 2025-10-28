@@ -1,4 +1,4 @@
-# dLNk - Python 3.13 Compatible Requirements
+# Connext - Python 3.13 Compatible Requirements
 
 # ===== Web Framework =====
 fastapi>=0.110.0

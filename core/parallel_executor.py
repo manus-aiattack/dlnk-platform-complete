@@ -1,5 +1,5 @@
 """
-Parallel Executor for dLNk Attack Platform
+Parallel Executor for Connext Security Platform
 ประมวลผลการโจมตีแบบขนานเพื่อความเร็ว 10x
 """
 

@@ -1,5 +1,5 @@
 """
-Self-Learning System for dLNk Attack Platform
+Self-Learning System for Connext Security Platform
 เรียนรู้จากการโจมตีที่สำเร็จและสร้างเทคนิคใหม่ด้วย AI
 """
 

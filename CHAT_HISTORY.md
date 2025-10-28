@@ -1,4 +1,4 @@
-# Chat History - dLNk Project Development
+# Chat History - Connext Project Development
 
 **Date:** 2025-10-26  
 **Session:** Complete System Setup & HK CLI Development  

@@ -1,4 +1,4 @@
-# Issues and Fixes - dLNk Project
+# Issues and Fixes - Connext Project
 
 **Date:** 2025-10-26  
 **Status:** In Progress
@@ -265,7 +265,7 @@ npm run dev
 
 ### Restart Backend
 ```bash
-sudo systemctl restart dlnk-platform
+sudo systemctl restart connext-platform
 # หรือ
 pkill -f run_production_fixed.py
 python3 /home/ubuntu/aiprojectattack/run_production_fixed.py &
